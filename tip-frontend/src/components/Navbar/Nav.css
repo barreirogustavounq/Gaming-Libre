@@ -1,0 +1,39 @@
+.nav-link {
+  margin-left: auto;
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #000000;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
+}
+#searchForm {
+  width: 60%;
+  margin: 0px 15% 0px 0px;
+}
+
+.navbar-light .navbar-brand {
+  color: rgba(0, 0, 0, 0.9);
+  padding: 0 15% 0px 0;
+}
+
+.dropdown-menu {
+  position: absolute;
+  z-index: 1000;
+  display: none;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 32% 0 0 -40px;
+  font-size: 1rem;
+  color: #212529;
+  text-align: end;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+#cartIcon {
+  font-size: 27px;
+  padding-right: 45px;
+}
