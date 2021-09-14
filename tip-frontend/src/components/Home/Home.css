@@ -3,3 +3,9 @@
   margin: auto;
   max-height: 22rem;
 }
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  min-height: 19rem;
+}

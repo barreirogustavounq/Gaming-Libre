@@ -1,30 +1,32 @@
 package com.example.tip.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+import java.util.List;
+
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Document
 public class User {
     @Id
     public String id;
 
-    public String firstName;
-    public String lastName;
-
-    public User() {}
-
-    public User(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    @Override
-    public String toString() {
-        return String.format(
-                "Customer[id=%s, firstName='%s', lastName='%s']",
-                id, firstName, lastName);
-    }
+    private String firstName;
+    private String lastName;
+    private String username;
+    private String address;
+    private String birthday;
+    private String email;
+    private int phone;
+    private List<Product> favorites;
+    private List<Product> shopping;
+    private List<Product> cart;
 }

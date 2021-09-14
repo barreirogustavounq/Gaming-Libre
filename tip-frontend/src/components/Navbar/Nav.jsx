@@ -2,24 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Nav.css";
 
-const Nav = () => {
-  function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  }
+const Nav = (props) => {
+  const user = props.user;
 
-  // Close the dropdown if the user clicks outside of it
-  window.onclick = function (event) {
-    if (!event.target.matches(".dropbtn")) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains("show")) {
-          openDropdown.classList.remove("show");
-        }
-      }
-    }
-  };
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -46,9 +31,7 @@ const Nav = () => {
                 placeholder="Search"
                 aria-label="Search"
               />
-              <button className="btn btn-outline-success" type="submit">
-                Search
-              </button>
+              <i id="SearchIcon" class="bi bi-search"></i>
             </form>
 
             <Link className="nav-link active">
@@ -62,7 +45,8 @@ const Nav = () => {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <i class="bi bi-person-circle"></i> Nombre
+                <i className="bi bi-person-circle"></i>{" "}
+                {user ? user.firstName : "ingresar"}
               </button>
               <div className="dropdown-menu dropdown-menu-right">
                 <button className="dropdown-item" type="button">

@@ -8,13 +8,13 @@ const Footer = () => {
           type="button"
           className="btn btn-primary btn-lg btn-floating mx-2"
         >
-          <i class="bi bi-facebook"></i>
+          <i className="bi bi-facebook"></i>
         </button>
         <button
           type="button"
           className="btn btn-primary btn-lg btn-floating mx-2"
         >
-          <i class="bi bi-envelope"></i>
+          <i className="bi bi-envelope"></i>
         </button>
         <button
           type="button"
@@ -26,7 +26,7 @@ const Footer = () => {
           type="button"
           className="btn btn-primary btn-lg btn-floating mx-2"
         >
-          <i class="bi bi-twitter"></i>
+          <i className="bi bi-twitter"></i>
         </button>
       </div>
       <div className="text-center text-black p-3">
