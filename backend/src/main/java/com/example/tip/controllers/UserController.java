@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @EnableAutoConfiguration
@@ -28,6 +29,11 @@ public class UserController {
     public User getUserByUsername(@PathVariable String username) throws UserNoExistException {
         return userService.getUserByUsername(username);
     }
+    @GetMapping(value = "user/{id}")
+    public Optional<User> getUserById(@PathVariable String id) throws UserNoExistException {
+        return userService.getUserById(id);
+    }
+
     @DeleteMapping(value = "user/{username}")
     public void deleteUser(@PathVariable String username){
         userService.deleteUserByUsername(username);

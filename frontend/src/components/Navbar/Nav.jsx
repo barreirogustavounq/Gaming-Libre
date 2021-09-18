@@ -1,10 +1,21 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import "./Nav.css";
 
 const Nav = (props) => {
   const user = props.user;
-
+  const [textSearch, settextSearch] = useState("");
+  const history = useHistory();
+  const SubmitHandler = (e) => {
+    console.log(textSearch);
+    e.preventDefault();
+    settextSearch("");
+    history.push(`/products/resultsearch/${textSearch}`);
+  };
+  const handleClick = (e) => {
+    e.preventDefault();
+    history.push(`/user/count/${user.id}`);
+  };
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -24,14 +35,22 @@ const Nav = (props) => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <form id="searchForm" className="d-flex">
+            <form
+              id="searchForm"
+              className="d-flex"
+              onSubmit={(e) => SubmitHandler(e)}
+            >
               <input
                 className="form-control me-2"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                value={textSearch}
+                onChange={(e) => settextSearch(e.target.value)}
               />
-              <i id="SearchIcon" class="bi bi-search"></i>
+              <Link onClick={(e) => SubmitHandler(e)}>
+                <i id="SearchIcon" class="bi bi-search"></i>
+              </Link>
             </form>
 
             <Link className="nav-link active">
@@ -49,17 +68,12 @@ const Nav = (props) => {
                 {user ? user.firstName : "ingresar"}
               </button>
               <div className="dropdown-menu dropdown-menu-right">
-                <button className="dropdown-item" type="button">
+                <button
+                  className="dropdown-item"
+                  type="button"
+                  onClick={(e) => handleClick(e)}
+                >
                   Cuenta
-                </button>
-                <button className="dropdown-item" type="button">
-                  Mis compras
-                </button>
-                <button className="dropdown-item" type="button">
-                  Favoritos
-                </button>
-                <button className="dropdown-item" type="button">
-                  Configuracion
                 </button>
                 <button className="dropdown-item" type="button">
                   Cerrar Sesion
