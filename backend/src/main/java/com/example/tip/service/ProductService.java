@@ -23,6 +23,7 @@ public class ProductService {
     public Product addProduct(Product product) {
         String productId = generateId(product.getName());
         product.setId(productId);
+        product.setName(product.getName().toLowerCase(Locale.ROOT));
         return productRepository.insert(product);
     }
 
@@ -37,5 +38,9 @@ public class ProductService {
 
     public void deleteProduct(String id) {
         productRepository.deleteById(id);
+    }
+
+    public List<Product> getProductsByName(String name){
+        return productRepository.findAllByNameIsContaining(name);
     }
 }

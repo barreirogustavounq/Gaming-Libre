@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./components/Home/Home";
 import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
+import ResultSeach from "./components/ResultSeach";
+import UserDatails from "./components/tools/UserDetails";
 
 const App = () => {
   const URL = "http://localhost:8080/user/test1";
@@ -25,6 +27,12 @@ const App = () => {
       <Switch>
         <Route exact path="/">
           <Home />
+        </Route>
+        <Route exact path="/products/resultsearch/:product">
+          <ResultSeach />
+        </Route>
+        <Route exact path="/user/count/:id">
+          <UserDatails />
         </Route>
       </Switch>
     );
