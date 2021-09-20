@@ -30,7 +30,7 @@ const UserDetails = () => {
                 src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
                 alt="imageProfile"
               />
-              <span className="font-weight-bold">{}</span>
+              <span className="font-weight-bold">{userstate.username}</span>
             </div>
           </div>
           <div className="col-md-5 border-right">
@@ -83,7 +83,7 @@ const UserDetails = () => {
                     type="text"
                     className="form-control"
                     placeholder="enter address line 2"
-                    defaultValue
+                    defaultValue={userstate.postalCode}
                   />
                 </div>
                 <div className="col-md-12">
@@ -92,7 +92,7 @@ const UserDetails = () => {
                     type="text"
                     className="form-control"
                     placeholder="enter address line 2"
-                    defaultValue
+                    defaultValue={userstate.city}
                   />
                 </div>
                 <div className="col-md-12">
@@ -101,7 +101,7 @@ const UserDetails = () => {
                     type="text"
                     className="form-control"
                     placeholder="enter address line 2"
-                    defaultValue
+                    defaultValue={userstate.state}
                   />
                 </div>
                 <div className="col-md-12">
@@ -111,15 +111,6 @@ const UserDetails = () => {
                     className="form-control"
                     placeholder="enter email id"
                     defaultValue={userstate.email}
-                  />
-                </div>
-                <div className="col-md-12">
-                  <label className="labels">Usuario</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Nombre de usuario"
-                    defaultValue={userstate.username}
                   />
                 </div>
                 <div className="col-md-12">

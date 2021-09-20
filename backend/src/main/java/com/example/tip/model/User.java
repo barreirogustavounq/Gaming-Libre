@@ -23,10 +23,14 @@ public class User {
     private String lastName;
     private String username;
     private String address;
+    private String city;
+    private String state;
+    private int postalCode;
     private String birthday;
     private String email;
     private int phone;
     private List<Product> favorites;
     private List<Product> shopping;
     private List<Product> cart;
+
 }

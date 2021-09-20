@@ -9,7 +9,7 @@ import ResultSeach from "./components/ResultSeach";
 import UserDatails from "./components/tools/UserDetails";
 
 const App = () => {
-  const URL = "http://localhost:8080/user/test1";
+  const URL = "http://localhost:8080/user/GusBa1654321";
   const [user, setuser] = useState(null);
 
   useEffect(() => {
