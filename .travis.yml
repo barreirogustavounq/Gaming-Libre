@@ -1,5 +1,4 @@
 language: java
-install: skip
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -9,9 +8,13 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
+jdk:
+  - oraclejdk8
 dist: trusty
-jdk: oraclejdk8
 
+before_script:
+  - chmod +x gradle
 script:
-  - cd backend
-  - ./gradlew build --scan -s
+  - ./gradlew check
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
