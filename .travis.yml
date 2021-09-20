@@ -15,5 +15,6 @@ dist: trusty
 jdk: oraclejdk8
 
 script:
+  - cd backend
   - jdk_switcher use openjdk8
   - ./gradlew build --scan -s
