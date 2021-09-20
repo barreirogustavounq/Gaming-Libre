@@ -1,9 +1,9 @@
 import React from "react";
 import "./Home.css";
 import axios from "axios";
-import logo from "../../images/logo 2.png";
-import logo2 from "../../images/logo192.png";
-import logo3 from "../../images/logo512.png";
+import logo from "../../images/banner1.jpg";
+import logo2 from "../../images/banner2.jpg";
+import logo3 from "../../images/banner3.jpg";
 import Carousel from "../tools/Carousel";
 import CardOfProduct from "../tools/CardOfProduct";
 

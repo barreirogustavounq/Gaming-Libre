@@ -30,7 +30,7 @@ const CardOfProduct = (props) => {
       </div>
     </div>
   ) : (
-    <p>Loadidng...</p>
+    <p>Loading...</p>
   );
 };
 

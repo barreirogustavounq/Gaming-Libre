@@ -29,7 +29,7 @@ public class UserController {
     public User getUserByUsername(@PathVariable String username) throws UserNoExistException {
         return userService.getUserByUsername(username);
     }
-    @GetMapping(value = "user/{id}")
+    @GetMapping(value = "user/count/{id}")
     public Optional<User> getUserById(@PathVariable String id) throws UserNoExistException {
         return userService.getUserById(id);
     }

@@ -7,10 +7,11 @@ const Nav = (props) => {
   const [textSearch, settextSearch] = useState("");
   const history = useHistory();
   const SubmitHandler = (e) => {
-    console.log(textSearch);
     e.preventDefault();
-    settextSearch("");
-    history.push(`/products/resultsearch/${textSearch}`);
+    if (textSearch) {
+      history.push(`/products/resultsearch/${textSearch.toLowerCase()}`);
+      settextSearch("");
+    }
   };
   const handleClick = (e) => {
     e.preventDefault();
