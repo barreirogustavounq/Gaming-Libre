@@ -1,7 +1,5 @@
 language: java
-install:
-  ./gradlew assemble
-  ./gradlew check
+install: skip
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -16,5 +14,4 @@ jdk: oraclejdk8
 
 script:
   - cd backend
-  - jdk_switcher use openjdk8
   - ./gradlew build --scan -s
