@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CardOfProduct from "./tools/CardOfProduct";
 import { useParams } from "react-router";
+import "../style/ResultSearch.css";
 
 const ResultSeach = () => {
   const param = useParams();
@@ -17,7 +18,7 @@ const ResultSeach = () => {
   }, [URL, param]);
   return (
     <div>
-      <h1>Resultados para "{param.product}"</h1>
+      <h1 id="h1Search">Resultados para "{param.product}"</h1>
       <div className="container">
         <div className="row">
           {products.map((product) => (

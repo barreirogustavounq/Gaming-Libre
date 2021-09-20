@@ -43,3 +43,35 @@
   padding: 0 10px;
   cursor: pointer;
 }
+.bg-dark {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+  background-image: linear-gradient(
+    to right,
+    #2b2935,
+    #183048,
+    rgb(62 127 224 / 25%),
+    #94bac1
+  );
+}
+.btn-secondary {
+  color: #fff;
+  background-color: #214565;
+  border-color: #3c5a75;
+}
+
+.btn-check:active + .btn-secondary,
+.btn-check:checked + .btn-secondary,
+.btn-secondary.active,
+.btn-secondary:active,
+.show > .btn-secondary.dropdown-toggle {
+  color: #fff;
+  background-color: #214565;
+  border-color: #3c5a75;
+}
+
+.btn-secondary:hover {
+  color: #fff;
+  background-color: #05203c;
+  border-color: #031523;
+}
