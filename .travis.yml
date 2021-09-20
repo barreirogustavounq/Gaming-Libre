@@ -1,0 +1,19 @@
+language: java
+
+before_cache:
+  - rm -f  $HOME/backend/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/backend/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/backend/.gradle/caches/
+    - $HOME/backend/.gradle/wrapper/
+
+jdk:
+  - oraclejdk8
+dist: trusty
+
+before_script:
+  - cd backend
+  - chmod +x gradle
+script:
+  - ./gradlew check
