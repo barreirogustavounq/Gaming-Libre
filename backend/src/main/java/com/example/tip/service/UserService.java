@@ -1,5 +1,7 @@
 package com.example.tip.service;
 
+import com.example.tip.dto.LoginDTO;
+import com.example.tip.exception.UserAlreadyExists;
 import com.example.tip.exception.UserNoExistException;
 import com.example.tip.model.User;
 import com.example.tip.repository.UserRepository;
@@ -22,24 +24,25 @@ public class UserService {
     public Optional<User> getUserById(String id){
         return userRepository.findById(id);
     }
-    public void addUser(User user){
-        userRepository.save(user);
+
+    public User addUser(User user){
+        Optional<User> userCheck = userRepository.findByUsername(user.getUsername());
+        if(userCheck.isPresent()) throw new UserAlreadyExists(HttpStatus.ALREADY_REPORTED);
+        return userRepository.save(user);
     }
 
     public User getUserByUsername(String username) throws UserNoExistException{
-        User user = userRepository.findByUsername(username);
-        try{
-            user.getId();
-        }catch (Exception e){
-            throw new UserNoExistException(HttpStatus.NOT_FOUND);
-        }
-       return user;
+        Optional<User> user = userRepository.findByUsername(username);
+        return user.orElseThrow(() -> new UserNoExistException(HttpStatus.NOT_FOUND));
     }
 
     public void deleteUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        userRepository.delete(user);
+        Optional<User> user = userRepository.findByUsername(username);
+        userRepository.delete(user.orElseThrow(() -> new UserNoExistException(HttpStatus.NOT_FOUND)));
     }
 
 
+    public User login(LoginDTO login) {
+        return userRepository.findByUsername(login.getUsername()).orElseThrow(() -> new UserNoExistException(HttpStatus.NOT_FOUND));
+    }
 }
