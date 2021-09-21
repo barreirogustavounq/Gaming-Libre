@@ -1,57 +1,62 @@
 import "./App.css";
-import axios from "axios";
 import Nav from "./components/Navbar/Nav";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch, useHistory} from "react-router-dom";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Footer from "./components/Footer";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import ResultSeach from "./components/ResultSeach";
 import UserDatails from "./components/tools/UserDetails";
+import {getUser} from "./api/Api";
+import axios from "axios";
 
 const App = () => {
-  const URL = "http://localhost:8080/user/test1";
-  const [user, setuser] = useState(null);
+    const userName = localStorage.getItem('user')
+    const [user, setUser] = useState(null)
+    const URL = "http://localhost:8080/user/"
 
-  useEffect(() => {
-    axios
-      .get(URL)
-      .then((res) => res)
-      .then((data) => {
-        setuser(data.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    useEffect(() => {
+        axios
+            .get(`${URL}${userName}`)
+            .then((res) => res)
+            .then((data) => {
+                setUser(data.data);
+            })
+            .catch((err) => console.log(err));
+    }, []);
 
-  const Routes = () => {
+    const Routes = () => {
+        return (
+            userName ?
+                <Switch>
+                    <Route exact path="/">
+                        <Home/>
+                    </Route>
+                    <Route exact path="/products/resultsearch/:product">
+                        <ResultSeach/>
+                    </Route>
+                    <Route exact path="/user/count/:id">
+                        <UserDatails/>
+                    </Route>
+                </Switch> :
+                <Switch>
+                    <Route exact path="/">
+                        <Login/>
+                    </Route>
+                </Switch>
+        );
+    };
     return (
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-          <Route exact path="/login">
-              <Login />
-          </Route>
-        <Route exact path="/products/resultsearch/:product">
-          <ResultSeach />
-        </Route>
-        <Route exact path="/user/count/:id">
-          <UserDatails />
-        </Route>
-      </Switch>
+        <>
+            <Router>
+                <header>
+                    <Nav user={user}/>
+                </header>
+                <Routes/>
+                <Footer/>
+            </Router>
+        </>
     );
-  };
-  return (
-    <>
-      <Router>
-        <header>
-          <Nav user={user} />
-        </header>
-        <Routes />
-        <Footer />
-      </Router>
-    </>
-  );
 };
 
 export default App;

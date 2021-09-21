@@ -3,14 +3,22 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./Login.css";
 import {login} from '../../api/Api'
+import {useHistory} from "react-router-dom";
 
 const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const history = useHistory()
 
     function handleSubmit(event) {
         event.preventDefault();
-        login(username, password)
+        let user;
+        login(username, password).then(result => {
+            user = result.data;
+            localStorage.setItem('user', result.data.username)
+            window.location.reload()
+        })
+        history.push('/', user)
     }
 
     function validateForm() {

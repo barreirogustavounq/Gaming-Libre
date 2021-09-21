@@ -10,13 +10,22 @@ export const post = (endpoint, body) => {
     return axios.post(endpoint, body);
 }
 
+export const getUser = (userName) => {
+    let user;
+    axios.get(`${url}user/${userName}`)
+        .then((res) => res)
+        .then((data) => {
+            user = data.data;
+        })
+        .catch((err) => console.log(err));
+    return user;
+}
+
 export const login = (username, password) => {
     return axios.post(`${url}user/login`, {
             username,
             password
     },{
         headers: {"Access-Control-Allow-Origin": "*"}
-        }).then(result => {
-        console.log(result.data)
-    })
+        })
 }
