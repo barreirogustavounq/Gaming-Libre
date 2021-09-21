@@ -1,13 +1,13 @@
 import "./App.css";
 import axios from "axios";
-import Nav from "./components/Navbar/Nav";
+import Nav from "./components/Nav";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "./components/Home/Home";
+import Home from "./components/screens/Home";
 import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
-import ResultSeach from "./components/ResultSeach";
-import UserDatails from "./components/tools/UserDetails";
-import AddProduct from "./components/tools/AddProduct";
+import ResultSeach from "./components/screens/ResultSeach";
+import UserDatails from "./components/screens/UserDetails";
+import AddProduct from "./components/screens/AddProduct";
 
 const App = () => {
   const URL = "http://localhost:8080/user/GusBa1654321";

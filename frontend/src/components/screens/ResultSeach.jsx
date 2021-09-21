@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import CardOfProduct from "./tools/CardOfProduct";
+import CardOfProduct from "../tools/CardOfProduct";
 import { useParams } from "react-router";
-import "../style/ResultSearch.css";
+import "../../style/ResultSearch.css";
 
 const ResultSeach = () => {
   const param = useParams();

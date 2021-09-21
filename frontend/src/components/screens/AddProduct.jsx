@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import FormAddProduct from "./FormAddProduct";
+import FormAddProduct from "../tools/FormAddProduct";
 import "../../style/FormAddProduct.css";
-import "../Navbar/Nav.css";
+import "../../style/Nav.css";
 import axios from "axios";
 
 const AddProduct = () => {
