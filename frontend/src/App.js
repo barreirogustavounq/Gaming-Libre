@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 import ResultSeach from "./components/ResultSeach";
 import UserDatails from "./components/tools/UserDetails";
+import AddProduct from "./components/tools/AddProduct";
 
 const App = () => {
   const URL = "http://localhost:8080/user/GusBa1654321";
@@ -30,6 +31,9 @@ const App = () => {
         </Route>
         <Route exact path="/products/resultsearch/:product">
           <ResultSeach />
+        </Route>
+        <Route exact path="/products/add-product">
+          <AddProduct />
         </Route>
         <Route exact path="/user/count/:id">
           <UserDatails />
