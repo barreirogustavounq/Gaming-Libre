@@ -34,7 +34,7 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <h1></h1>
+      <h1>Favoritos</h1>
       <CardOfProduct />
       <hr />
       <h1>Ultimos Vistos</h1>

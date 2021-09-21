@@ -1,13 +1,12 @@
 import "./App.css";
 import Nav from "./components/Navbar/Nav";
-import {BrowserRouter as Router, Route, Switch, useHistory} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Footer from "./components/Footer";
 import {useEffect, useState} from "react";
 import ResultSeach from "./components/ResultSeach";
 import UserDatails from "./components/tools/UserDetails";
-import {getUser} from "./api/Api";
 import axios from "axios";
 
 const App = () => {
