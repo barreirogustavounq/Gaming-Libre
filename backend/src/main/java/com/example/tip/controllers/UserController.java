@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @EnableAutoConfiguration
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
@@ -41,7 +42,7 @@ public class UserController {
         userService.deleteUserByUsername(username);
     }
 
-    @GetMapping(value="user/login")
+    @PostMapping(value="user/login")
     public User login(@RequestBody LoginDTO login){
         return userService.login(login);
 
