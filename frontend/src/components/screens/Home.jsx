@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import "./Home.css";
 import "../../style/Home.css";
 import axios from "axios";
 import logo from "../../images/banner1.jpg";

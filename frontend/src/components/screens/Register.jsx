@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import "./Register.css";
+import "../../style/Register.css";
 import {register} from '../../api/Api'
 import {Alert, Col, Row} from "react-bootstrap";
 

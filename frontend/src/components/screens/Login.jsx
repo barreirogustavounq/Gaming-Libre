@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import "./Login.css";
+import "../../style/Login.css";
 import {login} from '../../api/Api'
-import {useHistory} from "react-router-dom";
 import {Alert} from "react-bootstrap";
 
 const Login = () => {
