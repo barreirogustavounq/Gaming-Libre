@@ -1,5 +1,6 @@
 package com.example.tip.controllers;
 
+import com.example.tip.dto.LoginDTO;
 import com.example.tip.exception.UserNoExistException;
 import com.example.tip.model.User;
 import com.example.tip.service.UserService;
@@ -12,17 +13,19 @@ import java.util.Optional;
 
 @RestController
 @EnableAutoConfiguration
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
     UserService userService;
+
     @GetMapping(value = "users")
     public List<User> getUsers(){
         return userService.getAll();}
 
     @PostMapping(value = "user/add-user")
-    public void addUser(@RequestBody User user){
-        userService.addUser(user);
+    public User addUser(@RequestBody User user){
+        return userService.addUser(user);
     }
 
     @GetMapping(value = "user/{username}")
@@ -38,4 +41,11 @@ public class UserController {
     public void deleteUser(@PathVariable String username){
         userService.deleteUserByUsername(username);
     }
+
+    @PostMapping(value="user/login")
+    public User login(@RequestBody LoginDTO login){
+        return userService.login(login);
+
+    }
+
 }

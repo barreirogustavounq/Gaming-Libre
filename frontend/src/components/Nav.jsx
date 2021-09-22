@@ -3,10 +3,14 @@ import { Link, useHistory } from "react-router-dom";
 import "../style/Nav.css";
 import logo from "../images/logo 2.png";
 
+
+
 const Nav = (props) => {
-  const user = props.user;
+  //const user = props.user;
+  const user = props.user
   const [textSearch, settextSearch] = useState("");
   const history = useHistory();
+
   const SubmitHandler = (e) => {
     e.preventDefault();
     if (textSearch) {
@@ -14,6 +18,11 @@ const Nav = (props) => {
       settextSearch("");
     }
   };
+
+  const logOut = () => {
+    localStorage.removeItem('user')
+    window.location.reload()
+  }
   const handleClick = (e) => {
     e.preventDefault();
     history.push(`/user/count/${user.id}`);
@@ -78,7 +87,7 @@ const Nav = (props) => {
                 >
                   Cuenta
                 </button>
-                <button className="dropdown-item" type="button">
+                <button className="dropdown-item" type="button" onClick={logOut}>
                   Cerrar Sesion
                 </button>
               </div>

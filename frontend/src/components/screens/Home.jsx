@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "../../style/Home.css";
 import axios from "axios";
 import logo from "../../images/banner1.jpg";
@@ -8,9 +8,9 @@ import Carousel from "../tools/Carousel";
 import CardOfProduct from "../tools/CardOfProduct";
 
 const Home = () => {
-  const [products, setProducts] = React.useState([]);
+  const [products, setProducts] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     axios
       .get("http://localhost:8080/products/getAll")
       .then((res) => res)
