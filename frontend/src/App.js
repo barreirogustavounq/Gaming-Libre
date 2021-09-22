@@ -8,6 +8,7 @@ import {useEffect, useState} from "react";
 import ResultSeach from "./components/ResultSeach";
 import UserDatails from "./components/tools/UserDetails";
 import axios from "axios";
+import Register from "./components/Register/Register";
 
 const App = () => {
     const userName = localStorage.getItem('user')
@@ -41,6 +42,9 @@ const App = () => {
                 <Switch>
                     <Route exact path="/">
                         <Login/>
+                    </Route>
+                    <Route exact path="/register">
+                        <Register/>
                     </Route>
                 </Switch>
         );

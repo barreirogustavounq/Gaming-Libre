@@ -4,21 +4,25 @@ import Button from "react-bootstrap/Button";
 import "./Login.css";
 import {login} from '../../api/Api'
 import {useHistory} from "react-router-dom";
+import {Alert} from "react-bootstrap";
 
 const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const history = useHistory()
+    const [error, setError] = useState(false)
 
     function handleSubmit(event) {
         event.preventDefault();
         let user;
         login(username, password).then(result => {
             user = result.data;
-            localStorage.setItem('user', result.data.username)
-            window.location.reload()
+            if(user){
+                setError(false)
+                localStorage.setItem('user', result.data.username)
+                window.location.reload()
+            }}).catch(error => {
+                setError(true)
         })
-        history.push('/', user)
     }
 
     function validateForm() {
@@ -48,6 +52,10 @@ const Login = () => {
                 <Button block size="lg" type="submit" disabled={!validateForm()}>
                     Login
                 </Button>
+                <Alert className="alertButton" variant={error ? "danger" : "secondary"}>
+                    <Alert.Heading>{error ? "Bad username or password, try again or: " : "Don't have an account yet?"}</Alert.Heading>
+                    <Alert.Link href="http://localhost:3000/register">click here to register</Alert.Link>.
+                </Alert>
             </Form>
         </div>
     );

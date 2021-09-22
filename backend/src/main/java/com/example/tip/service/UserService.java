@@ -1,6 +1,7 @@
 package com.example.tip.service;
 
 import com.example.tip.dto.LoginDTO;
+import com.example.tip.exception.BadUserException;
 import com.example.tip.exception.UserAlreadyExists;
 import com.example.tip.exception.UserNoExistException;
 import com.example.tip.model.User;
@@ -26,9 +27,17 @@ public class UserService {
     }
 
     public User addUser(User user){
-        Optional<User> userCheck = userRepository.findByUsername(user.getUsername());
-        if(userCheck.isPresent()) throw new UserAlreadyExists(HttpStatus.ALREADY_REPORTED);
-        return userRepository.save(user);
+        if (validateUser(user)){
+            Optional<User> userCheck = userRepository.findByUsername(user.getUsername());
+            if(userCheck.isPresent()) throw new UserAlreadyExists(HttpStatus.ALREADY_REPORTED);
+            return userRepository.save(user);
+        }else {
+            throw new BadUserException(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    private boolean validateUser(User user) {
+        return user.getUsername() != null && user.getEmail() != null && user.getPassword() != null;
     }
 
     public User getUserByUsername(String username) throws UserNoExistException{
@@ -43,6 +52,11 @@ public class UserService {
 
 
     public User login(LoginDTO login) {
-        return userRepository.findByUsername(login.getUsername()).orElseThrow(() -> new UserNoExistException(HttpStatus.NOT_FOUND));
+        User user = userRepository.findByUsername(login.getUsername()).orElseThrow(() -> new UserNoExistException(HttpStatus.NOT_FOUND));
+        if(user.getPassword().equals(login.getPassword().trim())){
+            return user;
+        }else {
+            throw new BadUserException(HttpStatus.BAD_REQUEST);
+        }
     }
 }
