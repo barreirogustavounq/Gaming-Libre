@@ -3,12 +3,16 @@ import Nav from "./components/Navbar/Nav";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
+import Home from "./components/screens/Home";
 import Footer from "./components/Footer";
 import {useEffect, useState} from "react";
 import ResultSeach from "./components/ResultSeach";
 import UserDatails from "./components/tools/UserDetails";
 import axios from "axios";
 import Register from "./components/Register/Register";
+import ResultSeach from "./components/screens/ResultSeach";
+import UserDatails from "./components/screens/UserDetails";
+import AddProduct from "./components/screens/AddProduct";
 
 const App = () => {
     const userName = localStorage.getItem('user')
@@ -34,6 +38,9 @@ const App = () => {
                     </Route>
                     <Route exact path="/products/resultsearch/:product">
                         <ResultSeach/>
+        </Route>
+        <Route exact path="/products/add-product">
+          <AddProduct />
                     </Route>
                     <Route exact path="/user/count/:id">
                         <UserDatails/>

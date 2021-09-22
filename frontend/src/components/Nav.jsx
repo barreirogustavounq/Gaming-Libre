@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import "./Nav.css";
+import "../style/Nav.css";
+import logo from "../images/logo 2.png";
 
 
 
@@ -29,10 +30,9 @@ const Nav = (props) => {
   return (
     <>
       <nav className="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+        <img id="logo" src={logo} alt="logo" />
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
-            Gaming Libre
-          </Link>
+          <Link className="navbar-brand" to="/"></Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -58,14 +58,16 @@ const Nav = (props) => {
                 value={textSearch}
                 onChange={(e) => settextSearch(e.target.value)}
               />
-              <Link onClick={(e) => SubmitHandler(e)}>
-                <i id="SearchIcon" class="bi bi-search"></i>
-              </Link>
+
+              <i
+                onClick={(e) => SubmitHandler(e)}
+                id="SearchIcon"
+                className="bi bi-search"
+              ></i>
             </form>
 
-            <Link className="nav-link active">
-              <i id="cartIcon" className="bi bi-cart"></i>
-            </Link>
+            <i id="cartIcon" className="bi bi-cart"></i>
+
             <div className="btn-group">
               <button
                 type="button"

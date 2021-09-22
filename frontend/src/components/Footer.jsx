@@ -20,7 +20,7 @@ const Footer = () => {
           type="button"
           className="btn btn-primary btn-lg btn-floating mx-2"
         >
-          <i class="bi bi-instagram"></i>
+          <i className="bi bi-instagram"></i>
         </button>
         <button
           type="button"

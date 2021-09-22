@@ -48,8 +48,8 @@
   background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
   background-image: linear-gradient(
     to right,
-    #2b2935,
-    #183048,
+    #040417,
+    #2b3138,
     rgb(62 127 224 / 25%),
     #94bac1
   );
@@ -74,4 +74,17 @@
   color: #fff;
   background-color: #05203c;
   border-color: #031523;
+}
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+  padding-bottom: 2rem;
+  min-height: 6rem;
+}
+#logo {
+  width: 10rem;
+  position: absolute;
 }
