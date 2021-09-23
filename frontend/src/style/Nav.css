@@ -8,8 +8,9 @@
     border-color 0.15s ease-in-out;
 }
 #searchForm {
-  width: 60%;
-  margin: 0px 15% 0px 0px;
+  width: 50%;
+  margin: 0px 15% -7px -2px;
+  position: absolute;
 }
 
 .navbar-dark .navbar-brand {
@@ -42,6 +43,9 @@
   font-size: 23px;
   padding: 0 10px;
   cursor: pointer;
+  position: absolute;
+  margin-left: 100%;
+  margin-top: 5px;
 }
 .bg-dark {
   --bs-bg-opacity: 1;
@@ -85,6 +89,25 @@
   min-height: 6rem;
 }
 #logo {
-  width: 10rem;
+  width: 5rem;
   position: absolute;
+  margin-top: 20px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.btn-group,
+.btn-group-vertical {
+  position: absolute;
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 74%;
+  margin-top: 7px;
+}
+
+#loginButton {
+  position: absolute;
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 74%;
+  margin-top: 7px;
 }

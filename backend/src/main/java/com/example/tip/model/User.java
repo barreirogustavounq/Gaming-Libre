@@ -34,4 +34,17 @@ public class User {
     private List<Product> shopping;
     private List<Product> cart;
 
+    public void addProductToFavorite(Product product){
+        favorites.add(product);
+    }
+    public void addProductToshopping(Product product){
+        shopping.add(product);
+    }
+    public void addProductToCart(Product product){
+        cart.add(product);
+    }
+
+
+
+
 }

@@ -4,7 +4,7 @@ import CardOfProduct from "../tools/CardOfProduct";
 import { useParams } from "react-router";
 import "../../style/ResultSearch.css";
 
-const ResultSeach = () => {
+const ResultSearch = () => {
   const param = useParams();
   const [products, setproducts] = useState([]);
   const URL = `http://localhost:8080/products/resultsearch/${param.product}`;
@@ -32,4 +32,4 @@ const ResultSeach = () => {
   );
 };
 
-export default ResultSeach;
+export default ResultSearch;
