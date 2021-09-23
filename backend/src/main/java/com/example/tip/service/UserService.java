@@ -7,6 +7,8 @@ import com.example.tip.exception.UserNoExistException;
 import com.example.tip.model.User;
 import com.example.tip.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +52,6 @@ public class UserService {
         userRepository.delete(user.orElseThrow(() -> new UserNoExistException(HttpStatus.NOT_FOUND)));
     }
 
-
     public User login(LoginDTO login) {
         User user = userRepository.findByUsername(login.getUsername()).orElseThrow(() -> new UserNoExistException(HttpStatus.NOT_FOUND));
         if(user.getPassword().equals(login.getPassword().trim())){
@@ -59,4 +60,10 @@ public class UserService {
             throw new BadUserException(HttpStatus.BAD_REQUEST);
         }
     }
+
+    public User updateUser(User user) {
+        userRepository.deleteById(user.getId());
+        return userRepository.insert(user);
+    }
+
 }

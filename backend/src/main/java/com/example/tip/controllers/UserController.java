@@ -28,6 +28,11 @@ public class UserController {
         return userService.addUser(user);
     }
 
+    @PutMapping(value="user/update")
+    public User updateUser(@RequestBody User user){
+        return userService.updateUser(user);
+    }
+
     @GetMapping(value = "user/{username}")
     public User getUserByUsername(@PathVariable String username) throws UserNoExistException {
         return userService.getUserByUsername(username);
