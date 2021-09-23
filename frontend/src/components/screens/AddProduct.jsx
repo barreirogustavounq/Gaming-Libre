@@ -3,11 +3,13 @@ import FormAddProduct from "../tools/FormAddProduct";
 import "../../style/FormAddProduct.css";
 import "../../style/Nav.css";
 import axios from "axios";
+import {useHistory} from "react-router-dom";
 
 const AddProduct = () => {
   const [nombre, setnombre] = useState("");
   const [descripcion, setdescripcion] = useState("");
   const [precio, setprecio] = useState(0);
+  const history = useHistory();
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -27,6 +29,7 @@ const AddProduct = () => {
         setnombre("");
         setdescripcion("");
         setprecio(0);
+        history.push('/')
         alert("el producto fue guardado con exito");
       })
       .catch((err) => console.log(err));
