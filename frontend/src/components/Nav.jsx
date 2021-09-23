@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import "../style/Nav.css";
-import logo from "../images/logo 2.png";
-
-
+import logo from "../images/logo-sin-fondo.png";
 
 const Nav = (props) => {
-  //const user = props.user;
-  const user = props.user
+  const user = props.user;
   const [textSearch, settextSearch] = useState("");
   const history = useHistory();
 
@@ -20,17 +17,64 @@ const Nav = (props) => {
   };
 
   const logOut = () => {
-    localStorage.removeItem('user')
-    window.location.reload()
-  }
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
   const handleClick = (e) => {
-    e.preventDefault();
+    console.log(user);
     history.push(`/user/count/${user.id}`);
+  };
+
+  const RenderNavButton = () => {
+    if (user) {
+      return (
+        <div className="btn-group">
+          <button
+            type="button"
+            className="btn btn-secondary dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i className="bi bi-person-circle"></i> {user.firstName}
+          </button>
+          <div className="dropdown-menu dropdown-menu-right">
+            <button
+              className="dropdown-item"
+              type="button"
+              onClick={(e) => handleClick(e)}
+            >
+              Cuenta
+            </button>
+            <button className="dropdown-item" type="button" onClick={logOut}>
+              Cerrar Sesion
+            </button>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <button
+          id="loginButton"
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => history.push("/login")}
+        >
+          {" "}
+          Ingresar
+        </button>
+      );
+    }
   };
   return (
     <>
       <nav className="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-        <img id="logo" src={logo} alt="logo" />
+        <img
+          id="logo"
+          src={logo}
+          alt="logo"
+          onClick={() => history.push("/")}
+        />
         <div className="container-fluid">
           <Link className="navbar-brand" to="/"></Link>
           <button
@@ -66,32 +110,7 @@ const Nav = (props) => {
               ></i>
             </form>
 
-            <i id="cartIcon" className="bi bi-cart"></i>
-
-            <div className="btn-group">
-              <button
-                type="button"
-                className="btn btn-secondary dropdown-toggle"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i className="bi bi-person-circle"></i>{" "}
-                {user ? user.firstName : "ingresar"}
-              </button>
-              <div className="dropdown-menu dropdown-menu-right">
-                <button
-                  className="dropdown-item"
-                  type="button"
-                  onClick={(e) => handleClick(e)}
-                >
-                  Cuenta
-                </button>
-                <button className="dropdown-item" type="button" onClick={logOut}>
-                  Cerrar Sesion
-                </button>
-              </div>
-            </div>
+            <RenderNavButton />
           </div>
         </div>
       </nav>
