@@ -25,6 +25,10 @@ const Nav = (props) => {
     history.push(`/user/count/${user.id}`);
   };
 
+  const goToAddProduct = () => {
+    history.push('/products/add-product')
+  }
+
   const RenderNavButton = () => {
     if (user) {
       return (
@@ -45,6 +49,13 @@ const Nav = (props) => {
               onClick={(e) => handleClick(e)}
             >
               Cuenta
+            </button>
+            <button
+              className="dropdown-item"
+              type="button"
+              onClick={goToAddProduct}
+            >
+              Agregar producto
             </button>
             <button className="dropdown-item" type="button" onClick={logOut}>
               Cerrar Sesion
