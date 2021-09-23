@@ -22,6 +22,7 @@ const Login = () => {
           setError(false);
           localStorage.setItem("user", result.data.username);
           history.push("/");
+          window.location.reload()
         }
       })
       .catch((error) => {
@@ -37,7 +38,7 @@ const Login = () => {
     <div className="Login">
       <Form onSubmit={handleSubmit}>
         <Form.Group size="lg" controlId="email">
-          <Form.Label>Username</Form.Label>
+          <Form.Label>Usuario</Form.Label>
           <Form.Control
             autoFocus
             type="text"
@@ -46,7 +47,7 @@ const Login = () => {
           />
         </Form.Group>
         <Form.Group size="lg" controlId="password">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Contraseña</Form.Label>
           <Form.Control
             type="password"
             value={password}
@@ -54,16 +55,16 @@ const Login = () => {
           />
         </Form.Group>
         <Button block size="lg" type="submit" disabled={!validateForm()}>
-          Login
+          Iniciar Sesión
         </Button>
         <Alert className="alertButton" variant={error ? "danger" : "secondary"}>
           <Alert.Heading>
             {error
-              ? "Bad username or password, try again or: "
-              : "Don't have an account yet?"}
+              ? "Usuario y/o contraseña incorrectasr: "
+              : "¿Aún no tienes una cuenta?"}
           </Alert.Heading>
           <Alert.Link href="http://localhost:3000/register">
-            click here to register
+            Click para registrarte
           </Alert.Link>
           .
         </Alert>

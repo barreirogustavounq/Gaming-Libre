@@ -30,6 +30,21 @@ export const login = (username, password) => {
         })
 }
 
+export const updateUser = (user) => {
+    return axios.put(`${url}user/update`,{
+        "id" : user.id,
+        "firstName" : user.firstName,
+        "lastName" : user.lastName,
+        "username": user.username,
+        "password": user.password,
+        "address" : user.address,
+        "email" : user.email,
+        "phone" : user.phone,
+    },{
+        headers: {"Access-Control-Allow-Origin": "*"}
+    })
+}
+
 export const register = (user) => {
     return axios.post(`${url}user/add-user`, {
         "firstName" : user.firstName,

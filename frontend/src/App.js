@@ -12,8 +12,8 @@ import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Register from "./components/screens/Register";
-import ResultSeach from "./components/screens/ResultSeach";
-import UserDatails from "./components/screens/UserDetails";
+import ResultSearch from "./components/screens/ResultSearch";
+import UserDetails from "./components/screens/UserDetails";
 import AddProduct from "./components/screens/AddProduct";
 
 const App = () => {
@@ -39,13 +39,13 @@ const App = () => {
           <Home />
         </Route>
         <Route exact path="/products/resultsearch/:product">
-          <ResultSeach />
+          <ResultSearch />
         </Route>
         <Route exact path="/products/add-product">
           <AddProduct />
         </Route>
         <Route exact path="/user/count/:id">
-          {userName ? <UserDatails /> : <Redirect to="/" />}
+          {userName ? <UserDetails /> : <Redirect to="/" />}
         </Route>
         <Route exact path="/login">
           <Login />

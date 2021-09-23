@@ -47,10 +47,10 @@ const Register = () => {
       <Form onSubmit={handleSubmit}>
         <Row>
           <Col>
-            <Form.Label>Username</Form.Label>
+            <Form.Label>Usuario</Form.Label>
             <Form.Control
               required
-              placeholder="Username"
+              placeholder="Usuario"
               autoFocus
               type="text"
               value={username}
@@ -58,9 +58,9 @@ const Register = () => {
             />
           </Col>
           <Col>
-            <Form.Label>Password</Form.Label>
+            <Form.Label>Contraseña</Form.Label>
             <Form.Control
-              placeholder="Password"
+              placeholder="Ingrese su contraseña"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -82,9 +82,9 @@ const Register = () => {
         </Row>
         <Row>
           <Col>
-            <Form.Label>First name</Form.Label>
+            <Form.Label>Nombre</Form.Label>
             <Form.Control
-              placeholder="First name"
+              placeholder="Nombre"
               autoFocus
               type="text"
               value={firstName}
@@ -92,9 +92,9 @@ const Register = () => {
             />
           </Col>
           <Col>
-            <Form.Label>Last name</Form.Label>
+            <Form.Label>Apellido</Form.Label>
             <Form.Control
-              placeholder="Last name"
+              placeholder="Apellido"
               autoFocus
               type="text"
               value={lastName}
@@ -104,9 +104,9 @@ const Register = () => {
         </Row>
         <Row>
           <Col>
-            <Form.Label>Phone</Form.Label>
+            <Form.Label>Teléfono</Form.Label>
             <Form.Control
-              placeholder="Phone"
+              placeholder="Telefono"
               autoFocus
               type="number"
               value={phone}
@@ -114,9 +114,9 @@ const Register = () => {
             />
           </Col>
           <Col>
-            <Form.Label>Address</Form.Label>
+            <Form.Label>Dirección</Form.Label>
             <Form.Control
-              placeholder="Address"
+              placeholder="Dirección"
               autoFocus
               type="text"
               value={address}
@@ -132,10 +132,10 @@ const Register = () => {
           variant={alertVisible ? "success" : "secondary"}
         >
           <Alert.Heading>
-            {alertVisible ? "Register successful!" : "If you already register"}
+            {alertVisible ? "Registro exitoso!" : "Si ya estas registrado"}
           </Alert.Heading>
           <Alert.Link href="http://localhost:3000/">
-            click here to login
+            Click acá para iniciar sesión
           </Alert.Link>
           .
         </Alert>

@@ -36,7 +36,7 @@ const Nav = (props) => {
             aria-haspopup="true"
             aria-expanded="false"
           >
-            <i className="bi bi-person-circle"></i> {user.firstName}
+            <i className="bi bi-person-circle"/> {user.firstName}
           </button>
           <div className="dropdown-menu dropdown-menu-right">
             <button
@@ -76,7 +76,7 @@ const Nav = (props) => {
           onClick={() => history.push("/")}
         />
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/"></Link>
+          <Link className="navbar-brand" to="/"/>
           <button
             className="navbar-toggler"
             type="button"
@@ -86,7 +86,7 @@ const Nav = (props) => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"/>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <form
@@ -107,7 +107,7 @@ const Nav = (props) => {
                 onClick={(e) => SubmitHandler(e)}
                 id="SearchIcon"
                 className="bi bi-search"
-              ></i>
+              />
             </form>
 
             <RenderNavButton />
