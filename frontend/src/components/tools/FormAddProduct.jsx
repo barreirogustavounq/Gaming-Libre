@@ -21,10 +21,10 @@ const FormAddProduct = (props) => {
         aria-describedby="inputGroup-sizing-sm"
         placeholder={placeholder}
         value={value}
+        required={true}
         onChange={(e) => {
           myFunction(e.target.value);
         }}
-        required
       />
     </div>
   );

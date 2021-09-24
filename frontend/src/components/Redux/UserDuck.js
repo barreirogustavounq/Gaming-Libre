@@ -39,7 +39,7 @@ export const userReducer = (state = initialData, action) => {
 
 // actions
 export const restoreSesion = () => (dispatch) => {
-  let storage = localStorage.getItem("user");
+  let storage = localStorage.getItem('user');
   storage = JSON.parse(storage);
   if (storage) {
     dispatch({

@@ -20,14 +20,13 @@ const Nav = (props) => {
     localStorage.removeItem("user");
     window.location.reload();
   };
-  const handleClick = (e) => {
-    //console.log(user);
+  const handleClick = () => {
     history.push(`/user/count/${user.id}`);
   };
 
   const goToAddProduct = () => {
-    history.push("/products/add-product");
-  };
+    history.push('/products/add-product')
+  }
 
   const RenderNavButton = () => {
     if (user) {
@@ -46,7 +45,7 @@ const Nav = (props) => {
             <button
               className="dropdown-item"
               type="button"
-              onClick={(e) => handleClick(e)}
+              onClick={handleClick}
             >
               Cuenta
             </button>
