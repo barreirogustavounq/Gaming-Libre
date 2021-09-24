@@ -1,6 +1,7 @@
 package com.example.tip.service;
 
 import com.example.tip.dto.LoginDTO;
+import com.example.tip.dto.UserDTO;
 import com.example.tip.exception.BadUserException;
 import com.example.tip.exception.UserAlreadyExists;
 import com.example.tip.exception.UserNoExistException;
@@ -52,10 +53,26 @@ public class UserService {
         userRepository.delete(user.orElseThrow(() -> new UserNoExistException(HttpStatus.NOT_FOUND)));
     }
 
-    public User login(LoginDTO login) {
+    public UserDTO login(LoginDTO login) {
         User user = userRepository.findByUsername(login.getUsername()).orElseThrow(() -> new UserNoExistException(HttpStatus.NOT_FOUND));
+        UserDTO userDTO = new UserDTO(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getUsername(),
+                user.getAddress(),
+                user.getCity(),
+                user.getState(),
+                user.getPostalCode(),
+                user.getBirthday(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getFavorites(),
+                user.getShopping(),
+                user.getCart()
+        );
         if(user.getPassword().equals(login.getPassword().trim())){
-            return user;
+            return userDTO;
         }else {
             throw new BadUserException(HttpStatus.BAD_REQUEST);
         }

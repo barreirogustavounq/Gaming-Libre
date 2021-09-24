@@ -1,42 +1,32 @@
 import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import { Form, Button, Alert } from "react-bootstrap";
+import { loginAction } from "../Redux/UserDuck";
 import "../../style/Login.css";
-import { login } from "../../api/Api";
-import { Alert } from "react-bootstrap";
 import { useHistory } from "react-router";
+import { connect } from "react-redux";
 
-const Login = () => {
+const Login = ({ loginAction }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const history = useHistory();
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    let user;
-    login(username, password)
-      .then((result) => {
-        user = result.data;
-        if (user) {
-          setError(false);
-          localStorage.setItem("user", result.data.username);
-          history.push("/");
-          window.location.reload()
-        }
-      })
-      .catch((error) => {
-        setError(true);
-      });
-  }
-
   function validateForm() {
     return username.length > 0 && password.length > 0;
   }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    loginAction(username, password);
+    history.push("/");
+  };
 
   return (
     <div className="Login">
-      <Form onSubmit={handleSubmit}>
+      <Form
+        onSubmit={(e) => {
+          handleSubmit(e);
+        }}
+      >
         <Form.Group size="lg" controlId="email">
           <Form.Label>Usuario</Form.Label>
           <Form.Control
@@ -72,5 +62,11 @@ const Login = () => {
     </div>
   );
 };
+const mapState = (state) => {
+  return {
+    user: state.user.user,
+    logedin: state.user.loggedin,
+  };
+};
 
-export default Login;
+export default connect(mapState, { loginAction })(Login);

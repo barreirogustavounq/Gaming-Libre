@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import "../../style/UserDetails.scss";
-import {updateUser} from "../../api/Api";
-
+import { updateUser } from "../../api/Api";
 
 const UserDetails = () => {
   const user = useParams().id;
@@ -18,24 +17,23 @@ const UserDetails = () => {
       })
       .catch((err) => console.log(err));
   }, [user]);
-  console.log(user);
 
   const handleUpdate = () => {
-
     let userUpd = userstate;
     userUpd.id = user;
-    updateUser(userUpd).then((res) => res)
-        .then((data) => {
-          setuserstate(data.data);
-        })
-        .catch((err) => console.log(err));
-  }
+    updateUser(userUpd)
+      .then((res) => res)
+      .then((data) => {
+        setuserstate(data.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
-    const handleChange = (e, attr) => {
-      let userChange = userstate;
-      userChange[attr] = e.target.value
-      setuserstate(userChange)
-    }
+  const handleChange = (e, attr) => {
+    let userChange = userstate;
+    userChange[attr] = e.target.value;
+    setuserstate(userChange);
+  };
 
   return userstate ? (
     <>
@@ -65,7 +63,7 @@ const UserDetails = () => {
                     className="form-control"
                     placeholder="first name"
                     defaultValue={userstate.firstName}
-                    onChange={(e) => handleChange(e, 'firstName')}
+                    onChange={(e) => handleChange(e, "firstName")}
                   />
                 </div>
                 <div className="col-md-6">
@@ -75,7 +73,7 @@ const UserDetails = () => {
                     className="form-control"
                     defaultValue={userstate.lastName}
                     placeholder="surname"
-                    onChange={(e) => handleChange(e, 'lastName')}
+                    onChange={(e) => handleChange(e, "lastName")}
                   />
                 </div>
               </div>
@@ -87,7 +85,7 @@ const UserDetails = () => {
                     className="form-control"
                     placeholder="enter phone number"
                     defaultValue={userstate.phone}
-                    onChange={(e) => handleChange(e, 'phone')}
+                    onChange={(e) => handleChange(e, "phone")}
                   />
                 </div>
                 <div className="col-md-12">
@@ -97,7 +95,7 @@ const UserDetails = () => {
                     className="form-control"
                     placeholder="enter address line 1"
                     defaultValue={userstate.address}
-                    onChange={(e) => handleChange(e, 'address')}
+                    onChange={(e) => handleChange(e, "address")}
                   />
                 </div>
                 <div className="col-md-12">
@@ -107,7 +105,7 @@ const UserDetails = () => {
                     className="form-control"
                     placeholder="enter address line 2"
                     defaultValue={userstate.postalCode}
-                    onChange={(e) => handleChange(e, 'postalCode')}
+                    onChange={(e) => handleChange(e, "postalCode")}
                   />
                 </div>
                 <div className="col-md-12">
@@ -117,7 +115,7 @@ const UserDetails = () => {
                     className="form-control"
                     placeholder="enter address line 2"
                     defaultValue={userstate.city}
-                    onChange={(e) => handleChange(e, 'city')}
+                    onChange={(e) => handleChange(e, "city")}
                   />
                 </div>
                 <div className="col-md-12">
@@ -127,7 +125,7 @@ const UserDetails = () => {
                     className="form-control"
                     placeholder="enter address line 2"
                     defaultValue={userstate.state}
-                    onChange={(e) => handleChange(e, 'state')}
+                    onChange={(e) => handleChange(e, "state")}
                   />
                 </div>
                 <div className="col-md-12">
@@ -137,7 +135,7 @@ const UserDetails = () => {
                     className="form-control"
                     placeholder="enter email id"
                     defaultValue={userstate.email}
-                    onChange={(e) => handleChange(e, 'email')}
+                    onChange={(e) => handleChange(e, "email")}
                   />
                 </div>
                 <div className="col-md-12">
@@ -147,13 +145,17 @@ const UserDetails = () => {
                     className="form-control"
                     placeholder="Fecha de Nacimiento"
                     defaultValue={userstate.birthday}
-                    onChange={(e) => handleChange(e, 'birthday')}
+                    onChange={(e) => handleChange(e, "birthday")}
                   />
                 </div>
               </div>
             </div>
             <div className="mt-5 text-center">
-              <button className="btn btn-primary profile-button" type="button" onClick={handleUpdate}>
+              <button
+                className="btn btn-primary profile-button"
+                type="button"
+                onClick={handleUpdate}
+              >
                 Guardar
               </button>
             </div>

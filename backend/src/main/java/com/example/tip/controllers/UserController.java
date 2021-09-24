@@ -1,6 +1,7 @@
 package com.example.tip.controllers;
 
 import com.example.tip.dto.LoginDTO;
+import com.example.tip.dto.UserDTO;
 import com.example.tip.exception.UserNoExistException;
 import com.example.tip.model.User;
 import com.example.tip.service.UserService;
@@ -48,7 +49,7 @@ public class UserController {
     }
 
     @PostMapping(value="user/login")
-    public User login(@RequestBody LoginDTO login){
+    public UserDTO login(@RequestBody LoginDTO login){
         return userService.login(login);
 
     }

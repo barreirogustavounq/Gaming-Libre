@@ -8,7 +8,6 @@ const ResultSearch = () => {
   const param = useParams();
   const [products, setproducts] = useState([]);
   const URL = `http://localhost:8080/products/resultsearch/${param.product}`;
-  console.log(param);
   useEffect(() => {
     axios
       .get(URL)

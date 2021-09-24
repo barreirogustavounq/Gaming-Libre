@@ -17,12 +17,14 @@ const AddProduct = () => {
             alert('Debes llenar todos los campos')
             return;
         }
+        let storage = localStorage.getItem('user');
+        storage = JSON.parse(storage);
         e.preventDefault();
         axios
             .post(
                 "http://localhost:8080/products/add",
                 {
-                    ownerUsername: localStorage.getItem('user'),
+                    ownerUsername: storage.username,
                     name: nombre,
                     description: descripcion,
                     price: precio,
