@@ -21,12 +21,12 @@ const Nav = (props) => {
     window.location.reload();
   };
   const handleClick = (e) => {
-    console.log(user);
     history.push(`/user/count/${user.id}`);
   };
 
   const goToAddProduct = () => {
-    history.push('/products/add-product')
+    console.log(user)
+    history.push('/products/add-product', user)
   }
 
   const RenderNavButton = () => {

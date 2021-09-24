@@ -5,7 +5,7 @@ const CardOfProduct = (props) => {
   return product ? (
     <div className="profile-card-4 text-center">
       <img
-        src="http://envato.jayasankarkr.in/code/profile/assets/img/profile-4.jpg"
+        src={product.imgSrc}
         className="img img-responsive"
         alt="card"
       />
@@ -15,7 +15,7 @@ const CardOfProduct = (props) => {
         <div className="row">
           <div className="col-xs-4">
             <div className="profile-overview">
-              <p>A solo</p>
+              <p>Precio</p>
               <h4>$ {product.price}</h4>
             </div>
           </div>

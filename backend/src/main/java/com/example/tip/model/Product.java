@@ -13,10 +13,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document
 public class Product {
+
     @Id
     private String id;
+
+    private String ownerUsername;
     private String name;
     private String description;
     private Integer price;
+    private String imgSrc;
 
 }
