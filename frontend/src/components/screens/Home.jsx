@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "../../style/Home.css";
 import axios from "axios";
 import logo from "../../images/banner1.jpg";
@@ -13,9 +13,9 @@ const Home = () => {
   useEffect(() => {
     axios
       .get("http://localhost:8080/products/getAll")
-      .then((res) => res)
+      .then((res) => res.data)
       .then((data) => {
-        setProducts(data.data);
+        setProducts(data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -28,7 +28,7 @@ const Home = () => {
       <div className="container">
         <div className="row">
           {products.map((product) => (
-            <div className="col">
+            <div className="col" key={product.id}>
               <CardOfProduct product={product} />
             </div>
           ))}
