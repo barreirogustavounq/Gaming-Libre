@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { loginAction } from "../Redux/UserDuck";
 import "../../style/Login.css";
 import { useHistory } from "react-router";
 import { connect } from "react-redux";
 
-const Login = ({ loginAction }) => {
+const Login = ({ loginAction, user }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -14,10 +14,22 @@ const Login = ({ loginAction }) => {
   function validateForm() {
     return username.length > 0 && password.length > 0;
   }
+  useEffect(() => {
+    if (user.loggedIn) {
+      history.push("/");
+    }
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     loginAction(username, password);
-    history.push("/");
+    setTimeout(() => {}, 500);
+    if (user.loggedIn) {
+      setUsername("");
+      setPassword("");
+    } else {
+      setError(true);
+    }
   };
 
   return (
@@ -64,8 +76,7 @@ const Login = ({ loginAction }) => {
 };
 const mapState = (state) => {
   return {
-    user: state.user.user,
-    logedin: state.user.loggedin,
+    user: state.user,
   };
 };
 

@@ -37,12 +37,13 @@ a {
   position: relative;
   margin: 10px auto;
   cursor: pointer;
-  min-height: 30rem;
-  min-height: 12rem;
+  min-height: 33rem;
+  min-width: 16rem;
 }
 
 .profile-card-4 img {
   transition: all 0.25s linear;
+  min-height: 12rem;
 }
 
 .profile-card-4 .profile-content {
