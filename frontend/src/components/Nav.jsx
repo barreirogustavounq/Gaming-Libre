@@ -11,7 +11,7 @@ const Nav = (props) => {
   const SubmitHandler = (e) => {
     e.preventDefault();
     if (textSearch) {
-      history.push(`/products/resultsearch/${textSearch.toLowerCase()}`);
+      history.push(`/products/resultsearch/${textSearch}`);
       settextSearch("");
     }
   };
@@ -25,8 +25,8 @@ const Nav = (props) => {
   };
 
   const goToAddProduct = () => {
-    history.push('/products/add-product')
-  }
+    history.push("/products/add-product");
+  };
 
   const RenderNavButton = () => {
     if (user) {

@@ -7,7 +7,10 @@ import "../../style/ResultSearch.css";
 const ResultSearch = () => {
   const param = useParams();
   const [products, setproducts] = useState([]);
-  const URL = `http://localhost:8080/products/resultsearch/${param.product}`;
+  const URL = `http://localhost:8080/products/resultsearch/${param.product.replace(
+    /\+|%20/g,
+    "-"
+  )}`;
   useEffect(() => {
     axios
       .get(URL)

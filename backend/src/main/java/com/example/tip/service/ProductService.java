@@ -5,7 +5,9 @@ import com.example.tip.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class ProductService {
@@ -26,6 +28,6 @@ public class ProductService {
     }
 
     public List<Product> getProductsByName(String name){
-        return productRepository.findAllByNameIsContaining(name);
+        return productRepository.findByNameRegex(name);
     }
 }
