@@ -23,8 +23,7 @@ const Login = ({ loginAction, user }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     loginAction(username, password);
-    setTimeout(() => {}, 500);
-    if (user.loggedIn) {
+    if (!user.loggedIn && !user.fetching) {
       setUsername("");
       setPassword("");
     } else {

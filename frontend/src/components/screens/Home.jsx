@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../style/Home.css";
-import axios from "axios";
+import { get } from "../../api/Api";
 import logo from "../../images/banner1.jpg";
 import logo2 from "../../images/banner2.jpg";
 import logo3 from "../../images/banner3.jpg";
@@ -11,8 +11,7 @@ const Home = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/products/getAll")
+    get("products/getAll")
       .then((res) => res.data)
       .then((data) => {
         setProducts(data);

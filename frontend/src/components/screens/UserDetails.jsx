@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import axios from "axios";
 import "../../style/UserDetails.scss";
-import { updateUser } from "../../api/Api";
+import { updateUser, get } from "../../api/Api";
 
 const UserDetails = () => {
   const user = useParams().id;
   const [userstate, setuserstate] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/user/count/${user}`)
+    get(`user/count/${user}`)
       .then((res) => res)
       .then((data) => {
         setuserstate(data.data);

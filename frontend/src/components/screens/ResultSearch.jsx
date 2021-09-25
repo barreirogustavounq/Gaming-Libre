@@ -1,4 +1,4 @@
-import axios from "axios";
+import { get } from "../../api/Api";
 import React, { useEffect, useState } from "react";
 import CardOfProduct from "../tools/CardOfProduct";
 import { useParams } from "react-router";
@@ -7,13 +7,9 @@ import "../../style/ResultSearch.css";
 const ResultSearch = () => {
   const param = useParams();
   const [products, setproducts] = useState([]);
-  const URL = `http://localhost:8080/products/resultsearch/${param.product.replace(
-    /\+|%20/g,
-    "-"
-  )}`;
+  const URL = `products/resultsearch/${param.product.replace(/\+|%20/g, "-")}`;
   useEffect(() => {
-    axios
-      .get(URL)
+    get(URL)
       .then((res) => res.data)
       .then((data) => setproducts(data))
       .catch((err) => console.log(err));
