@@ -1,12 +1,9 @@
-import { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { logoutAction } from "../Redux/UserDuck";
 const NavButton = ({ logoutAction, user }) => {
   const history = useHistory();
-  useEffect(() => {
-    console.log(user.firstName);
-  }, [user]);
+
   const logOut = () => {
     localStorage.removeItem("user");
     logoutAction();

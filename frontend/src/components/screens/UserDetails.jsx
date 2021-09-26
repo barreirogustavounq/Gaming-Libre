@@ -15,8 +15,8 @@ const UserDetails = ({ updateUserStorage, userStorage }) => {
     updateUser(userUpd)
       .then((res) => res)
       .then((data) => {
+        updateUserStorage(data.data);
         setuserstate(data.data);
-        updateUserStorage(userUpd);
       })
       .catch((err) => console.log(err));
   };

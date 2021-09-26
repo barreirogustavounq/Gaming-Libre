@@ -10,6 +10,7 @@ import ResultSearch from "./components/screens/ResultSearch";
 import UserDetails from "./components/screens/UserDetails";
 import AddProduct from "./components/screens/AddProduct";
 import { loginAction } from "./components/Redux/UserDuck";
+import Product from "./components/screens/Product";
 
 const App = ({ user }) => {
   const Routes = () => {
@@ -20,6 +21,9 @@ const App = ({ user }) => {
         </Route>
         <Route exact path="/products/resultsearch/:product">
           <ResultSearch />
+        </Route>
+        <Route exact path="/product/:id">
+          <Product />
         </Route>
         <Route exact path="/products/add-product">
           <AddProduct />
