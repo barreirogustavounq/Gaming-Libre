@@ -8,7 +8,7 @@ export const get = (endpoint) => {
 };
 
 export const post = (endpoint, body) => {
-  return axios.post(endpoint, body, header);
+  return axios.post(url + endpoint, body, header);
 };
 
 export const getUser = (userName) => {

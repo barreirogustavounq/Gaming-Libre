@@ -1,20 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "react-router";
 import "../../style/UserDetails.scss";
-import { updateUser, get } from "../../api/Api";
+import { updateUser } from "../../api/Api";
+import { connect } from "react-redux";
+import { updateUserStorage } from "../Redux/UserDuck";
 
-const UserDetails = () => {
+const UserDetails = ({ userStorage }) => {
   const user = useParams().id;
-  const [userstate, setuserstate] = useState(null);
-
-  useEffect(() => {
-    get(`user/count/${user}`)
-      .then((res) => res)
-      .then((data) => {
-        setuserstate(data.data);
-      })
-      .catch((err) => console.log(err));
-  }, [user]);
+  const [userstate, setuserstate] = useState(userStorage);
 
   const handleUpdate = () => {
     let userUpd = userstate;
@@ -23,6 +16,7 @@ const UserDetails = () => {
       .then((res) => res)
       .then((data) => {
         setuserstate(data.data);
+        updateUserStorage(userUpd);
       })
       .catch((err) => console.log(err));
   };
@@ -165,5 +159,10 @@ const UserDetails = () => {
     <h1>Loading...</h1>
   );
 };
+const mapState = (state) => {
+  return {
+    userStorage: state.user.user,
+  };
+};
 
-export default UserDetails;
+export default connect(mapState)(UserDetails);

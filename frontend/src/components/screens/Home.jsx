@@ -1,24 +1,12 @@
-import React, { useState, useEffect } from "react";
 import "../../style/Home.css";
-import { get } from "../../api/Api";
 import logo from "../../images/banner1.jpg";
 import logo2 from "../../images/banner2.jpg";
 import logo3 from "../../images/banner3.jpg";
 import Carousel from "../tools/Carousel";
 import CardOfProduct from "../tools/CardOfProduct";
+import { connect } from "react-redux";
 
-const Home = () => {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    get("products/getAll")
-      .then((res) => res.data)
-      .then((data) => {
-        setProducts(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
+const Home = ({ products }) => {
   return (
     <>
       <Carousel imageList={[logo, logo2, logo3]} />
@@ -41,5 +29,10 @@ const Home = () => {
     </>
   );
 };
+const mapState = (state) => {
+  return {
+    products: state.products.products,
+  };
+};
 
-export default Home;
+export default connect(mapState)(Home);

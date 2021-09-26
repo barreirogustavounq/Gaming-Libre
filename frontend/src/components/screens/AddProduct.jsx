@@ -4,8 +4,10 @@ import "../../style/FormAddProduct.css";
 import "../../style/Nav.css";
 import { post } from "../../api/Api";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { addProductToStore } from "../Redux/ProductDuck";
 
-const AddProduct = () => {
+const AddProduct = ({ addProductToStore, products }) => {
   const [nombre, setnombre] = useState("");
   const [descripcion, setdescripcion] = useState("");
   const [precio, setprecio] = useState(0);
@@ -20,14 +22,17 @@ const AddProduct = () => {
     let storage = localStorage.getItem("user");
     storage = JSON.parse(storage);
     e.preventDefault();
-    post("http://localhost:8080/products/add", {
+    let product = {
       ownerUsername: storage.username,
       name: nombre,
       description: descripcion,
       price: precio,
-      imgSrc,
-    })
+      imgSrc: imgSrc,
+    };
+    post("products/add", product)
       .then((res) => {
+        console.log(res);
+        addProductToStore(res.data);
         setnombre("");
         setdescripcion("");
         setprecio(0);
@@ -80,5 +85,10 @@ const AddProduct = () => {
     </div>
   );
 };
+const mapState = (state) => {
+  return {
+    products: state.products.products,
+  };
+};
 
-export default AddProduct;
+export default connect(mapState, { addProductToStore })(AddProduct);

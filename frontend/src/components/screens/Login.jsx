@@ -18,7 +18,7 @@ const Login = ({ loginAction, user }) => {
     if (user.loggedIn) {
       history.push("/");
     }
-  }, []);
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();

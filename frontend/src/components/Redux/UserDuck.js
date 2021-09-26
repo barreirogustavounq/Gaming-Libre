@@ -10,7 +10,7 @@ let initialData = {
 const LOGIN = "LOGIN";
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const LOGIN_ERROR = "LOGIN_ERROR";
-
+const UPDATE_USER = "UPDATE_USER";
 //reducer
 
 export const userReducer = (state = initialData, action) => {
@@ -32,6 +32,8 @@ export const userReducer = (state = initialData, action) => {
         user: null,
         error: action.payload,
       };
+    case UPDATE_USER:
+      return { ...state, user: action.payload };
     default:
       return state;
   }
@@ -68,4 +70,10 @@ export const loginAction = (username, password) => (dispatch, getState) => {
         payload: error.response.message,
       });
     });
+};
+export const updateUserStorage = (user) => (dispatch, getState) => {
+  dispatch({
+    type: UPDATE_USER,
+    payload: user,
+  });
 };
