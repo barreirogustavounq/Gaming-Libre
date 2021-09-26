@@ -5,7 +5,7 @@ import { updateUser } from "../../api/Api";
 import { connect } from "react-redux";
 import { updateUserStorage } from "../Redux/UserDuck";
 
-const UserDetails = ({ userStorage }) => {
+const UserDetails = ({ updateUserStorage, userStorage }) => {
   const user = useParams().id;
   const [userstate, setuserstate] = useState(userStorage);
 
@@ -165,4 +165,4 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState)(UserDetails);
+export default connect(mapState, { updateUserStorage })(UserDetails);

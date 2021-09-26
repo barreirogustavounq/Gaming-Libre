@@ -23,10 +23,7 @@ const Login = ({ loginAction, user }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     loginAction(username, password);
-    if (!user.loggedIn && !user.fetching) {
-      setUsername("");
-      setPassword("");
-    } else {
+    if (user.loggedIn || user.fetching) {
       setError(true);
     }
   };

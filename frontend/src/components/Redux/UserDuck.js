@@ -11,6 +11,7 @@ const LOGIN = "LOGIN";
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const LOGIN_ERROR = "LOGIN_ERROR";
 const UPDATE_USER = "UPDATE_USER";
+const LOGOUT = "LOGOUT";
 //reducer
 
 export const userReducer = (state = initialData, action) => {
@@ -34,6 +35,8 @@ export const userReducer = (state = initialData, action) => {
       };
     case UPDATE_USER:
       return { ...state, user: action.payload };
+    case LOGOUT:
+      return { ...state, user: undefined, loggedIn: false };
     default:
       return state;
   }
@@ -75,5 +78,11 @@ export const updateUserStorage = (user) => (dispatch, getState) => {
   dispatch({
     type: UPDATE_USER,
     payload: user,
+  });
+};
+
+export const logoutAction = () => (dispatch, getState) => {
+  dispatch({
+    type: LOGOUT,
   });
 };

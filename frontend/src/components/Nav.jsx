@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import "../style/Nav.css";
 import logo from "../images/logo-sin-fondo.png";
+import { connect } from "react-redux";
+import NavButton from "./tools/NavButton";
 
-const Nav = (props) => {
-  const user = props.user;
+const Nav = () => {
   const [textSearch, settextSearch] = useState("");
   const history = useHistory();
 
@@ -16,66 +17,6 @@ const Nav = (props) => {
     }
   };
 
-  const logOut = () => {
-    localStorage.removeItem("user");
-    window.location.reload();
-  };
-  const handleClick = () => {
-    history.push(`/user/count/${user.id}`);
-  };
-
-  const goToAddProduct = () => {
-    history.push("/products/add-product");
-  };
-
-  const RenderNavButton = () => {
-    if (user) {
-      return (
-        <div className="btn-group">
-          <button
-            type="button"
-            className="btn btn-secondary dropdown-toggle"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <i className="bi bi-person-circle" /> {user.firstName}
-          </button>
-          <div className="dropdown-menu dropdown-menu-right">
-            <button
-              className="dropdown-item"
-              type="button"
-              onClick={handleClick}
-            >
-              Cuenta
-            </button>
-            <button
-              className="dropdown-item"
-              type="button"
-              onClick={goToAddProduct}
-            >
-              Agregar producto
-            </button>
-            <button className="dropdown-item" type="button" onClick={logOut}>
-              Cerrar Sesion
-            </button>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <button
-          id="loginButton"
-          type="button"
-          className="btn btn-secondary"
-          onClick={() => history.push("/login")}
-        >
-          {" "}
-          Ingresar
-        </button>
-      );
-    }
-  };
   return (
     <>
       <nav className="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
@@ -120,12 +61,17 @@ const Nav = (props) => {
               />
             </form>
 
-            <RenderNavButton />
+            <NavButton />
           </div>
         </div>
       </nav>
     </>
   );
 };
+const mapState = (state) => {
+  return {
+    user: state.user.user,
+  };
+};
 
-export default Nav;
+export default connect(mapState)(Nav);

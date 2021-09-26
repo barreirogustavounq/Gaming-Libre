@@ -8,8 +8,6 @@ import com.example.tip.exception.UserNoExistException;
 import com.example.tip.model.User;
 import com.example.tip.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -79,8 +77,24 @@ public class UserService {
     }
 
     public User updateUser(User user) {
+        String pass = userRepository.findByUsername(user.getUsername()).get().getPassword();
+        User userResult =  new User(user.getId(),
+                pass,
+                user.getFirstName(),
+                user.getLastName(),
+                user.getUsername(),
+                user.getAddress(),
+                user.getCity(),
+                user.getState(),
+                user.getPostalCode(),
+                user.getBirthday(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getFavorites(),
+                user.getShopping(),
+                user.getCart());
         userRepository.deleteById(user.getId());
-        return userRepository.insert(user);
+        return userRepository.insert(userResult);
     }
 
 }

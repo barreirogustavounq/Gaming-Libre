@@ -18,7 +18,6 @@ import java.util.List;
 public class User {
     @Id
     public String id;
-
     private String password;
     private String firstName;
     private String lastName;
