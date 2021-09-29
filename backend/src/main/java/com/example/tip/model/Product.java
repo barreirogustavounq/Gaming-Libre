@@ -19,6 +19,7 @@ public class Product {
 
     private String ownerUsername;
     private String name;
+    private Integer stock;
     private String description;
     private Integer price;
     private String imgSrc;

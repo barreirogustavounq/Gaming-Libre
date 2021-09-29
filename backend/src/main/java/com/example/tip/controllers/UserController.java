@@ -1,5 +1,6 @@
 package com.example.tip.controllers;
 
+import com.example.tip.dto.BuyDataDTO;
 import com.example.tip.dto.LoginDTO;
 import com.example.tip.dto.UserDTO;
 import com.example.tip.exception.UserNoExistException;
@@ -51,7 +52,12 @@ public class UserController {
     @PostMapping(value="user/login")
     public UserDTO login(@RequestBody LoginDTO login){
         return userService.login(login);
+    }
 
+
+    @GetMapping(value="user/buyData/{username}")
+    public BuyDataDTO getBuyData(@PathVariable String username){
+        return userService.getBuyData(username);
     }
 
 }

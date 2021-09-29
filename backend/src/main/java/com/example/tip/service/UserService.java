@@ -1,5 +1,6 @@
 package com.example.tip.service;
 
+import com.example.tip.dto.BuyDataDTO;
 import com.example.tip.dto.LoginDTO;
 import com.example.tip.dto.UserDTO;
 import com.example.tip.exception.BadUserException;
@@ -20,19 +21,20 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public List<User> getAll(){
+    public List<User> getAll() {
         return userRepository.findAll();
     }
-    public Optional<User> getUserById(String id){
+
+    public Optional<User> getUserById(String id) {
         return userRepository.findById(id);
     }
 
-    public User addUser(User user){
-        if (validateUser(user)){
+    public User addUser(User user) {
+        if (validateUser(user)) {
             Optional<User> userCheck = userRepository.findByUsername(user.getUsername());
-            if(userCheck.isPresent()) throw new UserAlreadyExists(HttpStatus.ALREADY_REPORTED);
+            if (userCheck.isPresent()) throw new UserAlreadyExists(HttpStatus.ALREADY_REPORTED);
             return userRepository.save(user);
-        }else {
+        } else {
             throw new BadUserException(HttpStatus.BAD_REQUEST);
         }
     }
@@ -41,7 +43,7 @@ public class UserService {
         return user.getUsername() != null && user.getEmail() != null && user.getPassword() != null;
     }
 
-    public User getUserByUsername(String username) throws UserNoExistException{
+    public User getUserByUsername(String username) throws UserNoExistException {
         Optional<User> user = userRepository.findByUsername(username);
         return user.orElseThrow(() -> new UserNoExistException(HttpStatus.NOT_FOUND));
     }
@@ -69,16 +71,16 @@ public class UserService {
                 user.getShopping(),
                 user.getCart()
         );
-        if(user.getPassword().equals(login.getPassword().trim())){
+        if (user.getPassword().equals(login.getPassword().trim())) {
             return userDTO;
-        }else {
+        } else {
             throw new BadUserException(HttpStatus.BAD_REQUEST);
         }
     }
 
     public User updateUser(User user) {
         String pass = userRepository.findByUsername(user.getUsername()).get().getPassword();
-        User userResult =  new User(user.getId(),
+        User userResult = new User(user.getId(),
                 pass,
                 user.getFirstName(),
                 user.getLastName(),
@@ -97,4 +99,13 @@ public class UserService {
         return userRepository.insert(userResult);
     }
 
+    public BuyDataDTO getBuyData(String username) {
+        BuyDataDTO buyDataDTO = new BuyDataDTO();
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNoExistException(HttpStatus.NOT_FOUND));
+        buyDataDTO.setAddress(user.getAddress());
+        buyDataDTO.setMail(user.getEmail());
+        buyDataDTO.setPhone(user.getPhone());
+        buyDataDTO.setCity(user.getCity());
+        return buyDataDTO;
+    }
 }

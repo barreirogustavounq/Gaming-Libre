@@ -4,6 +4,7 @@ import com.example.tip.model.Product;
 import com.example.tip.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,5 +35,10 @@ public class ProductController {
     @GetMapping("resultsearch/{name}")
     public List<Product> getProductsByName(@PathVariable String name) {
         return productService.getProductsByName(name);
+    }
+
+    @PostMapping("buy/{id}")
+    public String buyProduct(@PathVariable String id) throws ChangeSetPersister.NotFoundException {
+        return productService.buyProduct(id);
     }
 }
