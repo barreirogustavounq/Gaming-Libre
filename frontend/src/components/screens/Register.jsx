@@ -125,7 +125,7 @@ const Register = () => {
           </Col>
         </Row>
         <Button block size="lg" type="submit" disabled={!validateForm()}>
-          Register
+          Registrar
         </Button>
         <Alert
           className="alertButton"

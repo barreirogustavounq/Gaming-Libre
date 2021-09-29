@@ -23,6 +23,17 @@ export const getUser = (userName) => {
   return user;
 };
 
+export const getBuyData = (userName) => {
+   return axios
+        .get(`${url}user/buyData/${userName}`)
+};
+
+export const buyProduct = (product) => {
+   return axios
+        .post(`${url}products/buy/${product.id}`)
+};
+
+
 export const login = (username, password) => {
   return axios.post(
     `${url}user/login`,

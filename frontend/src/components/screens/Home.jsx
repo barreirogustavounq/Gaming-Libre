@@ -21,11 +21,6 @@ const Home = ({ products }) => {
           ))}
         </div>
       </div>
-      <h1>Favoritos</h1>
-      <CardOfProduct />
-      <hr />
-      <h1>Ultimos Vistos</h1>
-      <CardOfProduct />
     </>
   );
 };

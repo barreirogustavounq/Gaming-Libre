@@ -23,7 +23,8 @@ const Login = ({ loginAction, user }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     loginAction(username, password);
-    if (user.loggedIn || user.fetching) {
+    console.log(user.loggedIn, user.fetching)
+    if (!user.loggedIn || !user.fetching) {
       setError(true);
     }
   };
@@ -58,7 +59,7 @@ const Login = ({ loginAction, user }) => {
         <Alert className="alertButton" variant={error ? "danger" : "secondary"}>
           <Alert.Heading>
             {error
-              ? "Usuario y/o contraseña incorrectasr: "
+              ? "Usuario y/o contraseña incorrectas: "
               : "¿Aún no tienes una cuenta?"}
           </Alert.Heading>
           <Alert.Link href="http://localhost:3000/register">
