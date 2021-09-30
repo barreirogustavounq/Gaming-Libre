@@ -4,6 +4,7 @@ import "../style/Nav.css";
 import logo from "../images/logo-sin-fondo.png";
 import { connect } from "react-redux";
 import NavButton from "./tools/NavButton";
+import { FaCartPlus } from "react-icons/fa";
 
 const Nav = () => {
   const [textSearch, settextSearch] = useState("");
@@ -59,6 +60,10 @@ const Nav = () => {
                 id="SearchIcon"
                 className="bi bi-search"
               />
+              <Link id="cartIcon" to="/user/cart">
+                {" "}
+                <FaCartPlus />{" "}
+              </Link>
             </form>
 
             <NavButton />

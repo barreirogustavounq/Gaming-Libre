@@ -24,15 +24,12 @@ export const getUser = (userName) => {
 };
 
 export const getBuyData = (userName) => {
-   return axios
-        .get(`${url}user/buyData/${userName}`)
+  return axios.get(`${url}user/buyData/${userName}`);
 };
 
 export const buyProduct = (product) => {
-   return axios
-        .post(`${url}products/buy/${product.id}`)
+  return axios.post(`${url}products/buy/${product.id}`);
 };
-
 
 export const login = (username, password) => {
   return axios.post(
@@ -57,6 +54,9 @@ export const updateUser = (user) => {
       address: user.address,
       email: user.email,
       phone: user.phone,
+      favorites: user.favorites,
+      shopping: user.shopping,
+      cart: user.cart,
     },
     header
   );
@@ -73,6 +73,9 @@ export const register = (user) => {
       address: user.address,
       email: user.email,
       phone: user.phone,
+      favorites: [],
+      shopping: [],
+      cart: [],
     },
     header
   );

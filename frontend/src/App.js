@@ -11,7 +11,7 @@ import UserDetails from "./components/screens/UserDetails";
 import AddProduct from "./components/screens/AddProduct";
 import { loginAction } from "./components/Redux/UserDuck";
 import Product from "./components/screens/Product";
-
+import Cart from "./components/screens/Cart";
 const App = ({ user }) => {
   const Routes = () => {
     return (
@@ -30,6 +30,9 @@ const App = ({ user }) => {
         </Route>
         <Route exact path="/user/count/:id">
           {user ? <UserDetails /> : <Redirect to="/" />}
+        </Route>
+        <Route exact path="/user/cart">
+          <Cart />
         </Route>
         <Route exact path="/login">
           <Login />

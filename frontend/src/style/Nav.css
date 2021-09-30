@@ -111,3 +111,11 @@
   margin-left: 74%;
   margin-top: 7px;
 }
+
+#cartIcon {
+  position: absolute;
+  margin-left: 132%;
+  font-size: 33px;
+  color: aliceblue;
+  margin-top: -10px;
+}
