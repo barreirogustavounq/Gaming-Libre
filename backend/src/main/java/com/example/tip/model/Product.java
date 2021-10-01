@@ -17,6 +17,7 @@ public class Product {
     @Id
     private String id;
 
+    private Integer buyQuantity;
     private String ownerUsername;
     private String name;
     private Integer stock;
