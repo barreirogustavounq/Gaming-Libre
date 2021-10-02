@@ -7,6 +7,7 @@ const GET_CART_SUCCESS = "GET_CART_SUCCESS";
 const GET_CART_ERROR = "GET_CART_ERROR";
 const ADD_CART = "ADD_CART";
 const DELETE_CART = "DELETE_CART";
+const DELETE_ALL = "DELETE_ALL"
 
 export const deleteProductOfArray = (product, array) => {
   console.log(product);
@@ -35,7 +36,12 @@ export const cartReducer = (state = initialData, action) => {
         fetching: false,
         cart: action.payload,
       };
-
+    case DELETE_ALL:
+      return {
+        ...state,
+        fetching:false,
+        cart:[]
+      }
     default:
       return state;
   }
@@ -59,8 +65,14 @@ export const getCart = () => (dispatch, getState) => {
 };
 
 export const addProduct = (product) => (dispatch, getState) => {
+  debugger;
   let cart = JSON.parse(localStorage.getItem("cart"));
-  cart = cart.concat([product]);
+  if (cart.length > 0 && cart.some(e => e.id === product.id)) {
+    let index= cart.findIndex(obj => obj.id === product.id)
+    cart[index].buyQuantity = cart[index].buyQuantity + product.buyQuantity
+  }else {
+    cart = cart.concat([product]);
+  }
   localStorage.setItem("cart", JSON.stringify(cart));
   dispatch({
     type: ADD_CART,
@@ -81,4 +93,17 @@ export const deleteProduct = (product) => (dispatch, getState) => {
     "cart",
     JSON.stringify(deleteProductOfArray(product, cart))
   );
+};
+
+export const deleteAll = () => (dispatch, getState) => {
+  localStorage.removeItem("cart")
+  //console.log(cart);
+  //console.log(product);
+  dispatch({
+    type: DELETE_ALL,
+    payload: deleteAll(),
+  });
+  //console.log(deleteProductOfArray(product, cart));
+
+  localStorage.setItem("cart", JSON.stringify([]));
 };

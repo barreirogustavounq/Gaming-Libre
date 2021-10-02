@@ -31,6 +31,11 @@ export const buyProduct = (product) => {
   return axios.post(`${url}products/buy/${product.id}`);
 };
 
+export const buyProductQuantity = (product) => {
+    return axios.post(`${url}products/buy/${product.id}/${product.buyQuantity}`);
+};
+
+
 export const login = (username, password) => {
   return axios.post(
     `${url}user/login`,

@@ -5,6 +5,8 @@ import com.example.tip.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,7 +40,17 @@ public class ProductController {
     }
 
     @PostMapping("buy/{id}")
-    public String buyProduct(@PathVariable String id) throws ChangeSetPersister.NotFoundException {
+    public ResponseEntity<?> buyProduct(@PathVariable String id) throws ChangeSetPersister.NotFoundException {
         return productService.buyProduct(id);
     }
+
+    @PostMapping("buy/{id}/{quantity}")
+    public ResponseEntity<?> buyProduct(@PathVariable String id, @PathVariable Integer quantity) throws ChangeSetPersister.NotFoundException {
+        return productService.buyProduct(id, quantity);
+    }
+
+    /*@PostMapping("buy/cart")
+    public String buyCart(@RequestBody)
+
+     */
 }
