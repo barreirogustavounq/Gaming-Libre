@@ -1,19 +1,17 @@
-import { get } from "../../api/Api";
 import React, { useEffect, useState } from "react";
 import CardOfProduct from "../tools/CardOfProduct";
 import { useParams } from "react-router";
 import "../../style/ResultSearch.css";
+import { searchProduct } from "../../service/ProductService";
 
 const ResultSearch = () => {
   const param = useParams();
   const [products, setproducts] = useState([]);
-  const URL = `products/resultsearch/${param.product.replace(/\+|%20/g, "-")}`;
+
   useEffect(() => {
-    get(URL)
-      .then((res) => res.data)
-      .then((data) => setproducts(data))
-      .catch((err) => console.log(err));
-  }, [URL, param]);
+    searchProduct(setproducts, param);
+  }, [param]);
+
   return (
     <div>
       <h1 id="h1Search">Resultados para "{param.product}"</h1>
