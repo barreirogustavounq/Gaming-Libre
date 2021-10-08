@@ -21,7 +21,7 @@ const Product = ({ products }) => {
           <Card.Body>
             <div style={{ marginTop: "2em" }} />
             <Card.Subtitle className="mb-2 text-muted">
-              <img src={selectedProduct.imgSrc} />
+              <img src={selectedProduct.imgSrc} alt={selectedProduct.name} />
             </Card.Subtitle>
             <Card.Text>{selectedProduct.name}</Card.Text>
             <div style={{ marginTop: "2em" }} />
