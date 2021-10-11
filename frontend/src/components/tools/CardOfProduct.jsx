@@ -49,7 +49,7 @@ const ProductName = styled.div`
 const ProductButton = styled.button`
      border:none;
      background-color: white;
-     border-bottom: 1px solid lightgray;
+     border-bottom: 3px solid lightgray;
 `
 const Price = styled.p`
     font-size: 2em;
