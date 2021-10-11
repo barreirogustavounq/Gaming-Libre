@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router";
 import "../../style/Card.scss";
+import styled from "@emotion/styled";
 const CardOfProduct = (props) => {
   const product = props.product;
   const history = useHistory();
@@ -10,10 +11,10 @@ const CardOfProduct = (props) => {
   };
   return product ? (
     <div className="profile-card-4 text-center">
-      <img src={product.imgSrc} className="img img-responsive" alt="card" />
+      <Image src={product.imgSrc} className="img img-responsive" alt="card" />
       <div className="profile-content">
-        <div className="profile-name">{product.name}</div>
-        <div className="profile-description">{product.description}</div>
+        <ProductName >{product.name}</ProductName>
+        <ProductDescription >{product.description}</ProductDescription>
         <div className="row">
           <div className="col-xs-4">
             <div className="profile-overview">
@@ -41,3 +42,15 @@ const CardOfProduct = (props) => {
 };
 
 export default CardOfProduct;
+
+
+const Image = styled.img`
+max-height: 10rem;
+`
+const ProductName = styled.div`
+     font-size: 3em;
+`
+
+const ProductDescription = styled.div`
+
+`

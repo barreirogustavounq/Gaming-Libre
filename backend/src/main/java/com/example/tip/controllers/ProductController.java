@@ -41,7 +41,7 @@ public class ProductController {
 
     @PostMapping("buy/{id}")
     public ResponseEntity<?> buyProduct(@PathVariable String id) throws ChangeSetPersister.NotFoundException {
-        return productService.buyProduct(id);
+        return productService.buyProduct(id,1);
     }
 
     @PostMapping("buy/{id}/{quantity}")

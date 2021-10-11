@@ -33,16 +33,6 @@ public class ProductService {
         return productRepository.findByNameRegex(name);
     }
 
-    public ResponseEntity<?> buyProduct(String id) throws ChangeSetPersister.NotFoundException {
-        Product product = productRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
-        int stock = product.getStock() - 1;
-        product.setStock(stock);
-        productRepository.save(product);
-        if (stock == 0) {
-            productRepository.deleteById(id);
-        }
-        return new ResponseEntity<>("ok", HttpStatus.OK);
-    }
 
     public ResponseEntity<?> buyProduct(String id, Integer quantity) throws ChangeSetPersister.NotFoundException {
         Product product = productRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
@@ -55,6 +45,6 @@ public class ProductService {
         }else {
             productRepository.deleteById(id);
         }
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return new ResponseEntity<>("no hay stock suficiente del producto "+ product.getName(), HttpStatus.BAD_REQUEST);
     }
 }
