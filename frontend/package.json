@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.15",
@@ -10,6 +12,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.3",
     "bootstrap-icons": "^1.5.0",
+    "emotion": "^11.0.0",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.3",
@@ -23,6 +26,7 @@
     "redux-devtools": "^3.7.0",
     "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.3.0",
+    "sweetalert2": "^11.1.7",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

@@ -5,11 +5,10 @@ import { deleteProduct, deleteAll } from "../Redux/CartDuck";
 import CardOfProduct from "../tools/CardOfProduct";
 import "../../style/cart.css";
 import { Button } from "react-bootstrap";
-import { buyProductQuantity} from "../../api/Api";
-const Cart = ({ cart, deleteProduct , deleteAll}) => {
-
+import { buyAllProductsNow } from "../../service/ProductService";
+const Cart = ({ cart, deleteProduct, deleteAll }) => {
   const [cartstate, setcartstate] = useState(
-      JSON.parse(localStorage.getItem("cart"))
+    JSON.parse(localStorage.getItem("cart"))
   );
   useEffect(() => {
     setcartstate(JSON.parse(localStorage.getItem("cart")));
@@ -19,19 +18,11 @@ const Cart = ({ cart, deleteProduct , deleteAll}) => {
     deleteProduct(product);
   };
 
-  let productsBuy = ''
+  let productsBuy = "";
 
   const handleBuy = (e) => {
-    cartstate.map((product) => {
-      buyProductQuantity(product).then((response) => {
-        productsBuy = productsBuy + `${product.name} ${response.data} `
-        alert(productsBuy)
-      }).catch((err) => {
-        console.log(err)
-      })
-    })
-    deleteAll()
-  }
+    buyAllProductsNow(cartstate, productsBuy, deleteAll);
+  };
 
   return (
     <div>
@@ -43,7 +34,7 @@ const Cart = ({ cart, deleteProduct , deleteAll}) => {
                 <Button id="deleteIcon" onClick={(e) => handleDelete(product)}>
                   <FaTrash />
                 </Button>
-                <span>Cantidad: {(product.buyQuantity)}</span>
+                <span>Cantidad: {product.buyQuantity}</span>
                 <CardOfProduct product={product} />
               </div>
             </div>

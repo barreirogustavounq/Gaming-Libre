@@ -4,21 +4,20 @@ import "../../style/UserDetails.scss";
 import { updateUser } from "../../api/Api";
 import { connect } from "react-redux";
 import { updateUserStorage } from "../Redux/UserDuck";
+import { updateUserService } from "../../service/UserService";
 
 const UserDetails = ({ updateUserStorage, userStorage }) => {
   const user = useParams().id;
   const [userstate, setuserstate] = useState(userStorage);
 
   const handleUpdate = () => {
-    let userUpd = userstate;
-    userUpd.id = user;
-    updateUser(userUpd)
-      .then((res) => res)
-      .then((data) => {
-        updateUserStorage(data.data);
-        setuserstate(data.data);
-      })
-      .catch((err) => console.log(err));
+    updateUserService(
+      userstate,
+      user,
+      updateUser,
+      updateUserStorage,
+      setuserstate
+    );
   };
 
   const handleChange = (e, attr) => {

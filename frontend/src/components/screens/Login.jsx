@@ -4,6 +4,7 @@ import { loginAction } from "../Redux/UserDuck";
 import "../../style/Login.css";
 import { useHistory } from "react-router";
 import { connect } from "react-redux";
+import { logInService } from "../../service/UserService";
 
 const Login = ({ loginAction, user }) => {
   const [username, setUsername] = useState("");
@@ -22,11 +23,7 @@ const Login = ({ loginAction, user }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    loginAction(username, password);
-    console.log(user.loggedIn, user.fetching)
-    if (!user.loggedIn || !user.fetching) {
-      setError(true);
-    }
+    logInService(username, password, user, setError, loginAction);
   };
 
   return (
