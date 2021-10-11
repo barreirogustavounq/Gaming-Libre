@@ -29,7 +29,7 @@ a {
 }
 
 .profile-card-4 {
-  display: inline-flex;
+  display: flex;
   width: 50em;
 }
 
@@ -41,6 +41,8 @@ a {
 .profile-card-4 .profile-content {
   padding: 15px;
   background-color: #fff;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .profile-card-4 .profile-name {

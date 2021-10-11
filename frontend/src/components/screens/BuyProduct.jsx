@@ -1,43 +1,44 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import React, {useEffect} from "react";
+import {connect} from "react-redux";
 import "../../style/Product.scss";
-import { Button, Card } from "react-bootstrap";
-import { FaCartPlus } from "react-icons/fa";
-import { FaShippingFast } from "react-icons/fa";
-import { BiMoney } from "react-icons/bi";
-import { getBuyData, buyProduct } from "../../api/Api";
+import {Button, Card} from "react-bootstrap";
+import {FaShippingFast} from "react-icons/fa";
+import {BiMoney} from "react-icons/bi";
 import AddCarButton from "../tools/AddCarButton";
 import Swal from "sweetalert2";
-import { buyProductNow } from "../../service/ProductService";
+import {buyProductNow} from "../../service/ProductService";
 
-const BuyProduct = ({ product }) => {
-  const [buyNow, setBuyNow] = React.useState(false);
-  const [ownerData, setOwnerData] = React.useState(null);
+const BuyProduct = ({product}) => {
+    const [buyNow, setBuyNow] = React.useState(false);
+    const [ownerData, setOwnerData] = React.useState(null);
 
     const handleBuyNow = (payMethod) => {
-        if(payMethod === 'efectivo'){
-          buyProductNow(product, setOwnerData, setBuyNow, buyNow);
+        if (payMethod === 'efectivo') {
+            buyProductNow(product, setOwnerData, setBuyNow, buyNow);
+        }
     }
-
     const selectPaid = () => {
         Swal.fire({
-                title: 'Elige un medio de pago',
-                input: 'select',
-                inputOptions: {
-                    efectivo: 'efectivo'
-                },
-                inputPlaceholder: 'Medio de pago',
-                showCancelButton: true,
-                inputValidator: (value) => {
-                    return new Promise((resolve) => {
+            title: 'Elige un medio de pago',
+            input: 'select',
+            inputOptions: {
+                efectivo: 'efectivo'
+            },
+            inputPlaceholder: 'Medio de pago',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                return new Promise((resolve) => {
+                    console.log(value)
+                    if (value === undefined || value === '') {
+                        resolve('Selecciona un medio de pago')
+                    } else {
                         console.log(value)
-                        if (value === undefined || value === '') {
-                            resolve('Selecciona un medio de pago')
-                        } else {
-                            console.log(value)
-                            handleBuyNow(value)
-                            resolve()
-                        }})}})
+                        handleBuyNow(value)
+                        resolve()
+                    }
+                })
+            }
+        })
     }
 
     return buyNow ? (
@@ -97,10 +98,11 @@ const BuyProduct = ({ product }) => {
         </Card>
     );
 };
+
 const mapState = (state) => {
     return {
         products: state.products.products,
     };
 };
 
-export default connect(mapState)(BuyProduct);
+export default connect(mapState)(BuyProduct)
