@@ -36,6 +36,9 @@ a {
 .profile-card-4 img {
   transition: all 0.25s linear;
   min-height: 12rem;
+  max-width: 11rem;
+  min-width: 11rem;
+  border-right-style: groove;
 }
 
 .profile-card-4 .profile-content {

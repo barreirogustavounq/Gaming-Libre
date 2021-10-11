@@ -51,7 +51,7 @@ export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
 };
 
 export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {
-  cartstate.map((product) => {
+  cartstate.map((product) =>
     buyProductQuantity(product)
       .then((response) => {
         productsBuy = productsBuy + `${product.name} ${response.data} `;
@@ -59,8 +59,8 @@ export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {
       })
       .catch((err) => {
         console.log(err);
-      });
-  });
+      })
+  );
   deleteAll();
 };
 

@@ -22,7 +22,25 @@ const ResultSearch = () => {
   const handleFilter = () => {
     setproducts(
       allproducts.filter((prod) => max >= prod.price && prod.price >= min)
+
+      //allproducts.filter((prod) => {
+      //  let maxCheck = max ? max >= prod.price : true;
+      //  let minCheck = min ? min <= prod.price : true;
+      //  return minCheck && maxCheck;
     );
+  };
+
+  const handleQuitFilter = () => {
+    document.getElementById("minimo").value = undefined;
+    document.getElementById("maximo").value = undefined;
+    setproducts(allproducts);
+  };
+  const handleChangeinput = (e, input, func) => {
+    if (e.target.value > 0) {
+      func(e.target.value);
+    } else {
+      document.getElementById(input).value = undefined;
+    }
   };
 
   useEffect(() => {
@@ -63,7 +81,7 @@ const ResultSearch = () => {
 
       <form>
         <div className="row">
-          <div className="col-3">
+          <div className="col-2">
             <Button variant="primary" onClick={handleShow}>
               Ordenar
             </Button>
@@ -73,7 +91,10 @@ const ResultSearch = () => {
               type="number"
               className="form-control"
               placeholder="Precio minimo"
-              onChange={(e) => setmin(e.target.value)}
+              id="minimo"
+              onChange={(e) => {
+                handleChangeinput(e, "minimo", setmin);
+              }}
             />
           </div>
           <div className="col-3">
@@ -81,12 +102,24 @@ const ResultSearch = () => {
               type="number"
               className="form-control"
               placeholder="Precio Maximo"
-              onChange={(e) => setmax(e.target.value)}
+              id="maximo"
+              onChange={(e) => {
+                handleChangeinput(e, "maximo", setmax);
+              }}
             />
           </div>
-          <div className="col-3">
-            <Button variant="primary" onClick={handleFilter}>
+          <div className="col-2">
+            <Button
+              variant="primary"
+              onClick={handleFilter}
+              disabled={!(max || min)}
+            >
               Filtrar
+            </Button>
+          </div>
+          <div className="col-2">
+            <Button variant="primary" onClick={handleQuitFilter}>
+              Quitar Filtros
             </Button>
           </div>
         </div>
