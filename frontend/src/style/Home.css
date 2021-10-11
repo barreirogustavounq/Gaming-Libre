@@ -8,3 +8,10 @@
 header {
   margin-bottom: 6rem;
 }
+.css-13xt966 {
+  font-size: 3em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 11em;
+}
