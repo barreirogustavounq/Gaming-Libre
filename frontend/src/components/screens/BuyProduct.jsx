@@ -1,32 +1,23 @@
-import React, {useEffect} from "react";
-import {connect} from "react-redux";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import "../../style/Product.scss";
-import {Button, Card} from "react-bootstrap";
-import {FaCartPlus} from "react-icons/fa";
-import {FaShippingFast} from "react-icons/fa";
-import {BiMoney} from "react-icons/bi";
-import {getBuyData, buyProduct} from "../../api/Api";
+import { Button, Card } from "react-bootstrap";
+import { FaCartPlus } from "react-icons/fa";
+import { FaShippingFast } from "react-icons/fa";
+import { BiMoney } from "react-icons/bi";
+import { getBuyData, buyProduct } from "../../api/Api";
 import AddCarButton from "../tools/AddCarButton";
 import Swal from "sweetalert2";
+import { buyProductNow } from "../../service/ProductService";
 
-const BuyProduct = ({product}) => {
-    const [buyNow, setBuyNow] = React.useState(false);
-    const [ownerData, setOwnerData] = React.useState(null);
+const BuyProduct = ({ product }) => {
+  const [buyNow, setBuyNow] = React.useState(false);
+  const [ownerData, setOwnerData] = React.useState(null);
 
     const handleBuyNow = (payMethod) => {
         if(payMethod === 'efectivo'){
-        getBuyData(product.ownerUsername)
-            .then((data) => {
-                setOwnerData(data.data);
-            })
-            .catch((err) => console.log(err));
-        buyProduct(product)
-            .then((data) => {
-                setBuyNow(!buyNow);
-            })
-            .catch((err) => console.log(err));
-        }
-    };
+          buyProductNow(product, setOwnerData, setBuyNow, buyNow);
+    }
 
     const selectPaid = () => {
         Swal.fire({

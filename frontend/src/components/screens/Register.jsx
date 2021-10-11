@@ -5,6 +5,7 @@ import "../../style/Register.css";
 import { register } from "../../api/Api";
 import { Alert, Col, Row } from "react-bootstrap";
 import { useHistory } from "react-router";
+import { registerService } from "../../service/UserService";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -19,23 +20,19 @@ const Register = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    let user = {
-      firstName: firstName.trim(),
-      lastName: lastName.trim(),
-      username: username.trim(),
-      password: password.trim(),
-      address: address.trim(),
-      email: email.trim(),
-      phone: phone.trim(),
-    };
-    register(user)
-      .then((result) => {
-        setAlertVisible(!alertVisible);
-        history.push("/login");
-      })
-      .catch((error) => {
-        alert(error);
-      });
+    registerService(
+      firstName,
+      lastName,
+      username,
+      password,
+      address,
+      email,
+      phone,
+      register,
+      history,
+      setAlertVisible,
+      alertVisible
+    );
   }
 
   function validateForm() {
