@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { useParams } from "react-router";
 import BuyProduct from "./BuyProduct";
 import { Card } from "react-bootstrap";
+import styled from "@emotion/styled";
 
 const Product = ({ products }) => {
   const id = useParams().id;
@@ -21,7 +22,7 @@ const Product = ({ products }) => {
           <Card.Body>
             <div style={{ marginTop: "2em" }} />
             <Card.Subtitle className="mb-2 text-muted">
-              <img src={selectedProduct.imgSrc} alt={selectedProduct.name} />
+              <Image src={selectedProduct.imgSrc} alt={selectedProduct.name} />
             </Card.Subtitle>
             <Card.Text>{selectedProduct.name}</Card.Text>
             <div style={{ marginTop: "2em" }} />
@@ -40,5 +41,10 @@ const mapState = (state) => {
     products: state.products.products,
   };
 };
+
+const Image = styled.img`
+    max-height: 13rem;
+    
+`
 
 export default connect(mapState)(Product);

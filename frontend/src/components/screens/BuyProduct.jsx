@@ -73,7 +73,7 @@ const BuyProduct = ({product}) => {
             }}
         >
             <Card.Body>
-                <Card.Title>Compra tu {product.name}</Card.Title>
+                <Card.Title>Compra tu producto: {product.name}</Card.Title>
                 <div style={{marginTop: "2em"}}/>
                 <Card.Subtitle className="mb-2 text-muted">Descripción:</Card.Subtitle>
                 <Card.Text>{product.description}</Card.Text>
