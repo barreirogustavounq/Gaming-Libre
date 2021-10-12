@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { addProductToStore } from "../Redux/ProductDuck";
 import { addProduct } from "../../service/ProductService";
+import categories from "../tools/CategoryList";
 
 const AddProduct = ({ addProductToStore, products }) => {
   const [nombre, setnombre] = useState("");
@@ -13,6 +14,7 @@ const AddProduct = ({ addProductToStore, products }) => {
   const [precio, setprecio] = useState();
   const [stock, setStock] = useState(1);
   const [imgSrc, setImgSrc] = useState("");
+  const [category, setcategory] = useState("");
   const history = useHistory();
 
   const handleClick = (e) => {
@@ -21,7 +23,8 @@ const AddProduct = ({ addProductToStore, products }) => {
       nombre === "" ||
       descripcion === "" ||
       precio === undefined ||
-      imgSrc === ""
+      imgSrc === "" ||
+      category === ""
     ) {
       alert("Debes llenar todos los campos");
       return;
@@ -33,7 +36,8 @@ const AddProduct = ({ addProductToStore, products }) => {
       stock,
       imgSrc,
       history,
-      addProductToStore
+      addProductToStore,
+      category
     );
   };
   return (
@@ -78,6 +82,20 @@ const AddProduct = ({ addProductToStore, products }) => {
         function={setImgSrc}
         required={true}
       />
+      <select
+        className="form-select"
+        aria-label="Default select example"
+        onChange={(e) => setcategory(e.target.value)}
+      >
+        <option hidden value="">
+          Seleccione una Categoria
+        </option>
+        {categories.map((cat) => (
+          <option key={cat} value={cat}>
+            {cat}
+          </option>
+        ))}
+      </select>
       <button
         className="btn-secondary"
         type="button"

@@ -13,7 +13,8 @@ export const addProduct = (
   precio,
   imgSrc,
   history,
-  addProductToStore
+  addProductToStore,
+  category
 ) => {
   let storage = localStorage.getItem("user");
   storage = JSON.parse(storage);
@@ -24,6 +25,7 @@ export const addProduct = (
     stock,
     price: precio,
     imgSrc: imgSrc,
+    category: category,
   };
   post("products/add", product)
     .then((res) => {

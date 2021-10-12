@@ -22,11 +22,6 @@ const ResultSearch = () => {
   const handleFilter = () => {
     setproducts(
       allproducts.filter((prod) => max >= prod.price && prod.price >= min)
-
-      //allproducts.filter((prod) => {
-      //  let maxCheck = max ? max >= prod.price : true;
-      //  let minCheck = min ? min <= prod.price : true;
-      //  return minCheck && maxCheck;
     );
   };
 
