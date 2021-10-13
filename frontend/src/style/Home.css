@@ -15,3 +15,13 @@ header {
   text-overflow: ellipsis;
   width: 11em;
 }
+.w-100 {
+  width: 80% !important;
+  margin-left: 10.5%;
+}
+.css-1mpy9pw {
+  background: #fafafa;
+  margin-top: 2em;
+  display: contents !important;
+  text-align: right;
+}

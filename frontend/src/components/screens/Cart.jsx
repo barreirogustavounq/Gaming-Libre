@@ -24,7 +24,9 @@ const Cart = ({ cart, deleteProduct, deleteAll }) => {
     buyAllProductsNow(cartstate, productsBuy, deleteAll);
   };
 
-  return (
+  return cartstate.length === 0 ? (
+    <h1 id="noHayElementos"> No hay elementos en el carrito </h1>
+  ) : (
     <div>
       <div className="container">
         <div className="row">

@@ -97,7 +97,8 @@ const AddProduct = ({ addProductToStore, products }) => {
         ))}
       </select>
       <button
-        className="btn-secondary"
+        className="btn btn-primary"
+        id="addProductButton"
         type="button"
         onClick={(e) => handleClick(e)}
       >

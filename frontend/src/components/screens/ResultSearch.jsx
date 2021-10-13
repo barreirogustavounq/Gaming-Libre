@@ -28,6 +28,8 @@ const ResultSearch = () => {
   const handleQuitFilter = () => {
     document.getElementById("minimo").value = undefined;
     document.getElementById("maximo").value = undefined;
+    setmax(undefined);
+    setmin(undefined);
     setproducts(allproducts);
   };
   const handleChangeinput = (e, input, func) => {
@@ -35,6 +37,7 @@ const ResultSearch = () => {
       func(e.target.value);
     } else {
       document.getElementById(input).value = undefined;
+      func(undefined);
     }
   };
 
@@ -107,7 +110,7 @@ const ResultSearch = () => {
             <Button
               variant="primary"
               onClick={handleFilter}
-              disabled={!(max || min)}
+              disabled={!max || !min}
             >
               Filtrar
             </Button>
@@ -154,7 +157,7 @@ const ResultSearch = () => {
         </Modal.Footer>
       </Modal>
       <div className="container">
-        <div className="row">
+        <div className="row" id="result">
           {products.map((product) => (
             <div className="col" key={product.id}>
               <CardOfProduct product={product} />

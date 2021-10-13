@@ -11,7 +11,7 @@ const Home = ({ products }) => {
   return (
     <>
       <Carousel imageList={[logo, logo2, logo3]} />
-      <hr />
+
       <Title>Productos</Title>
       <div className="container">
         <Products>
@@ -34,10 +34,10 @@ const mapState = (state) => {
 export default connect(mapState)(Home);
 
 const Products = styled.div`
-    background: #FAFAFA;
-    margin-top: 2em;
-    display: table;
-`
+  background: #fafafa;
+  margin-top: 2em;
+  display: table;
+`;
 const Title = styled.h1`
-    padding-left:1em;
-`
+  padding-left: 1em;
+`;
