@@ -39,7 +39,7 @@ public class UserService {
         }
     }
 
-    private boolean validateUser(User user) {
+    public boolean validateUser(User user) {
         return user.getUsername() != null && user.getEmail() != null && user.getPassword() != null;
     }
 
