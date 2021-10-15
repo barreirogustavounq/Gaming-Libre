@@ -40,4 +40,6 @@ const Products = styled.div`
 `;
 const Title = styled.h1`
   padding-left: 1em;
+  padding-top: 1em;
+  color: gray;
 `;
