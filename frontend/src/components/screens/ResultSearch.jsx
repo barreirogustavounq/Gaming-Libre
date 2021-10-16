@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import "../../style/ResultSearch.css";
 import { searchProduct } from "../../service/ProductService";
 import { Button, Form, Modal } from "react-bootstrap";
+import styled from "@emotion/styled";
 
 const ResultSearch = () => {
   const param = useParams();
@@ -75,14 +76,16 @@ const ResultSearch = () => {
 
   return (
     <div>
-      <h1 id="h1Search">Resultados para "{param.product}"</h1>
+      <TitleResult id="h1Search">Resultados para "{param.product}"</TitleResult>
 
       <form>
         <div className="row">
           <div className="col-2">
+            <WrapperButton>
             <Button variant="primary" onClick={handleShow}>
               Ordenar
             </Button>
+            </WrapperButton>
           </div>
           <div className="col-3">
             <input
@@ -170,3 +173,13 @@ const ResultSearch = () => {
 };
 
 export default ResultSearch;
+
+const TitleResult = styled.h1`
+  padding-left: 2em;
+  padding-top:2em;
+  padding-bottom: 2em;
+  color: lightgray;
+`
+const WrapperButton = styled.div`
+   padding-left: 4em;
+`

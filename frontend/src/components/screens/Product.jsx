@@ -9,7 +9,8 @@ const Product = ({ products }) => {
   const id = useParams().id;
   const selectedProduct = products.find((prod) => prod.id === id);
   return (
-    <div className="row">
+      selectedProduct ?
+              <div className="row">
       <div className="column">
         <Card
           style={{
@@ -33,7 +34,7 @@ const Product = ({ products }) => {
       <div className="column">
         <BuyProduct product={selectedProduct} />
       </div>
-    </div>
+    </div> : <h1>Cargando...</h1>
   );
 };
 const mapState = (state) => {
