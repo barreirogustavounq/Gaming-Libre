@@ -2,6 +2,7 @@
     .Register {
         margin-top: 5em;
         padding: 60px 0;
+        text-align: -webkit-center;
     }
 
     .Register form {
@@ -12,8 +13,6 @@
     .Register button {
         margin-top: 2rem;
         max-width: 320px;
-        margin-left: 7rem;
-
     }
     .alertButton {
         margin-top:2em;

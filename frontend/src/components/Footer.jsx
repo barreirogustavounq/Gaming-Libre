@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "@emotion/styled";
 
 const Footer = () => {
   return (
@@ -30,11 +31,19 @@ const Footer = () => {
         </button>
       </div>
       */}
-      <div className="text-center text-black p-3">
+      <WrapperFooter>
         © 2021 Copyright: Gaming-Libre.com
-      </div>
+      </WrapperFooter>
     </footer>
   );
 };
 
 export default Footer;
+
+const WrapperFooter = styled.div`
+    background:black;
+    color:white;
+    margin-top: 10em;
+    padding:2em;
+    padding-left: 40em;
+`

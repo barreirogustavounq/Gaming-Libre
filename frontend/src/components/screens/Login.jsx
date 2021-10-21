@@ -5,6 +5,7 @@ import "../../style/Login.css";
 import { useHistory } from "react-router";
 import { connect } from "react-redux";
 import { logInService } from "../../service/UserService";
+import styled from "@emotion/styled";
 
 const Login = ({ loginAction, user }) => {
   const [username, setUsername] = useState("");
@@ -28,6 +29,7 @@ const Login = ({ loginAction, user }) => {
 
   return (
     <div className="Login">
+      <LoginWrapper>
       <Form
         onSubmit={(e) => {
           handleSubmit(e);
@@ -65,6 +67,7 @@ const Login = ({ loginAction, user }) => {
           .
         </Alert>
       </Form>
+      </LoginWrapper>
     </div>
   );
 };
@@ -75,3 +78,13 @@ const mapState = (state) => {
 };
 
 export default connect(mapState, { loginAction })(Login);
+
+
+const LoginWrapper = styled.div`
+background-color:white;
+width: 30em;
+height : 30em;
+padding-top: 2em;
+border: 1px solid white;
+border-radius:8px;
+`

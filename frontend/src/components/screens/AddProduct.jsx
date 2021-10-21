@@ -10,11 +10,11 @@ import categories from "../tools/CategoryList";
 
 const AddProduct = ({ addProductToStore, products }) => {
   const [nombre, setnombre] = useState("");
-  const [descripcion, setdescripcion] = useState("");
+  const [descripcion, setDescripcion] = useState("");
   const [precio, setprecio] = useState();
   const [stock, setStock] = useState(1);
   const [imgSrc, setImgSrc] = useState("");
-  const [category, setcategory] = useState("");
+  const [category, setCategory] = useState("");
   const history = useHistory();
 
   const handleClick = (e) => {
@@ -55,7 +55,7 @@ const AddProduct = ({ addProductToStore, products }) => {
         placeholder={"Ingrese una descripción del producto"}
         type={"text"}
         value={descripcion}
-        function={setdescripcion}
+        function={setDescripcion}
         required={true}
       />
       <FormAddProduct
@@ -85,7 +85,7 @@ const AddProduct = ({ addProductToStore, products }) => {
       <select
         className="form-select"
         aria-label="Default select example"
-        onChange={(e) => setcategory(e.target.value)}
+        onChange={(e) => setCategory(e.target.value)}
       >
         <option hidden value="">
           Seleccione una Categoria

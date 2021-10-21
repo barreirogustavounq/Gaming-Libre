@@ -1,0 +1,33 @@
+package com.example.tip.model;
+
+public enum Category {
+    all,
+    Notebooks,
+    Fuentes,
+    Monitores,
+    PCsAllinOne,
+    PlacasdeVideos,
+    Motherboards,
+    Procesadores,
+    MemoriasRam,
+    Almacenamiento,
+    Gabinetes,
+    RefrigeracionPC,
+    Teclados,
+    Mouse,
+    Pads,
+    Auriculares,
+    Microfonos,
+    CamarasWeb,
+    Impresoras,
+    UpsyEstabilizadores,
+    SillasGamer,
+    Consolas,
+    Parlantes,
+    Proyectores,
+    Software,
+    Tablets,
+    Cables,
+    Juegos,
+
+}

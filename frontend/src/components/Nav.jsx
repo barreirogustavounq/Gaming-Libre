@@ -13,7 +13,7 @@ const Nav = () => {
   const SubmitHandler = (e) => {
     e.preventDefault();
     if (textSearch) {
-      history.push(`/products/resultsearch/${textSearch}`);
+      history.push(`/products/resultsearch/all/${textSearch}`);
       settextSearch("");
     }
   };
