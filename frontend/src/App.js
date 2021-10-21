@@ -21,7 +21,7 @@ const App = ({user}) => {
                 <Route exact path="/">
                     <Home/>
                 </Route>
-                <Route exact path="/products/resultsearch/:product">
+                <Route exact path={["/products/resultsearch/:category/:product", "/products/resultsearch/:category"]}>
                     <ResultSearch/>
                 </Route>
                 <Route exact path="/product/:id">

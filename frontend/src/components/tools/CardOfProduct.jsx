@@ -13,6 +13,7 @@ const CardOfProduct = (props) => {
   };
   return product ? (
       <ProductButton onClick={handleClick}>
+        {console.log('product', product)}
     <div className="profile-card-4 text-center">
       <Image src={product.imgSrc} className="img img-responsive" alt="card" />
       <div className="profile-content">
@@ -47,9 +48,9 @@ const ProductName = styled.div`
 `
 
 const ProductButton = styled.button`
-     border:none;
-     background-color: white;
-     border-bottom: 3px solid lightgray;
+    border: 3px solid black;
+    background-color: white;
+    border-radius: 8px;
 `
 const Price = styled.p`
     font-size: 2em;

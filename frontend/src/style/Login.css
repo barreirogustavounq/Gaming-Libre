@@ -2,6 +2,7 @@
     .Login {
         margin-top: 5em;
         padding: 60px 0;
+        text-align: -webkit-center;
     }
 
     .Login form {
@@ -12,7 +13,5 @@
     .Login button {
         margin-top: 2rem;
         max-width: 320px;
-        margin-left: 5.5rem;
-
     }
 }

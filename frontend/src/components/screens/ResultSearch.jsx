@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CardOfProduct from "../tools/CardOfProduct";
 import { useParams } from "react-router";
 import "../../style/ResultSearch.css";
-import { searchProduct } from "../../service/ProductService";
+import {findByCategory, searchProduct} from "../../service/ProductService";
 import { Button, Form, Modal } from "react-bootstrap";
 import styled from "@emotion/styled";
 
@@ -43,8 +43,9 @@ const ResultSearch = () => {
   };
 
   useEffect(() => {
-    searchProduct(setproducts, param);
-    searchProduct(setallproducts, param);
+    console.log('params',param)
+    findByCategory(setproducts, param.product, param.category)
+    findByCategory(setallproducts, param.product, param.category)
   }, [param]);
 
   const orderBy = () => {
@@ -178,7 +179,7 @@ const TitleResult = styled.h1`
   padding-left: 2em;
   padding-top:2em;
   padding-bottom: 2em;
-  color: lightgray;
+  color: white;
 `
 const WrapperButton = styled.div`
    padding-left: 4em;

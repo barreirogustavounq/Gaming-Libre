@@ -1,5 +1,6 @@
 package com.example.tip.controllers;
 
+import com.example.tip.model.Category;
 import com.example.tip.model.Product;
 import com.example.tip.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,17 @@ public class ProductController {
     @PostMapping("add")
     public Product addProduct(@RequestBody Product product) {
         return productService.addProduct(product);
+    }
+
+    @GetMapping("categories")
+    public Category[] getCategories(){
+        return Category.values();
+    }
+
+    @GetMapping("get/{category}/{product}")
+    public List<Product> findCategory(@PathVariable String category, @PathVariable String product){
+        String prod = product.equals("undefined") ? "" : product;
+        return productService.findByCategory(category, prod);
     }
 
     @DeleteMapping("delete/{id}")

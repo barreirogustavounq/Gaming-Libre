@@ -6,6 +6,7 @@ import { register } from "../../api/Api";
 import { Alert, Col, Row } from "react-bootstrap";
 import { useHistory } from "react-router";
 import { registerService } from "../../service/UserService";
+import styled from "@emotion/styled";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -41,6 +42,7 @@ const Register = () => {
 
   return (
     <div className="Register">
+      <RegisterWrapper>
       <Form onSubmit={handleSubmit}>
         <Row>
           <Col>
@@ -131,14 +133,25 @@ const Register = () => {
           <Alert.Heading>
             {alertVisible ? "Registro exitoso!" : "Si ya estas registrado"}
           </Alert.Heading>
-          <Alert.Link href="http://localhost:3000/">
+          <Alert.Link href="http://localhost:3000/login">
             Click acá para iniciar sesión
           </Alert.Link>
           .
         </Alert>
       </Form>
+      </RegisterWrapper>
     </div>
   );
 };
 
 export default Register;
+
+
+const RegisterWrapper = styled.div`
+    background-color:white;
+    width: 35em;
+    height: 48em;
+    padding-top: 2em;
+    border: 1px solid white;
+    border-radius:8px;
+`

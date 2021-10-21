@@ -7,14 +7,14 @@ import {
 } from "../api/Api";
 
 export const addProduct = (
-  nombre,
-  descripcion,
-  stock,
-  precio,
-  imgSrc,
-  history,
-  addProductToStore,
-  category
+    nombre,
+    descripcion,
+    precio,
+    stock,
+    imgSrc,
+    history,
+    addProductToStore,
+    category
 ) => {
   let storage = localStorage.getItem("user");
   storage = JSON.parse(storage);
@@ -25,7 +25,7 @@ export const addProduct = (
     stock,
     price: precio,
     imgSrc: imgSrc,
-    category: category,
+    category: category.replace(' ', ''),
   };
   post("products/add", product)
     .then((res) => {
@@ -66,10 +66,27 @@ export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {
   deleteAll();
 };
 
-export const searchProduct = (setproducts, param) => {
+export const getCategories = (setCategories) => {
+    const URL = 'products/categories'
+    get(URL)
+        .then((res) => res.data)
+        .then((data) => setCategories(data))
+        .catch((err) => console.log(err));
+}
+
+export const findByCategory = (setProducts, product, category) => {
+    const URL = `products/get/${category}/${product}`;
+    console.log(product,category)
+    get(URL)
+        .then((res) => res.data)
+        .then((data) => setProducts(data))
+        .catch((err) => console.log(err));
+}
+
+export const searchProduct = (setProducts, param) => {
   const URL = `products/resultsearch/${param.product.replace(/\+|%20/g, "-")}`;
   get(URL)
     .then((res) => res.data)
-    .then((data) => setproducts(data))
+    .then((data) => setProducts(data))
     .catch((err) => console.log(err));
 };
