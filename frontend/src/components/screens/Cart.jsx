@@ -8,7 +8,7 @@ import { Button } from "react-bootstrap";
 import { buyAllProductsNow } from "../../service/ProductService";
 const Cart = ({ cart, deleteProduct, deleteAll }) => {
   const [cartstate, setcartstate] = useState(
-    JSON.parse(localStorage.getItem("cart"))
+    localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
   );
   useEffect(() => {
     setcartstate(JSON.parse(localStorage.getItem("cart")));
