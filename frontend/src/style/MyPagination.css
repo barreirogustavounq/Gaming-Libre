@@ -1,0 +1,11 @@
+.MyPagination {
+  margin-top: 2rem;
+  margin-left: 40%;
+  margin-bottom: -2rem;
+}
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #072044;
+  border-color: #0d6efd;
+}

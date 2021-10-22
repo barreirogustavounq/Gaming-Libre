@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import CardOfProduct from "../tools/CardOfProduct";
 import { useParams } from "react-router";
 import "../../style/ResultSearch.css";
-import {findByCategory, searchProduct} from "../../service/ProductService";
+import { findByCategory } from "../../service/ProductService";
 import { Button, Form, Modal } from "react-bootstrap";
 import styled from "@emotion/styled";
+import MyPagination from "../tools/MyPagination";
 
 const ResultSearch = () => {
   const param = useParams();
@@ -43,9 +43,8 @@ const ResultSearch = () => {
   };
 
   useEffect(() => {
-    console.log('params',param)
-    findByCategory(setproducts, param.product, param.category)
-    findByCategory(setallproducts, param.product, param.category)
+    findByCategory(setproducts, param.product, param.category);
+    findByCategory(setallproducts, param.product, param.category);
   }, [param]);
 
   const orderBy = () => {
@@ -83,9 +82,9 @@ const ResultSearch = () => {
         <div className="row">
           <div className="col-2">
             <WrapperButton>
-            <Button variant="primary" onClick={handleShow}>
-              Ordenar
-            </Button>
+              <Button variant="primary" onClick={handleShow}>
+                Ordenar
+              </Button>
             </WrapperButton>
           </div>
           <div className="col-3">
@@ -162,11 +161,7 @@ const ResultSearch = () => {
       </Modal>
       <div className="container">
         <div className="row" id="result">
-          {products.map((product) => (
-            <div className="col" key={product.id}>
-              <CardOfProduct product={product} />
-            </div>
-          ))}
+          <MyPagination products={products} />
         </div>
       </div>
     </div>
@@ -177,10 +172,10 @@ export default ResultSearch;
 
 const TitleResult = styled.h1`
   padding-left: 2em;
-  padding-top:2em;
+  padding-top: 2em;
   padding-bottom: 2em;
   color: white;
-`
+`;
 const WrapperButton = styled.div`
-   padding-left: 4em;
-`
+  padding-left: 4em;
+`;

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { deleteProduct, deleteAll } from "../Redux/CartDuck";
 import CardOfProduct from "../tools/CardOfProduct";
 import "../../style/cart.css";
-import { Button } from "react-bootstrap";
+import { Badge, Button } from "react-bootstrap";
 import { buyAllProductsNow } from "../../service/ProductService";
 const Cart = ({ cart, deleteProduct, deleteAll }) => {
   const [cartstate, setcartstate] = useState(
@@ -25,7 +25,10 @@ const Cart = ({ cart, deleteProduct, deleteAll }) => {
   };
 
   return cartstate.length === 0 ? (
-    <h1 id="noHayElementos"> No hay elementos en el carrito </h1>
+    <h1 id="noHayElementos">
+      {" "}
+      <Badge bg="secondary">No hay elementos en el carrito </Badge>{" "}
+    </h1>
   ) : (
     <div>
       <div className="container">
