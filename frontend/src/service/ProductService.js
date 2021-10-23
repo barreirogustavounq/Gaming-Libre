@@ -77,6 +77,16 @@ export const getCategories = (setCategories) => {
 export const findByCategory = (setProducts, product, category) => {
   const URL = `products/get/${category}/${product}`;
   get(URL)
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .then((data) => setProducts(data))
+    .catch((err) => console.log(err));
+};
+export const findByMyCategory = (setProducts, category) => {
+  const URL = `products/get/${category}`;
+  get(URL)
     .then((res) => res.data)
     .then((data) => setProducts(data))
     .catch((err) => console.log(err));
