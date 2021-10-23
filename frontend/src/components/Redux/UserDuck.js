@@ -75,10 +75,12 @@ export const loginAction = (username, password) => (dispatch, getState) => {
     });
 };
 export const updateUserStorage = (user) => (dispatch, getState) => {
+  localStorage.removeItem("user");
   dispatch({
     type: UPDATE_USER,
     payload: user,
   });
+  localStorage.setItem("user", JSON.stringify(user));
 };
 
 export const logoutAction = () => (dispatch, getState) => {

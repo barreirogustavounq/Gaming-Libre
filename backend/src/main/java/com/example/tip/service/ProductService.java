@@ -59,6 +59,15 @@ public class ProductService {
         }
         return productRepository.findByNameContains(product).stream().filter(prod -> prod.getCategory() == cat).collect(Collectors.toList());
     }
+    public List<Product> findByCategory(String category) {
+
+        Category cat = getCategory(category);
+        if (Category.all == cat ) {
+            return productRepository.findAll();
+        }
+        return productRepository.findAllByCategory(category);
+    }
+
 
     private Category getCategory(String category) {
         return Arrays.stream(Category.values()).filter(cat -> Category.valueOf(category) == cat).findFirst().orElseThrow(NoSuchFieldError::new);

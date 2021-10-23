@@ -40,6 +40,10 @@ public class ProductController {
         return productService.findByCategory(category, prod);
     }
 
+    @GetMapping("get/{category}")
+    public List<Product> findCategory(@PathVariable String category){
+        return productService.findByCategory(category);
+    }
     @DeleteMapping("delete/{id}")
     public void deleteProduct(@PathVariable String id) {
         productService.deleteProduct(id);

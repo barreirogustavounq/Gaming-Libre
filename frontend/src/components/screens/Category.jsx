@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import "../../style/ResultSearch.css";
-import { findByCategory } from "../../service/ProductService";
-import styled from "@emotion/styled";
-import MyPagination from "../tools/MyPagination";
+import { findByMyCategory } from "../../service/ProductService";
 import FilterForm from "../tools/FilterForm";
+import MyPagination from "../tools/MyPagination";
 
-const ResultSearch = () => {
-  const param = useParams();
+const Category = () => {
+  const cat = useParams().category;
   const [products, setproducts] = useState([]);
   const [allproducts, setallproducts] = useState([]);
   const [Filterstate, setFilterstate] = useState("");
@@ -16,14 +14,12 @@ const ResultSearch = () => {
   const [max, setmax] = useState(undefined);
 
   useEffect(() => {
-    findByCategory(setproducts, param.product, param.category);
-    findByCategory(setallproducts, param.product, param.category);
-  }, [param]);
+    findByMyCategory(setproducts, cat);
+    findByMyCategory(setallproducts, cat);
+  }, [cat]);
 
   return (
     <div>
-      <TitleResult id="h1Search">Resultados para "{param.product}"</TitleResult>
-
       <FilterForm
         products={products}
         setproducts={setproducts}
@@ -47,14 +43,4 @@ const ResultSearch = () => {
   );
 };
 
-export default ResultSearch;
-
-const TitleResult = styled.h1`
-  padding-left: 2em;
-  padding-top: 2em;
-  padding-bottom: 2em;
-  color: white;
-`;
-const WrapperButton = styled.div`
-  padding-left: 4em;
-`;
+export default Category;
