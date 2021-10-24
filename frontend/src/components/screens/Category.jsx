@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { findByMyCategory } from "../../service/ProductService";
+import BackButton from "../tools/BackButton";
 import FilterForm from "../tools/FilterForm";
 import MyPagination from "../tools/MyPagination";
 
@@ -39,6 +40,7 @@ const Category = () => {
           <MyPagination products={products} />
         </div>
       </div>
+      <BackButton />
     </div>
   );
 };

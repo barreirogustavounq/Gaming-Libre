@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 const Footer = () => {
   return (
-    <footer className="text-center text-lg-start">
+    <footer className="text-center">
       {/*  <div className="container d-flex justify-content-center py-5">
         <button
           type="button"
@@ -31,9 +31,7 @@ const Footer = () => {
         </button>
       </div>
       */}
-      <WrapperFooter>
-        © 2021 Copyright: Gaming-Libre.com
-      </WrapperFooter>
+      <WrapperFooter>© 2021 Copyright: Gaming-Libre.com</WrapperFooter>
     </footer>
   );
 };
@@ -41,9 +39,8 @@ const Footer = () => {
 export default Footer;
 
 const WrapperFooter = styled.div`
-    background:black;
-    color:white;
-    margin-top: 10em;
-    padding:2em;
-    padding-left: 40em;
-`
+  background: black;
+  color: white;
+  margin-top: 10em;
+  padding: 2em;
+`;

@@ -9,3 +9,9 @@
   background-color: #072044;
   border-color: #0d6efd;
 }
+#ProductList {
+  min-height: 70em;
+  margin-right: 1rem;
+  margin-left: 2rem;
+  margin-top: 1px;
+}

@@ -7,7 +7,7 @@ const GET_CART_SUCCESS = "GET_CART_SUCCESS";
 const GET_CART_ERROR = "GET_CART_ERROR";
 const ADD_CART = "ADD_CART";
 const DELETE_CART = "DELETE_CART";
-const DELETE_ALL = "DELETE_ALL"
+const DELETE_ALL = "DELETE_ALL";
 
 export const deleteProductOfArray = (product, array) => {
   console.log(product);
@@ -39,9 +39,9 @@ export const cartReducer = (state = initialData, action) => {
     case DELETE_ALL:
       return {
         ...state,
-        fetching:false,
-        cart:[]
-      }
+        fetching: false,
+        cart: [],
+      };
     default:
       return state;
   }
@@ -65,12 +65,11 @@ export const getCart = () => (dispatch, getState) => {
 };
 
 export const addProduct = (product) => (dispatch, getState) => {
-  debugger;
   let cart = JSON.parse(localStorage.getItem("cart"));
-  if (cart.length > 0 && cart.some(e => e.id === product.id)) {
-    let index= cart.findIndex(obj => obj.id === product.id)
-    cart[index].buyQuantity = cart[index].buyQuantity + product.buyQuantity
-  }else {
+  if (cart.length > 0 && cart.some((e) => e.id === product.id)) {
+    let index = cart.findIndex((obj) => obj.id === product.id);
+    cart[index].buyQuantity = cart[index].buyQuantity + product.buyQuantity;
+  } else {
     cart = cart.concat([product]);
   }
   localStorage.setItem("cart", JSON.stringify(cart));
@@ -96,7 +95,7 @@ export const deleteProduct = (product) => (dispatch, getState) => {
 };
 
 export const deleteAll = () => (dispatch, getState) => {
-  localStorage.removeItem("cart")
+  localStorage.removeItem("cart");
   //console.log(cart);
   //console.log(product);
   dispatch({
