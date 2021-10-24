@@ -49,4 +49,5 @@ const WrapperCategory = styled.div`
   border-radius: 5px;
   background-color: transparent;
   color: white;
+  min-height: 81em;
 `;

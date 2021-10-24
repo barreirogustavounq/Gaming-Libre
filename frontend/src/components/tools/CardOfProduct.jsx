@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import "../../style/Card.scss";
 import styled from "@emotion/styled";
 const CardOfProduct = (props) => {
   const product = props.product;
   const history = useHistory();
+  const [size, setSize] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setSize(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    console.log(size);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [size]);
+
   const handleClick = (e) => {
     e.preventDefault();
 
@@ -12,19 +23,27 @@ const CardOfProduct = (props) => {
   };
   return product ? (
     <ProductButton onClick={handleClick}>
-      <div className="profile-card-4 text-center">
-        <Image src={product.imgSrc} className="img img-responsive" alt="card" />
-        <div className="profile-content">
-          <ProductName>{product.name}</ProductName>
-          <ProductDescription>{product.description}</ProductDescription>
-          <div className="row">
-            <div className="col-xs-4">
-              <Price className="profile-overview">$ {product.price}</Price>
+      {size >= 994 ? (
+        <div className="profile-card-4 text-center">
+          <Image
+            src={product.imgSrc}
+            className="img img-responsive"
+            alt="card"
+          />
+          <div className="profile-content">
+            <ProductName>{product.name}</ProductName>
+            <ProductDescription>{product.description}</ProductDescription>
+            <div className="row">
+              <div className="col-xs-4">
+                <Price className="profile-overview">$ {product.price}</Price>
+              </div>
+              <div className="col-xs-4"></div>
             </div>
-            <div className="col-xs-4"></div>
           </div>
         </div>
-      </div>
+      ) : (
+        <Image src={product.imgSrc} className="img img-responsive" alt="card" />
+      )}
     </ProductButton>
   ) : (
     <p>Loading...</p>
@@ -37,13 +56,19 @@ const Image = styled.img`
   max-height: 10rem;
 `;
 const ProductName = styled.div`
-  font-size: 3em;
+  font-size: 2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 23rem;
 `;
 
 const ProductButton = styled.button`
   border: 3px solid black;
   background-color: white;
   border-radius: 8px;
+  min-height: 11rem;
+  margin-bottom: 11px;
 `;
 const Price = styled.p`
   font-size: 2em;

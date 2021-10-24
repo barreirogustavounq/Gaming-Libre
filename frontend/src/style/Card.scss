@@ -30,7 +30,7 @@ a {
 
 .profile-card-4 {
   display: flex;
-  width: 50em;
+  width: 100%;
 }
 
 .profile-card-4 img {
@@ -94,7 +94,6 @@ a {
   right: 0px;
   background-color: #fff;
   z-index: 0;
-  transform: skewY(3deg);
 }
 
 .profile-card-4:hover img {

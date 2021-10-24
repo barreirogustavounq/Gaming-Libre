@@ -5,6 +5,7 @@ import { findByCategory } from "../../service/ProductService";
 import styled from "@emotion/styled";
 import MyPagination from "../tools/MyPagination";
 import FilterForm from "../tools/FilterForm";
+import BackButton from "../tools/BackButton";
 
 const ResultSearch = () => {
   const param = useParams();

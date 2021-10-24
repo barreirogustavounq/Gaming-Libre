@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import CardOfProduct from "./CardOfProduct";
-import { Badge, Pagination, Spinner } from "react-bootstrap";
+import {
+  Badge,
+  Col,
+  Container,
+  Pagination,
+  Row,
+  Spinner,
+} from "react-bootstrap";
 import "../../style/MyPagination.css";
 import styled from "@emotion/styled";
 
@@ -55,10 +62,16 @@ const MyPagination = (props) => {
       };
 
       return (
-        <div>
-          {Paginacion()}
-          <div className="row">{result}</div>
-        </div>
+        <Container>
+          <Row>
+            <Col id="ProductList">
+              <div className="row">{result}</div>
+            </Col>
+          </Row>
+          <Row>
+            <Col>{Paginacion()}</Col>
+          </Row>
+        </Container>
       );
     } else {
       return (
@@ -76,9 +89,15 @@ const MyPagination = (props) => {
       {!products ? (
         <Spinner animation="border" variant="primary" />
       ) : products.length === 0 ? (
-        <NotElement>No hay productos</NotElement>
+        <Container>
+          <Row>
+            <Col>
+              <NotElement>No hay productos</NotElement>
+            </Col>
+          </Row>
+        </Container>
       ) : (
-        <div>{listOfProducts(products)}</div>
+        listOfProducts(products)
       )}
     </div>
   );

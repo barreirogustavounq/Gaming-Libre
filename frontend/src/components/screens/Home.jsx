@@ -7,19 +7,29 @@ import { connect } from "react-redux";
 import styled from "@emotion/styled";
 import Categories from "./Categories";
 import MyPagination from "../tools/MyPagination";
+import { Col, Container, Row } from "react-bootstrap";
 
 const Home = ({ products, setProducts }) => {
   return (
     <>
-      <Carousel imageList={[logo, logo2, logo3]} />
-
+      <Container>
+        <Row>
+          <Col>
+            <Carousel imageList={[logo, logo2, logo3]} />
+          </Col>
+        </Row>
+      </Container>
       <Title>Productos</Title>
-      <div className="container">
-        <Wrapper>
-          <Categories />
-          <MyPagination products={products} />
-        </Wrapper>
-      </div>
+      <Container>
+        <Row>
+          <Col xs={4}>
+            <Categories />
+          </Col>
+          <Col xs={8}>
+            <MyPagination products={products} />
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 };
