@@ -170,5 +170,5 @@ const TitleResult = styled.h1`
   color: white;
 `;
 const WrapperButton = styled.div`
-  padding-left: 4em;
+  margin-left: 2%;
 `;
