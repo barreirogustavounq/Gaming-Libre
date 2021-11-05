@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const url = "http://localhost:8080/";
+const mpUrl = "http://localhost:3001/";
 const header = { headers: { "Access-Control-Allow-Origin": "*" } };
 
 export const get = (endpoint) => {
@@ -10,6 +11,10 @@ export const get = (endpoint) => {
 export const post = (endpoint, body) => {
   return axios.post(url + endpoint, body, header);
 };
+
+export const mpPost = (endpoint,body) => {
+    return axios.post(mpUrl + endpoint, body, header);
+}
 
 export const getUser = (userName) => {
   let user;
@@ -30,6 +35,10 @@ export const getBuyData = (userName) => {
 export const buyProduct = (product) => {
   return axios.post(`${url}products/buy/${product.id}`);
 };
+
+export const buyProductMP = (preference, url) => {
+    return axios.post(url, preference)
+}
 
 export const buyProductQuantity = (product) => {
     return axios.post(`${url}products/buy/${product.id}/${product.buyQuantity}`);

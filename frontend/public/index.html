@@ -23,6 +23,23 @@
     />
 
     <!-- js -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script>
+      const mercadopago = new MercadoPago('TEST-a9d614c0-96c3-4e26-9297-d9372c5fb02d', {
+        locale: 'es-AR'
+      });
+
+      // Inicializa el checkout
+      mercadopago.checkout({
+        preference: {
+          id:  global.id
+        },
+        render: {
+          container: '.pagarAhora', // Indica el nombre de la clase donde se mostrará el botón de pago
+          label: 'Pagar', // Cambia el texto del botón de pago (opcional)
+        }
+      })
+    </script>
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

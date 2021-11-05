@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useEffect} from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
@@ -7,7 +7,6 @@ import { Provider } from "react-redux";
 import generateStore from "./components/Redux/Store";
 
 const store = generateStore();
-
 const WithRouter = () => (
   <Router>
     <App />
