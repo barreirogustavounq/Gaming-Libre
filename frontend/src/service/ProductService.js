@@ -1,10 +1,27 @@
 import {
-  buyProduct,
-  getBuyData,
-  post,
-  buyProductQuantity,
-  get,
+    buyProduct,
+    getBuyData,
+    post,
+    mpPost,
+    buyProductQuantity,
+    get, buyProductMP,
 } from "../api/Api";
+import mercadopago from "mercadopago";
+
+const accesTokenMP = "TEST-4470583120056903-092823-e8250e22361adffae3967c20cd11f87f-240182164"
+const mpApi = `https://api.mercadopago.com/preferences?access_token=${accesTokenMP}`
+// Crea un objeto de preferencia
+let preference = {
+    items: [
+        {
+            title: 'Mi producto',
+            unit_price: 100,
+            quantity: 1,
+        }
+    ]
+};
+
+
 
 export const addProduct = (
   nombre,
@@ -45,6 +62,7 @@ export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
       setOwnerData(data.data);
     })
     .catch((err) => console.log(err));
+  console.log(product)
   buyProduct(product)
     .then((data) => {
       setBuyNow(!buyNow);
@@ -52,6 +70,61 @@ export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
     .catch((err) => console.log(err));
 };
 
+export const buyProductMercadoPago = (product, setOwnerData, setBuyNow, buyNow) => {
+    const mercadopago = require('mercadopago')
+    mercadopago.configure({
+        access_token: "TEST-4470583120056903-092823-e8250e22361adffae3967c20cd11f87f-240182164",
+    });
+    let preference = {
+        external_reference: "ABC",
+        //notification_url: "https://hookb.in/r19LWVaW93Hqk2XXkGeg",
+        items:[
+            {
+                id:product.id,
+                category_id: product.category,
+                title:product.name,
+                quantity: product.buyQuantity,
+                unit_price: product.price,
+                picture_url:product.imgSrc
+            }
+        ],
+        back_urls:{
+            success:'https:/localhost:3000',
+            failure:'https:/localhost:3000',
+            pending:'https:/localhost:3000'
+        },
+        redirect_urls:{
+            success:'https:/localhost:3000',
+            failure:'https:/localhost:3000',
+            pending:'https:/localhost:3000'
+        },
+        auto_return:"approved"
+    }
+
+    let pref = ''
+    mercadopago.preferences.create(preference)
+        .then(response => {
+            pref = response;
+        }).catch(function (error) {
+            console.log(error);
+        });
+    console.log(pref)
+
+    return pref;
+
+}
+
+
+export const buymp = (product, setButtonUrl) => {
+    mpPost('payment/new',{
+        "name": `${product.name}`,
+        "unit": `${product.buyQuantity}`,
+        "price": `${product.price}`
+    }).then((result)=> {
+        console.log(result.data)
+        setButtonUrl(result.data)
+    })
+}
 export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {
   cartstate.map((product) =>
     buyProductQuantity(product)

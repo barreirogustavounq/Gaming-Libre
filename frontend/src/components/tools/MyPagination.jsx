@@ -56,7 +56,7 @@ const MyPagination = (props) => {
       const Paginacion = () => {
         return (
           <div className="MyPagination">
-            <Pagination>{numerosDePaginacion()}</Pagination>;
+            <Pagination>{numerosDePaginacion()}</Pagination>
           </div>
         );
       };
