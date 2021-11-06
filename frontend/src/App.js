@@ -58,7 +58,7 @@ const App = ({ user }) => {
   };
   return (
     <>
-      <header>
+      <header><script src="https://sdk.mercadopago.com/js/v2"/>
         <Nav user={user} />
       </header>
       <Routes />

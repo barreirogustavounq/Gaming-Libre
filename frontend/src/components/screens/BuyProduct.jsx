@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+
 import { connect } from "react-redux";
 import "../../style/Product.scss";
 import { Button, Card } from "react-bootstrap";
@@ -6,15 +7,22 @@ import { FaShippingFast } from "react-icons/fa";
 import { BiMoney } from "react-icons/bi";
 import AddCarButton from "../tools/AddCarButton";
 import Swal from "sweetalert2";
-import { buyProductNow } from "../../service/ProductService";
+import {buymp, buyProductMercadoPago, buyProductNow} from "../../service/ProductService";
+
 
 const BuyProduct = ({ product }) => {
-  const [buyNow, setBuyNow] = React.useState(false);
-  const [ownerData, setOwnerData] = React.useState(null);
+  const [buyNow, setBuyNow] = useState(false);
+  const [ownerData, setOwnerData] = useState(null);
+  const [buttonUrl, setButtonUrl] = useState('')
+
 
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
       buyProductNow(product, setOwnerData, setBuyNow, buyNow);
+    }
+    if (payMethod === "mercadopago"){
+      //buyProductMercadoPago(product, setOwnerData, setBuyNow, buyNow)
+      buymp(product, setButtonUrl)
     }
   };
   const selectPaid = () => {
@@ -23,6 +31,7 @@ const BuyProduct = ({ product }) => {
       input: "select",
       inputOptions: {
         efectivo: "efectivo",
+        mercadopago: "mercadopago"
       },
       inputPlaceholder: "Medio de pago",
       showCancelButton: true,
@@ -90,9 +99,15 @@ const BuyProduct = ({ product }) => {
           <AddCarButton product={product} />
 
           <div style={{ marginTop: "2em" }} />
-          <Button onClick={() => selectPaid()}>
-            <BiMoney /> Comprar ahora
-          </Button>
+          {buttonUrl == '' ?
+              <Button className={'pagarAhora'} onClick={() => selectPaid() }>
+                <BiMoney /> Comprar ahora
+              </Button>
+          :
+              <Button href={buttonUrl} className={'pagarAhora'}>
+                <BiMoney /> Pagar con MercadoPago
+              </Button>
+          }
         </Card.Footer>
       </Card.Body>
     </Card>
