@@ -1,14 +1,14 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require("express");
+const app = express();
 const cors = require("cors");
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
-var app = express();
-app.use(cors());
+
 
 const PaymentController = require("./controllers/PaymentController");
 //importamos el controller
@@ -18,10 +18,15 @@ const PaymentService = require("./services/PaymentService");
 
 const PaymentInstance = new PaymentController(new PaymentService());
 // Permitimos que el controller pueda usar el service
+const allowedOrigins = ['http://localhost:3000'];
 
+const options = {
+    origin: allowedOrigins
+};
 app.use(logger('dev'));
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cors());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

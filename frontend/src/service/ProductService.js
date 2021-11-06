@@ -115,14 +115,14 @@ export const buyProductMercadoPago = (product, setOwnerData, setBuyNow, buyNow) 
 }
 
 
-export const buymp = (product) => {
-    console.log(product)
+export const buymp = (product, setButtonUrl) => {
     mpPost('payment/new',{
         "name": `${product.name}`,
         "unit": `${product.buyQuantity}`,
         "price": `${product.price}`
     }).then((result)=> {
-        console.log(result)
+        console.log(result.data)
+        setButtonUrl(result.data)
     })
 }
 export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {

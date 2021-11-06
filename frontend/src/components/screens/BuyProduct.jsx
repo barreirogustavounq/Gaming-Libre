@@ -13,6 +13,7 @@ import {buymp, buyProductMercadoPago, buyProductNow} from "../../service/Product
 const BuyProduct = ({ product }) => {
   const [buyNow, setBuyNow] = useState(false);
   const [ownerData, setOwnerData] = useState(null);
+  const [buttonUrl, setButtonUrl] = useState('')
 
 
   const handleBuyNow = (payMethod) => {
@@ -21,7 +22,7 @@ const BuyProduct = ({ product }) => {
     }
     if (payMethod === "mercadopago"){
       //buyProductMercadoPago(product, setOwnerData, setBuyNow, buyNow)
-      buymp(product)
+      buymp(product, setButtonUrl)
     }
   };
   const selectPaid = () => {
@@ -98,9 +99,15 @@ const BuyProduct = ({ product }) => {
           <AddCarButton product={product} />
 
           <div style={{ marginTop: "2em" }} />
-          <Button className={'pagarAhora'} onClick={() => selectPaid()}>
-            <BiMoney /> Comprar ahora
-          </Button>
+          {buttonUrl == '' ?
+              <Button className={'pagarAhora'} onClick={() => selectPaid() }>
+                <BiMoney /> Comprar ahora
+              </Button>
+          :
+              <Button href={buttonUrl} className={'pagarAhora'}>
+                <BiMoney /> Pagar con MercadoPago
+              </Button>
+          }
         </Card.Footer>
       </Card.Body>
     </Card>

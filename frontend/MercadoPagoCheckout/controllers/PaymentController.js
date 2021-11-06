@@ -13,7 +13,9 @@ class PaymentController {
                 img
             );
             console.log(checkout.init_point)
-            return res.redirect(checkout.init_point);
+            let url = checkout.init_point
+            res.json(url)
+            return  url;
         } catch (err) {
 
             return res.status(500).json({
