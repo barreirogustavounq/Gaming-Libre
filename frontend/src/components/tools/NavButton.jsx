@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { logoutAction } from "../Redux/UserDuck";
+import "../../style/Nav.css";
 const NavButton = ({ logoutAction, user }) => {
   const history = useHistory();
 
@@ -48,7 +49,6 @@ const NavButton = ({ logoutAction, user }) => {
   } else {
     return (
       <button
-        id="loginButton"
         type="button"
         className="btn btn-secondary"
         onClick={() => history.push("/login")}

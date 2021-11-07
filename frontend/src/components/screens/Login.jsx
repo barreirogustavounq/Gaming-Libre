@@ -30,43 +30,46 @@ const Login = ({ loginAction, user }) => {
   return (
     <div className="Login">
       <LoginWrapper>
-      <Form
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
-      >
-        <Form.Group size="lg" controlId="email">
-          <Form.Label>Usuario</Form.Label>
-          <Form.Control
-            autoFocus
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group size="lg" controlId="password">
-          <Form.Label>Contraseña</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-        <Button block size="lg" type="submit" disabled={!validateForm()}>
-          Iniciar Sesión
-        </Button>
-        <Alert className="alertButton" variant={error ? "danger" : "secondary"}>
-          <Alert.Heading>
-            {error
-              ? "Usuario y/o contraseña incorrectas: "
-              : "¿Aún no tienes una cuenta?"}
-          </Alert.Heading>
-          <Alert.Link href="http://localhost:3000/register">
-            Click para registrarte
-          </Alert.Link>
-          .
-        </Alert>
-      </Form>
+        <Form
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+        >
+          <Form.Group size="lg" controlId="email">
+            <Form.Label>Usuario</Form.Label>
+            <Form.Control
+              autoFocus
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group size="lg" controlId="password">
+            <Form.Label>Contraseña</Form.Label>
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Group>
+          <Button block size="lg" type="submit" disabled={!validateForm()}>
+            Iniciar Sesión
+          </Button>
+          <Alert
+            className="alertButton"
+            variant={error && !user.fetching ? "danger" : "secondary"}
+          >
+            <Alert.Heading>
+              {error && !user.fetching
+                ? "Usuario y/o contraseña incorrectas: "
+                : "¿Aún no tienes una cuenta?"}
+            </Alert.Heading>
+            <Alert.Link href="http://localhost:3000/register">
+              Click para registrarte
+            </Alert.Link>
+            .
+          </Alert>
+        </Form>
       </LoginWrapper>
     </div>
   );
@@ -79,12 +82,11 @@ const mapState = (state) => {
 
 export default connect(mapState, { loginAction })(Login);
 
-
 const LoginWrapper = styled.div`
-background-color:white;
-width: 30em;
-height : 30em;
-padding-top: 2em;
-border: 1px solid white;
-border-radius:8px;
-`
+  background-color: white;
+  width: 30em;
+  height: 30em;
+  padding-top: 2em;
+  border: 1px solid white;
+  border-radius: 8px;
+`;
