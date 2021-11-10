@@ -22,40 +22,47 @@ const ResultSearch = () => {
   }, [param]);
 
   return (
-    <div>
-      <TitleResult id="h1Search">Resultados para "{param.product}"</TitleResult>
-
-      <FilterForm
-        products={products}
-        setproducts={setproducts}
-        allproducts={allproducts}
-        Filterstate={Filterstate}
-        show={show}
-        min={min}
-        max={max}
-        setallproducts={setallproducts}
-        setFilterstate={setFilterstate}
-        setShow={setShow}
-        setmin={setmin}
-        setmax={setmax}
-      />
+    <DivResult>
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <FilterForm
+              products={products}
+              setproducts={setproducts}
+              allproducts={allproducts}
+              Filterstate={Filterstate}
+              show={show}
+              min={min}
+              max={max}
+              setallproducts={setallproducts}
+              setFilterstate={setFilterstate}
+              setShow={setShow}
+              setmin={setmin}
+              setmax={setmax}
+            />
+          </div>
+          <div className="col-12">
+            <TitleResult id="h1Search">
+              Resultados para "{param.product}"
+            </TitleResult>
+          </div>
+        </div>
+      </div>
       <div className="container">
         <div className="row" id="result">
           <MyPagination products={products} />
         </div>
       </div>
-    </div>
+    </DivResult>
   );
 };
 
 export default ResultSearch;
 
 const TitleResult = styled.h1`
-  padding-left: 2em;
   padding-top: 2em;
-  padding-bottom: 2em;
   color: white;
 `;
-const WrapperButton = styled.div`
-  padding-left: 4em;
+const DivResult = styled.div`
+  margin-top: 9em;
 `;

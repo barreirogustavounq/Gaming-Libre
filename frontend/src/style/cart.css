@@ -1,3 +1,7 @@
 #noHayElementos {
   margin: 30% 31% !important;
 }
+
+#deleteIcon {
+  margin-left: -10px;
+}

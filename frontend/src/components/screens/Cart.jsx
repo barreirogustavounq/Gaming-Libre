@@ -6,12 +6,23 @@ import { deleteProduct, deleteAll, addProduct } from "../Redux/CartDuck";
 import "../../style/cart.css";
 import { Badge, Button } from "react-bootstrap";
 import { buyAllProductsNow } from "../../service/ProductService";
+import styled from "@emotion/styled";
 
 const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
   const [cartstate, setcartstate] = useState(
     localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
   );
   let total = 0;
+  const [size, setSize] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setSize(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    console.log(size);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [size]);
 
   useEffect(() => {
     setcartstate(JSON.parse(localStorage.getItem("cart")));
@@ -48,23 +59,29 @@ const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
       <Badge bg="secondary">No hay elementos en el carrito </Badge>{" "}
     </h1>
   ) : (
-    <div>
+    <ContainerCart className="container">
       {cartstate.map((product) => {
         total += product.price * product.buyQuantity;
         return (
-          <div key={product.id} className="container">
-            <div className="row">
-              <div className="col">
-                {" "}
-                <img src={product.imgSrc} alt={product.id} />
+          <RowCart key={product.id}>
+            <div className={size > 990 ? "col-3" : "col-5"}>
+              {" "}
+              <ImageCart src={product.imgSrc} alt={product.id} />)
+            </div>
+
+            {size > 990 ? (
+              <div className="col-3">
+                <H1Cart> {product.name} </H1Cart>{" "}
               </div>
-              <div className="col">
-                <h1> {product.name} </h1>{" "}
-              </div>
-              <div className="col">
-                <h1> $ {product.price} </h1>{" "}
-              </div>
-              <div className="col">
+            ) : (
+              <></>
+            )}
+
+            <div className={size > 990 ? "col-2" : "col-3"}>
+              <H1Cart> $ {product.price} </H1Cart>{" "}
+            </div>
+            <div className="col-3">
+              <H1Cart>
                 <Button onClick={(e) => handleRemoveOneToCart(product)}>
                   <IoIosRemove />
                 </Button>
@@ -74,26 +91,28 @@ const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
                 <Button onClick={(e) => handleAddOneToCart(product)}>
                   <IoIosAdd />
                 </Button>
-              </div>
-              <div className="col">
+              </H1Cart>
+            </div>
+            <div className="col-1">
+              <H1Cart>
                 {" "}
                 <Button id="deleteIcon" onClick={(e) => handleDelete(product)}>
                   <FaTrash />
                 </Button>{" "}
-              </div>
+              </H1Cart>
             </div>
-          </div>
+          </RowCart>
         );
       })}
       <div className="container">
-        <div className="row">
+        <RowCart>
           <Button onClick={handleBuy}>
             {" "}
             Comprar todos los productos por $ {total}
           </Button>
-        </div>
+        </RowCart>
       </div>
-    </div>
+    </ContainerCart>
   );
 };
 const mapState = (state) => {
@@ -104,3 +123,26 @@ const mapState = (state) => {
 export default connect(mapState, { addProduct, deleteProduct, deleteAll })(
   Cart
 );
+
+const ImageCart = styled.img`
+  min-height: 12em;
+  max-height: 10em;
+  border-radius: 23%;
+  margin-bottom: 3rem;
+`;
+
+const H1Cart = styled.h5`
+  padding-top: 5rem;
+  color: aliceblue;
+`;
+const ContainerCart = styled.div`
+  margin-top: 14rem;
+`;
+const RowCart = styled.div`
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(var(--bs-gutter-y) * -1);
+  margin-right: calc(var(--bs-gutter-x) * -0.5);
+  margin-left: calc(var(--bs-gutter-x) * -0.5);
+`;
