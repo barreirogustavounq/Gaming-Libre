@@ -1,27 +1,27 @@
 import {
-    buyProduct,
-    getBuyData,
-    post,
-    mpPost,
-    buyProductQuantity,
-    get, buyProductMP,
+  buyProduct,
+  getBuyData,
+  post,
+  mpPost,
+  buyProductQuantity,
+  get,
+  buyProductMP,
 } from "../api/Api";
 import mercadopago from "mercadopago";
 
-const accesTokenMP = "TEST-4470583120056903-092823-e8250e22361adffae3967c20cd11f87f-240182164"
-const mpApi = `https://api.mercadopago.com/preferences?access_token=${accesTokenMP}`
+const accesTokenMP =
+  "TEST-4470583120056903-092823-e8250e22361adffae3967c20cd11f87f-240182164";
+const mpApi = `https://api.mercadopago.com/preferences?access_token=${accesTokenMP}`;
 // Crea un objeto de preferencia
 let preference = {
-    items: [
-        {
-            title: 'Mi producto',
-            unit_price: 100,
-            quantity: 1,
-        }
-    ]
+  items: [
+    {
+      title: "Mi producto",
+      unit_price: 100,
+      quantity: 1,
+    },
+  ],
 };
-
-
 
 export const addProduct = (
   nombre,
@@ -56,12 +56,13 @@ export const addProduct = (
     });
 };
 
-export const getOwnerData= (product, setOwnerData) => {
-    getBuyData(product.ownerUsername)
-        .then((data) => {
-            setOwnerData(data.data);
-        }).catch((err) => console.log(err));
-}
+export const getOwnerData = (product, setOwnerData) => {
+  getBuyData(product.ownerUsername)
+    .then((data) => {
+      setOwnerData(data.data);
+    })
+    .catch((err) => console.log(err));
+};
 
 export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
   getBuyData(product.ownerUsername)
@@ -69,7 +70,7 @@ export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
       setOwnerData(data.data);
     })
     .catch((err) => console.log(err));
-  console.log(product)
+  console.log(product);
   buyProduct(product)
     .then((data) => {
       setBuyNow(!buyNow);
@@ -78,20 +79,20 @@ export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
 };
 
 export const buymp = (product, setButtonUrl) => {
-    mpPost('payment/new',{
-        "name": `${product.name}`,
-        "unit": `${product.buyQuantity}`,
-        "price": `${product.price}`,
-        "img": `${product.imgSrc}`,
-        "id": `${product.id}`,
-        "description": `${product.description}`,
-        "category": `${product.category}`,
-        "user":localStorage.getItem("user")
-    }).then((result)=> {
-        setButtonUrl(result.data)
-        localStorage.setItem("mpBuy", JSON.stringify(product))
-    })
-}
+  mpPost("payment/new", {
+    name: `${product.name}`,
+    unit: `${product.buyQuantity}`,
+    price: `${product.price}`,
+    img: `${product.imgSrc}`,
+    id: `${product.id}`,
+    description: `${product.description}`,
+    category: `${product.category}`,
+    user: localStorage.getItem("user"),
+  }).then((result) => {
+    setButtonUrl(result.data);
+    localStorage.setItem("mpBuy", JSON.stringify(product));
+  });
+};
 export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {
   cartstate.map((product) =>
     buyProductQuantity(product)

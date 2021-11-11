@@ -42,7 +42,6 @@ const Category = () => {
           </div>
         </div>
       </div>
-      <BackButton />
 
       <div className="container">
         <div className="row" id="result">

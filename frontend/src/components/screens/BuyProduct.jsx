@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 import { connect } from "react-redux";
 import "../../style/Product.scss";
@@ -7,36 +7,36 @@ import { FaShippingFast } from "react-icons/fa";
 import { BiMoney } from "react-icons/bi";
 import AddCarButton from "../tools/AddCarButton";
 import Swal from "sweetalert2";
-import {buymp, buyProductNow} from "../../service/ProductService";
+import { buymp, buyProductNow } from "../../service/ProductService";
+import { updateProduct } from "../Redux/ProductDuck";
 
-
-const BuyProduct = ({ product }) => {
+const BuyProduct = ({ updateProduct, product }) => {
   const [buyNow, setBuyNow] = useState(false);
   const [ownerData, setOwnerData] = useState(null);
-  const [buttonUrl, setButtonUrl] = useState('')
-
+  const [buttonUrl, setButtonUrl] = useState("");
 
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
       buyProductNow(product, setOwnerData, setBuyNow, buyNow);
     }
-    if (payMethod === "mercadopago"){
-      buymp(product, setButtonUrl)
-      let timerInterval
+    if (payMethod === "mercadopago") {
+      buymp(product, setButtonUrl);
+      let timerInterval;
       Swal.fire({
-        title: 'Procesando información...',
+        title: "Procesando información...",
         timer: 1000,
         timerProgressBar: true,
         didOpen: () => {
-          Swal.showLoading()
-          timerInterval = setInterval(() => {
-          }, 100)
+          Swal.showLoading();
+          timerInterval = setInterval(() => {}, 100);
         },
         willClose: () => {
-          clearInterval(timerInterval)
-        }
-      })
+          clearInterval(timerInterval);
+        },
+      });
     }
+    updateProduct(product);
+    product.stock = product.stock - 1;
   };
   const selectPaid = () => {
     Swal.fire({
@@ -44,7 +44,7 @@ const BuyProduct = ({ product }) => {
       input: "select",
       inputOptions: {
         efectivo: "Efectivo",
-        mercadopago: "Mercado Pago"
+        mercadopago: "Mercado Pago",
       },
       inputPlaceholder: "Medio de pago",
       showCancelButton: true,
@@ -111,15 +111,15 @@ const BuyProduct = ({ product }) => {
           <AddCarButton product={product} />
 
           <div style={{ marginTop: "2em" }} />
-          {buttonUrl === '' ?
-              <Button className={'pagarAhora'} onClick={() => selectPaid() }>
-                <BiMoney /> Comprar ahora
-              </Button>
-          :
-              <Button href={buttonUrl} className={'pagarAhora'}>
-                <BiMoney /> Pagar con MercadoPago
-              </Button>
-          }
+          {buttonUrl === "" ? (
+            <Button className={"pagarAhora"} onClick={() => selectPaid()}>
+              <BiMoney /> Comprar ahora
+            </Button>
+          ) : (
+            <Button href={buttonUrl} className={"pagarAhora"}>
+              <BiMoney /> Pagar con MercadoPago
+            </Button>
+          )}
         </Card.Footer>
       </Card.Body>
     </Card>
@@ -132,4 +132,4 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState)(BuyProduct);
+export default connect(mapState, { updateProduct })(BuyProduct);
