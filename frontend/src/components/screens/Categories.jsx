@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { getCategories } from "../../service/ProductService";
 import { useHistory } from "react-router-dom";
+import { Tooltip } from "react-bootstrap";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);

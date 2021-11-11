@@ -2,10 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import "../../style/Card.scss";
 import styled from "@emotion/styled";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 const CardOfProduct = (props) => {
   const product = props.product;
   const history = useHistory();
   const [size, setSize] = useState(window.innerWidth);
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      {product.name}
+    </Tooltip>
+  );
 
   useEffect(() => {
     const handleResize = () => setSize(window.innerWidth);
@@ -31,7 +37,13 @@ const CardOfProduct = (props) => {
             alt="card"
           />
           <div className="profile-content">
-            <ProductName>{product.name}</ProductName>
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip}
+            >
+              <ProductName>{product.name}</ProductName>
+            </OverlayTrigger>
             <ProductDescription>{product.description}</ProductDescription>
             <div className="row">
               <div className="col-xs-4">
@@ -69,6 +81,7 @@ const ProductButton = styled.button`
   border-radius: 8px;
   min-height: 11rem;
   margin-bottom: 11px;
+  margein-left: 10% !important;
 `;
 const Price = styled.p`
   font-size: 2em;

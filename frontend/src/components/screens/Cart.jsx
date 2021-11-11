@@ -106,7 +106,7 @@ const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
       })}
       <div className="container">
         <RowCart>
-          <Button onClick={handleBuy}>
+          <Button className="col align-self-center" onClick={handleBuy}>
             {" "}
             Comprar todos los productos por $ {total}
           </Button>
