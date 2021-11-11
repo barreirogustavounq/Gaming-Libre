@@ -45,6 +45,7 @@ const mapState = (state) => {
 
 const Image = styled.img`
     max-height: 13rem;
+    max-width: -webkit-fill-available;
     
 `
 
