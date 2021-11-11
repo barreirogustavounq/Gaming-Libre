@@ -67,7 +67,7 @@ export const getOwnerData = (product, setOwnerData) => {
 export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
   getBuyData(product.ownerUsername)
     .then((data) => {
-      console.log(data.data);
+        console.log(data.data)
       setOwnerData(data.data);
     })
     .catch((err) => console.log(err));
@@ -80,20 +80,43 @@ export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
 };
 
 export const buymp = (product, setButtonUrl) => {
-  mpPost("payment/new", {
-    name: `${product.name}`,
-    unit: `${product.buyQuantity}`,
-    price: `${product.price}`,
-    img: `${product.imgSrc}`,
-    id: `${product.id}`,
-    description: `${product.description}`,
-    category: `${product.category}`,
-    user: localStorage.getItem("user"),
-  }).then((result) => {
-    setButtonUrl(result.data);
-    localStorage.setItem("mpBuy", JSON.stringify(product));
-  });
-};
+    mpPost('payment/new',{
+        "name": `${product.name}`,
+        "unit": `${product.buyQuantity}`,
+        "price": `${product.price}`,
+        "img": `${product.imgSrc}`,
+        "id": `${product.id}`,
+        "description": `${product.description}`,
+        "category": `${product.category}`,
+        "user":localStorage.getItem("user")
+    }).then((result)=> {
+        setButtonUrl(result.data)
+        localStorage.setItem("mpBuy", JSON.stringify(product))
+    })
+}
+
+export const buyAllProductsMP = (cartstate, productsBuy, deleteAll, setButtonUrl) => {
+    const price = productsBuy.reduce(function(total, product){
+        return total + product.price
+    })
+    const name = productsBuy.reduce(function(name, product){
+        return name + ',' + product.name
+    })
+    mpPost('payment/new',{
+        "name": `${name}`,
+        "unit": `${1}`,
+        "price": `${price}`,
+        "img": ``,
+        "id": ``,
+        "description": `carrito con ${name}`,
+        "category": `all`,
+        "user":localStorage.getItem("user")
+    }).then((result)=> {
+        setButtonUrl(result.data)
+        localStorage.setItem("mpBuy", JSON.stringify(productsBuy[0]))
+    })
+}
+
 export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {
   cartstate.map((product) =>
     buyProductQuantity(product)

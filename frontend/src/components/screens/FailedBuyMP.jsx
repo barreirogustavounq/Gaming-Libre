@@ -10,7 +10,6 @@ export const FailedBuyMP = () => {
     const product = JSON.parse(localStorage.getItem("mpBuy"))
     const history = useHistory();
 
-
     return(
         <Wrapper>
             <Fail/>
