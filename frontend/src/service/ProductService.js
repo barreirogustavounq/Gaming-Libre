@@ -93,6 +93,28 @@ export const buymp = (product, setButtonUrl) => {
         localStorage.setItem("mpBuy", JSON.stringify(product))
     })
 }
+
+export const buyAllProductsMP = (cartstate, productsBuy, deleteAll, setButtonUrl) => {
+    const price = productsBuy.reduce(function(total, product){
+        return total + product.price
+    })
+    const name = products.reduce(function(name, product){
+        return name + ',' + product.name
+    })
+    mpPost('payment/new',{
+        "name": `${name}`,
+        "unit": `${1}`,
+        "price": `${price}`,
+        "img": ``,
+        "id": ``,
+        "description": `carrito con ${name}`,
+        "category": `all`,
+        "user":localStorage.getItem("user")
+    }).then((result)=> {
+        setButtonUrl(result.data)
+        localStorage.setItem("mpBuy", JSON.stringify(productsBuy[0]))
+    })
+}
 export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {
   cartstate.map((product) =>
     buyProductQuantity(product)
