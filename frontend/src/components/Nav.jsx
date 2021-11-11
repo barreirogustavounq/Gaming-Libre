@@ -6,8 +6,15 @@ import { connect } from "react-redux";
 import NavButton from "./tools/NavButton";
 import { FaCartPlus } from "react-icons/fa";
 import { Col, Container, Row } from "react-bootstrap";
+import styled from "@emotion/styled";
 
-const NavExpand = ({ history, SubmitHandler, textSearch, settextSearch }) => {
+const NavExpand = ({
+  history,
+  SubmitHandler,
+  textSearch,
+  settextSearch,
+  cart,
+}) => {
   return (
     <nav className="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
       <Container fluid>
@@ -44,8 +51,8 @@ const NavExpand = ({ history, SubmitHandler, textSearch, settextSearch }) => {
             />
           </Col>
           <Col>
+            <CartNumber> {cart.length} </CartNumber>
             <Link id="cartIcon" to="/user/cart">
-              {" "}
               <FaCartPlus />{" "}
             </Link>
           </Col>
@@ -62,6 +69,7 @@ const OffcanvasNav = ({
   SubmitHandler,
   textSearch,
   settextSearch,
+  cart,
 }) => {
   return (
     <Container>
@@ -100,6 +108,12 @@ const OffcanvasNav = ({
                 alt="logo"
                 onClick={() => history.push("/")}
               />
+              <div>
+                <CartNumberOffCanvas> {cart.length} </CartNumberOffCanvas>
+                <Link id="cartOffCanvas" to="/user/cart">
+                  <FaCartPlus />
+                </Link>
+              </div>
 
               <button
                 type="button"
@@ -129,12 +143,7 @@ const OffcanvasNav = ({
                   />
                 </form>
               </div>
-              <div>
-                <Link id="cartOffCanvas" to="/user/cart">
-                  <FaCartPlus />
-                </Link>
-              </div>
-              <div className="buttonOffCanvas">
+              <div className="buttonOffCanvasProfile">
                 <NavButton />
               </div>
             </div>
@@ -149,7 +158,9 @@ const Nav = () => {
   const [textSearch, settextSearch] = useState("");
   const history = useHistory();
   const [size, setSize] = useState(window.innerWidth);
-
+  const [cart, setcart] = useState(
+    localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
+  );
   useEffect(() => {
     const handleResize = () => setSize(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -158,7 +169,9 @@ const Nav = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [size]);
-
+  useEffect(() => {
+    setcart(JSON.parse(localStorage.getItem("cart")));
+  }, [cart]);
   const SubmitHandler = (e) => {
     e.preventDefault();
     if (textSearch) {
@@ -173,6 +186,7 @@ const Nav = () => {
       SubmitHandler={SubmitHandler}
       textSearch={textSearch}
       settextSearch={settextSearch}
+      cart={cart}
     />
   ) : (
     <OffcanvasNav
@@ -180,13 +194,36 @@ const Nav = () => {
       SubmitHandler={SubmitHandler}
       textSearch={textSearch}
       settextSearch={settextSearch}
+      cart={cart}
     />
   );
 };
 const mapState = (state) => {
   return {
     user: state.user.user,
+    cart: state.cart.cart,
   };
 };
 
 export default connect(mapState)(Nav);
+
+const CartNumber = styled.p`
+  color: #f9fafb;
+  position: fixed;
+  font-size: 22px;
+  margin-left: 19px !important;
+  margin-top: -22px !important;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+`;
+const CartNumberOffCanvas = styled.p`
+  color: #f9fafb;
+  position: fixed;
+  font-size: 22px;
+  margin-left: 57px !important;
+  margin-top: -32px !important;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+`;
