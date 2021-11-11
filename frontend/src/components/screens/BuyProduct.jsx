@@ -7,7 +7,7 @@ import { FaShippingFast } from "react-icons/fa";
 import { BiMoney } from "react-icons/bi";
 import AddCarButton from "../tools/AddCarButton";
 import Swal from "sweetalert2";
-import {buymp, buyProductMercadoPago, buyProductNow} from "../../service/ProductService";
+import {buymp, buyProductNow} from "../../service/ProductService";
 
 
 const BuyProduct = ({ product }) => {
@@ -21,8 +21,21 @@ const BuyProduct = ({ product }) => {
       buyProductNow(product, setOwnerData, setBuyNow, buyNow);
     }
     if (payMethod === "mercadopago"){
-      //buyProductMercadoPago(product, setOwnerData, setBuyNow, buyNow)
       buymp(product, setButtonUrl)
+      let timerInterval
+      Swal.fire({
+        title: 'Procesando información...',
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+          timerInterval = setInterval(() => {
+          }, 100)
+        },
+        willClose: () => {
+          clearInterval(timerInterval)
+        }
+      })
     }
   };
   const selectPaid = () => {
@@ -30,14 +43,13 @@ const BuyProduct = ({ product }) => {
       title: "Elige un medio de pago",
       input: "select",
       inputOptions: {
-        efectivo: "efectivo",
-        mercadopago: "mercadopago"
+        efectivo: "Efectivo",
+        mercadopago: "Mercado Pago"
       },
       inputPlaceholder: "Medio de pago",
       showCancelButton: true,
       inputValidator: (value) => {
         return new Promise((resolve) => {
-          console.log(value);
           if (value === undefined || value === "") {
             resolve("Selecciona un medio de pago");
           } else {
@@ -99,7 +111,7 @@ const BuyProduct = ({ product }) => {
           <AddCarButton product={product} />
 
           <div style={{ marginTop: "2em" }} />
-          {buttonUrl == '' ?
+          {buttonUrl === '' ?
               <Button className={'pagarAhora'} onClick={() => selectPaid() }>
                 <BiMoney /> Comprar ahora
               </Button>

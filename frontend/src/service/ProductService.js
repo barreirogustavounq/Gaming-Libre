@@ -56,6 +56,13 @@ export const addProduct = (
     });
 };
 
+export const getOwnerData= (product, setOwnerData) => {
+    getBuyData(product.ownerUsername)
+        .then((data) => {
+            setOwnerData(data.data);
+        }).catch((err) => console.log(err));
+}
+
 export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
   getBuyData(product.ownerUsername)
     .then((data) => {
@@ -70,59 +77,19 @@ export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
     .catch((err) => console.log(err));
 };
 
-export const buyProductMercadoPago = (product, setOwnerData, setBuyNow, buyNow) => {
-    const mercadopago = require('mercadopago')
-    mercadopago.configure({
-        access_token: "TEST-4470583120056903-092823-e8250e22361adffae3967c20cd11f87f-240182164",
-    });
-    let preference = {
-        external_reference: "ABC",
-        //notification_url: "https://hookb.in/r19LWVaW93Hqk2XXkGeg",
-        items:[
-            {
-                id:product.id,
-                category_id: product.category,
-                title:product.name,
-                quantity: product.buyQuantity,
-                unit_price: product.price,
-                picture_url:product.imgSrc
-            }
-        ],
-        back_urls:{
-            success:'https:/localhost:3000',
-            failure:'https:/localhost:3000',
-            pending:'https:/localhost:3000'
-        },
-        redirect_urls:{
-            success:'https:/localhost:3000',
-            failure:'https:/localhost:3000',
-            pending:'https:/localhost:3000'
-        },
-        auto_return:"approved"
-    }
-
-    let pref = ''
-    mercadopago.preferences.create(preference)
-        .then(response => {
-            pref = response;
-        }).catch(function (error) {
-            console.log(error);
-        });
-    console.log(pref)
-
-    return pref;
-
-}
-
-
 export const buymp = (product, setButtonUrl) => {
     mpPost('payment/new',{
         "name": `${product.name}`,
         "unit": `${product.buyQuantity}`,
-        "price": `${product.price}`
+        "price": `${product.price}`,
+        "img": `${product.imgSrc}`,
+        "id": `${product.id}`,
+        "description": `${product.description}`,
+        "category": `${product.category}`,
+        "user":localStorage.getItem("user")
     }).then((result)=> {
-        console.log(result.data)
         setButtonUrl(result.data)
+        localStorage.setItem("mpBuy", JSON.stringify(product))
     })
 }
 export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {

@@ -14,6 +14,8 @@ import Product from "./components/screens/Product";
 import Cart from "./components/screens/Cart";
 import NotFound from "./components/screens/NotFound";
 import Category from "./components/screens/Category";
+import {SuccessBuyMP} from "./components/screens/SuccesBuyMP";
+import {FailedBuyMP} from "./components/screens/FailedBuyMP";
 
 const App = ({ user }) => {
   const Routes = () => {
@@ -22,6 +24,12 @@ const App = ({ user }) => {
         <Route exact path="/">
           <Home />
         </Route>
+          <Route path="/success">
+              <SuccessBuyMP />
+          </Route>
+          <Route path="/error">
+              <FailedBuyMP />
+          </Route>
         <Route
           exact
           path={[

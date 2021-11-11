@@ -12,73 +12,54 @@ class PaymentService {
         this.mercadoPagoUrl = "https://api.mercadopago.com/checkout";
     }
 
-    async createPaymentMercadoPago(name, price, unit, img) {
+    async createPaymentMercadoPago(name, price, unit, img, id, description, category, user) {
         const url = `${this.mercadoPagoUrl}/preferences?access_token=${this.tokensMercadoPago.test.access_token}`;
         const items = [
             {
-                id: "1234",
-                // id interno (del negocio) del item
+                id: id,
                 title: name,
-                // nombre que viene de la prop que recibe del controller
-                description: "Dispositivo movil de Tienda e-commerce",
-                // descripción del producto
-                picture_url: "https://courseit.com.ar/static/logo.png",
-                // url de la imágen del producto
-                category_id: "1234",
-                // categoría interna del producto (del negocio)
+                description: description,
+                picture_url: img,
+                category_id: category,
                 quantity: parseInt(unit),
-                // cantidad, que tiene que ser un intiger
                 currency_id: "ARS",
-                // id de la moneda, que tiene que ser en ISO 4217
                 unit_price: parseFloat(price)
-                // el precio, que por su complejidad tiene que ser tipo FLOAT
             }
         ];
 
         const preferences = {
             items,
-            external_reference: "referencia del negocio",
+            external_reference: "Gaming-Libre",
             payer: {
-                name: "Lalo",
-                surname: "Landa",
-                email: "test_user_63274575@testuser.com",
+                name: user.firstName,
+                surname: user.lastName,
+                email: user.email,
                 phone: {
                     area_code: "11",
-                    number: "22223333"
+                    number: user.phone
                 },
                 address: {
-                    zip_code: "1111",
-                    street_name: "False",
-                    street_number: "123"
+                    zip_code: user.postalCode,
+                    street_name: user.address,
+                    street_number: user.address
                 }
             },
             payment_methods: {
-                excluded_payment_methods: [
-                    {
-                        id: "amex"
-                    }
-                ],
                 excluded_payment_types: [{id: "atm"}],
-                installments: 6,
-                default_installments: 6
+                installments: 18,
+                default_installments: 1
             },
             back_urls: {
-                // declaramos las urls de redireccionamiento
-                success: "https://localhost:3000/success",
-                // url que va a redireccionar si sale todo bien
-                pending: "https://localhost:3000.com/pending",
-                // url a la que va a redireccionar si decide pagar en efectivo por ejemplo
-                failure: "https://localhost:3000.com/error"
-                // url a la que va a redireccionar si falla el pago
+                success: "http://localhost:3000/success",
+                pending: "http://localhost:3000.com/pending",
+                failure: "http://localhost:3000.com/error"
             },
             notification_url: "https://mercadopago-checkout.herokuapp.com/webhook",
-            // declaramos nuestra url donde recibiremos las notificaciones
             auto_return: "approved"
         };
 
         try {
             const request = await axios.post(url, preferences, {
-                // hacemos el POST a la url que declaramos arriba, con las preferencias
                 headers: {
                     "Content-Type": "application/json"
                 }
