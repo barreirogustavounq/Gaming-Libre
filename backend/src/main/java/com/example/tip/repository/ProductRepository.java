@@ -1,6 +1,5 @@
 package com.example.tip.repository;
 
-import com.example.tip.model.Category;
 import com.example.tip.model.Product;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

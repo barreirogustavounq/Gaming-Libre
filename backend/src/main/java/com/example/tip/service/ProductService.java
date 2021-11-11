@@ -3,6 +3,7 @@ package com.example.tip.service;
 import com.example.tip.model.Category;
 import com.example.tip.model.Product;
 import com.example.tip.repository.ProductRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     @Autowired
-    private ProductRepository productRepository;
+    ProductRepository productRepository;
 
     public List<Product> getProducts() {
         return productRepository.findAll();
