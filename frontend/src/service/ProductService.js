@@ -98,7 +98,7 @@ export const buyAllProductsMP = (cartstate, productsBuy, deleteAll, setButtonUrl
     const price = productsBuy.reduce(function(total, product){
         return total + product.price
     })
-    const name = products.reduce(function(name, product){
+    const name = productsBuy.reduce(function(name, product){
         return name + ',' + product.name
     })
     mpPost('payment/new',{
