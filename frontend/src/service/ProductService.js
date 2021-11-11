@@ -66,6 +66,7 @@ export const getOwnerData= (product, setOwnerData) => {
 export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
   getBuyData(product.ownerUsername)
     .then((data) => {
+        console.log(data.data)
       setOwnerData(data.data);
     })
     .catch((err) => console.log(err));

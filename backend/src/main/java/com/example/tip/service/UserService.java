@@ -103,7 +103,7 @@ public class UserService {
         BuyDataDTO buyDataDTO = new BuyDataDTO();
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNoExistException(HttpStatus.NOT_FOUND));
         buyDataDTO.setAddress(user.getAddress());
-        buyDataDTO.setMail(user.getEmail());
+        buyDataDTO.setEmail(user.getEmail());
         buyDataDTO.setPhone(user.getPhone());
         buyDataDTO.setCity(user.getCity());
         return buyDataDTO;
