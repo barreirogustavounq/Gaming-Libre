@@ -67,6 +67,7 @@ export const getOwnerData = (product, setOwnerData) => {
 export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
   getBuyData(product.ownerUsername)
     .then((data) => {
+      console.log(data.data);
       setOwnerData(data.data);
     })
     .catch((err) => console.log(err));
@@ -105,6 +106,33 @@ export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {
       })
   );
   deleteAll();
+};
+
+export const buyAllProductsMP = (
+  cartstate,
+  productsBuy,
+  deleteAll,
+  setButtonUrl
+) => {
+  const price = productsBuy.reduce(function (total, product) {
+    return total + product.price;
+  });
+  const name = productsBuy.reduce(function (name, product) {
+    return name + "," + product.name;
+  });
+  mpPost("payment/new", {
+    name: `${name}`,
+    unit: `${1}`,
+    price: `${price}`,
+    img: ``,
+    id: ``,
+    description: `carrito con ${name}`,
+    category: `all`,
+    user: localStorage.getItem("user"),
+  }).then((result) => {
+    setButtonUrl(result.data);
+    localStorage.setItem("mpBuy", JSON.stringify(productsBuy[0]));
+  });
 };
 
 export const getCategories = (setCategories) => {

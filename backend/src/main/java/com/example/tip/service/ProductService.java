@@ -40,15 +40,16 @@ public class ProductService {
     public ResponseEntity<?> buyProduct(String id, Integer quantity) throws ChangeSetPersister.NotFoundException {
         Product product = productRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
         int stock = product.getStock() - quantity;
+        if(stock < 0) {
+            return new ResponseEntity<>("no hay stock suficiente del producto " + product.getName(), HttpStatus.BAD_REQUEST);
+        }
         if (stock > 0) {
             product.setStock(stock);
             productRepository.save(product);
-            return new ResponseEntity<>("ok", HttpStatus.OK);
-
         } else {
             productRepository.deleteById(id);
         }
-        return new ResponseEntity<>("no hay stock suficiente del producto " + product.getName(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
     public List<Product> findByCategory(String category, String product) {

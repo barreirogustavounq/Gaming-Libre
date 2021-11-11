@@ -77,8 +77,7 @@ const BuyProduct = ({ updateProduct, product }) => {
           Estos son los datos de contacto de {product.ownerUsername}
         </Card.Text>
         <Card.Text>Ahora podes coordinar la entrega!</Card.Text>
-        <Card.Text>E-mail: {ownerData.mail}</Card.Text>
-        <Card.Text>Teléfono: {ownerData.phone}</Card.Text>
+        <Card.Text>E-mail: {ownerData.email}</Card.Text>
         <Card.Text>Teléfono: {ownerData.phone}</Card.Text>
         <Card.Text>Ciudad: {ownerData.city}</Card.Text>
         <Card.Text>Dirección: {ownerData.address}</Card.Text>

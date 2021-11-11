@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BuyDataDTO {
     private String address;
-    private String mail;
+    private String email;
     private Integer phone;
     private String city;
 }
