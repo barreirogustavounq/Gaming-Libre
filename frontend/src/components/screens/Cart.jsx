@@ -18,7 +18,6 @@ const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
   useEffect(() => {
     const handleResize = () => setSize(window.innerWidth);
     window.addEventListener("resize", handleResize);
-    console.log(size);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
