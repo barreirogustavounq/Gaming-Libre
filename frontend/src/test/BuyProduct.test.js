@@ -8,7 +8,7 @@ import Enzyme, { shallow } from "enzyme";
 const mockStore = configureStore([]);
 Enzyme.configure({ adapter: new Adapter() });
 
-describe("<MyComponent />", () => {
+describe("<BuyProduct />", () => {
   let products;
 
   const product = {
@@ -22,12 +22,13 @@ describe("<MyComponent />", () => {
       products: product,
     });
   });
-  it("should render with buyProduct", () => {
+  test("should render with buyProduct", () => {
     const component = shallow(
       <Provider store={products}>
         <BuyProduct product={product} />
       </Provider>
     );
+    console.log(component);
     expect(component.contains(<BuyProduct product={product} />)).toEqual(true);
   });
 });
