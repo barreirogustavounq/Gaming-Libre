@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { deleteProduct, deleteAll, addProduct } from "../Redux/CartDuck";
 import "../../style/cart.css";
 import { Badge, Button } from "react-bootstrap";
-import { buyAllProductsNow } from "../../service/ProductService";
+import { buyAllProductsMP } from "../../service/ProductService";
 import styled from "@emotion/styled";
 
 const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
@@ -27,7 +27,7 @@ const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
   useEffect(() => {
     setcartstate(JSON.parse(localStorage.getItem("cart")));
     cartstate.map((product) => (total += product.price));
-  }, [cart]);
+  }, [cartstate]);
 
   const handleDelete = (product) => {
     deleteProduct(product);
@@ -36,7 +36,7 @@ const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
   let productsBuy = "";
 
   const handleBuy = (e) => {
-    buyAllProductsNow(cartstate, productsBuy, deleteAll);
+    buyAllProductsMP(cartstate, productsBuy, deleteAll);
   };
 
   const handleAddOneToCart = (product) => {
