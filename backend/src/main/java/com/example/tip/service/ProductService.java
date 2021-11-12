@@ -75,4 +75,9 @@ public class ProductService {
     }
 
 
+    public ResponseEntity<?> changeStock(String id, Integer newStock) throws ChangeSetPersister.NotFoundException {
+        Product product = productRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
+        product.setStock(newStock);
+        return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+    }
 }
