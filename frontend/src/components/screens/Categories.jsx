@@ -20,7 +20,10 @@ const Categories = () => {
     <WrapperCategory>
       <Title>Categorias</Title>
       {categories.map((category) => (
-        <CategoryButton onClick={() => filterByCategory(category)}>
+        <CategoryButton
+          key={category}
+          onClick={() => filterByCategory(category)}
+        >
           {category}
         </CategoryButton>
       ))}

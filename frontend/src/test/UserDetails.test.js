@@ -31,6 +31,7 @@ describe("<UserDetails />", () => {
         <UserDetails />
       </Provider>
     );
+    console.log(component.find("button").debug());
     expect(component.contains(<UserDetails />)).toEqual(true);
   });
 });
