@@ -5,13 +5,16 @@ import { connect } from "react-redux";
 import { deleteProduct, deleteAll, addProduct } from "../Redux/CartDuck";
 import "../../style/cart.css";
 import { Badge, Button } from "react-bootstrap";
-import { buyAllProductsMP } from "../../service/ProductService";
+import {buyAllProductsMP, buyAllProductsNow, buymp, buyProductNow} from "../../service/ProductService";
 import styled from "@emotion/styled";
+import {BiMoney} from "react-icons/bi";
+import Swal from "sweetalert2";
 
 const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
   const [cartstate, setcartstate] = useState(
     localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
   );
+  const [buttonUrl, setButtonUrl]= useState('')
   let total = 0;
   const [size, setSize] = useState(window.innerWidth);
 
@@ -50,6 +53,51 @@ const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
       product.buyQuantity = -1;
       addProduct(product);
     }
+  };
+
+  const handleBuyNow = (payMethod) => {
+    if (payMethod === "efectivo") {
+      buyAllProductsNow(cartstate, productsBuy,deleteAll);
+    }
+    if (payMethod === "mercadopago") {
+      buyAllProductsMP(cartstate,productsBuy,deleteAll, setButtonUrl);
+      let timerInterval;
+      Swal.fire({
+        title: "Procesando información...",
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          timerInterval = setInterval(() => {}, 100);
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        },
+      });
+    }
+  };
+
+  const selectPaid = () => {
+    Swal.fire({
+      title: "Elige un medio de pago",
+      input: "select",
+      inputOptions: {
+        efectivo: "Efectivo",
+        mercadopago: "Mercado Pago",
+      },
+      inputPlaceholder: "Medio de pago",
+      showCancelButton: true,
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (value === undefined || value === "") {
+            resolve("Selecciona un medio de pago");
+          } else {
+            handleBuyNow(value);
+            resolve();
+          }
+        });
+      },
+    });
   };
 
   return cartstate.length === 0 ? (
@@ -105,10 +153,16 @@ const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
       })}
       <div className="container">
         <RowCart>
-          <Button className="col align-self-center" onClick={handleBuy}>
-            {" "}
-            Comprar todos los productos por $ {total}
-          </Button>
+          {buttonUrl === "" ? (
+              <Button className="col align-self-center" onClick={() => selectPaid()}>
+                {" "}
+                Comprar todos los productos por $ {total}
+              </Button>
+          ) : (
+              <Button className="col align-self-center" href={buttonUrl}>
+                <BiMoney /> Pagar con MercadoPago
+              </Button>
+          )}
         </RowCart>
       </div>
     </ContainerCart>

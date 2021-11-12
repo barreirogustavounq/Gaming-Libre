@@ -32,6 +32,10 @@ export const getBuyData = (userName) => {
   return axios.get(`${url}user/buyData/${userName}`);
 };
 
+export const changeStock = (productId, newStock) => {
+    return axios.post(`${url}products/actualizeStock/${id}/${newStock}`);
+};
+
 export const buyProduct = (product) => {
   return axios.post(`${url}products/buy/${product.id}`);
 };

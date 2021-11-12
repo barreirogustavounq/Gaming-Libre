@@ -1,35 +1,59 @@
 import React, {useEffect, useState} from "react";
 
 import "../../style/Product.scss";
-import {buyProductNow, getOwnerData} from "../../service/ProductService";
+import {actualizeStock, buyProductNow, getOwnerData, getOwnerDataCart} from "../../service/ProductService";
 import styled from "@emotion/styled";
 import {useHistory} from "react-router-dom";
 
 export const SuccessBuyMP = () => {
 
-    const product = JSON.parse(localStorage.getItem("mpBuy"))
+    const cart = localStorage.getItem("lastBuy") === 'cart' ? JSON.parse(localStorage.getItem("mpBuy")): null;
+    const product = localStorage.getItem("lastBuy") === 'single' ?  JSON.parse(localStorage.getItem("mpBuy")) : null;
     const [ownerData, setOwnerData] = useState(null);
     const history = useHistory();
 
     useEffect(() => {
-        getOwnerData(product, setOwnerData);
+        if(product) {
+            getOwnerData(product, setOwnerData)
+            actualizeStock(product)
+        }else {
+            getOwnerDataCart(cart, setOwnerData)
+            actualizeCartStock(product)
+        }
     }, [])
 
-    return ownerData ?
+    return ownerData ? (
         <Wrapper>
             <Tilde/>
             <Title>Se acreditó tu pago</Title>
             <Subtitle>
-                Estos son los datos de contacto de {product.ownerUsername}
+                Estos son los datos de contacto de {product ? product.ownerUsername : 'tu carrito'}
             </Subtitle>
+            <>
+            {product ? (
+                <>
             <Content>Ahora podes coordinar la entrega!</Content>
-            <Content>E-mail: {ownerData.mail}</Content>
+            <Content>E-mail: {ownerData.email}</Content>
             <Content>Teléfono: {ownerData.phone}</Content>
             <Content>Teléfono: {ownerData.phone}</Content>
             <Content>Ciudad: {ownerData.city}</Content>
             <Content>Dirección: {ownerData.address}</Content>
+                </>
+                ):
+            ownerData.map((owner) =>  (
+                <>
+                <Content>Ahora podes coordinar la entrega!</Content>
+                <Content>E-mail: {owner.email}</Content>
+                <Content>Teléfono: {owner.phone}</Content>
+                <Content>Teléfono: {owner.phone}</Content>
+                <Content>Ciudad: {owner.city}</Content>
+                <Content>Dirección: {owner.address}</Content>
+                </>
+                ))
+            }
+            </>
             <Button onClick={() => history.push('/')}>Volver al inicio</Button>
-        </Wrapper>: null
+        </Wrapper>): null
 };
 
 const Wrapper = styled.div`

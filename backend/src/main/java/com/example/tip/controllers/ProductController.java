@@ -64,4 +64,9 @@ public class ProductController {
         return productService.buyProduct(id, quantity);
     }
 
+    @PostMapping("actualizeStock/{id}/{newStock}")
+    public ResponseEntity<?> actualizeStock(@PathVariable String id, @PathVariable Integer newStock) throws ChangeSetPersister.NotFoundException {
+        return productService.changeStock(id,newStock);
+    }
+
 }

@@ -5,7 +5,7 @@ import {
   mpPost,
   buyProductQuantity,
   get,
-  buyProductMP,
+  buyProductMP, changeStock,
 } from "../api/Api";
 import mercadopago from "mercadopago";
 
@@ -64,6 +64,26 @@ export const getOwnerData = (product, setOwnerData) => {
     .catch((err) => console.log(err));
 };
 
+export const actualizeStock = (product) => {
+    changeStock(product.id,product.stock - product.buyQuantity).then(result => console.log(result)).catch(er => console.log(er))
+};
+
+export const actualizeCartStock = (cart) => {
+  cart.forEach(prod => changeStock(prod))
+};
+
+
+export const getOwnerDataCart = (cart, setOwnerData) => {
+  let owners = []
+  cart.forEach(product =>
+      getBuyData(product.ownerUsername)
+      .then((data) => {
+        owners.push(data.data);
+        setOwnerData(owners)
+      })
+      .catch((err) => console.log(err)))
+};
+
 export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
   getBuyData(product.ownerUsername)
     .then((data) => {
@@ -92,6 +112,7 @@ export const buymp = (product, setButtonUrl) => {
   }).then((result) => {
     setButtonUrl(result.data);
     localStorage.setItem("mpBuy", JSON.stringify(product));
+    localStorage.setItem("lastBuy", 'single');
   });
 };
 
@@ -102,15 +123,15 @@ export const buyAllProductsMP = (
   setButtonUrl
 ) => {
   console.log(cartstate);
-  const price = cartstate.reduce(function (price, product) {
-    return price + product.price;
-  });
-  const name = cartstate.reduce(function (name, product) {
-    return name + "," + product.name;
-  });
+  const name = cartstate.reduce((name, product) =>
+     name + "," + product.name,'');
+  const price = cartstate.reduce((price, product) =>
+     price + product.price * product.buyQuantity,0);
+  console.log(price)
+  console.log(name)
   mpPost("payment/new", {
     name: `${name}`,
-    unit: `${1}`,
+    unit: 1,
     price: `${price}`,
     img: ``,
     id: ``,
@@ -119,9 +140,25 @@ export const buyAllProductsMP = (
     user: localStorage.getItem("user"),
   }).then((result) => {
     setButtonUrl(result.data);
-    localStorage.setItem("mpBuy", JSON.stringify(productsBuy[0]));
+    localStorage.setItem("mpBuy", JSON.stringify(cartstate));
+    localStorage.setItem("lastBuy", 'cart');
   });
 };
+
+export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {
+  cartstate.map((product) =>
+      buyProductQuantity(product)
+          .then((response) => {
+            productsBuy = productsBuy + `${product.name} ${response.data} `;
+            alert(productsBuy);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+  );
+  deleteAll();
+};
+
 
 export const getCategories = (setCategories) => {
   const URL = "products/categories";
