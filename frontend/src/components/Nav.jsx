@@ -154,13 +154,11 @@ const OffcanvasNav = ({
   );
 };
 
-const Nav = () => {
+const Nav = ({ cart }) => {
   const [textSearch, settextSearch] = useState("");
   const history = useHistory();
   const [size, setSize] = useState(window.innerWidth);
-  const [cart, setcart] = useState(
-    localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
-  );
+
   useEffect(() => {
     const handleResize = () => setSize(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -169,9 +167,7 @@ const Nav = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [size]);
-  useEffect(() => {
-    setcart(JSON.parse(localStorage.getItem("cart")));
-  }, [cart]);
+
   const SubmitHandler = (e) => {
     e.preventDefault();
     if (textSearch) {

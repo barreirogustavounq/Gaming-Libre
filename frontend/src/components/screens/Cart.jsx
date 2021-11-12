@@ -26,7 +26,7 @@ const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
   useEffect(() => {
     setcartstate(JSON.parse(localStorage.getItem("cart")));
     cartstate.map((product) => (total += product.price));
-  }, [cartstate]);
+  }, [cart]);
 
   const handleDelete = (product) => {
     deleteProduct(product);
