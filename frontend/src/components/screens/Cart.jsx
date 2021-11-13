@@ -5,16 +5,23 @@ import { connect } from "react-redux";
 import { deleteProduct, deleteAll, addProduct } from "../Redux/CartDuck";
 import "../../style/cart.css";
 import { Badge, Button } from "react-bootstrap";
-import {buyAllProductsMP, buyAllProductsNow, buymp, buyProductNow} from "../../service/ProductService";
+import {
+  buyAllProductsMP,
+  buyAllProductsNow,
+  buymp,
+  buyProductNow,
+} from "../../service/ProductService";
 import styled from "@emotion/styled";
-import {BiMoney} from "react-icons/bi";
+import { BiMoney } from "react-icons/bi";
 import Swal from "sweetalert2";
+import { useHistory } from "react-router";
 
 const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
+  const history = useHistory();
   const [cartstate, setcartstate] = useState(
     localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
   );
-  const [buttonUrl, setButtonUrl]= useState('')
+  const [buttonUrl, setButtonUrl] = useState("");
   let total = 0;
   const [size, setSize] = useState(window.innerWidth);
 
@@ -57,10 +64,10 @@ const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
 
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
-      buyAllProductsNow(cartstate, productsBuy,deleteAll);
+      buyAllProductsNow(cartstate, productsBuy, deleteAll);
     }
     if (payMethod === "mercadopago") {
-      buyAllProductsMP(cartstate,productsBuy,deleteAll, setButtonUrl);
+      buyAllProductsMP(cartstate, productsBuy, deleteAll, setButtonUrl);
       let timerInterval;
       Swal.fire({
         title: "Procesando información...",
@@ -154,14 +161,21 @@ const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
       <div className="container">
         <RowCart>
           {buttonUrl === "" ? (
-              <Button className="col align-self-center" onClick={() => selectPaid()}>
-                {" "}
-                Comprar todos los productos por $ {total}
-              </Button>
+            <Button
+              className="col align-self-center"
+              onClick={() =>
+                localStorage.getItem("user")
+                  ? selectPaid()
+                  : history.push("/login")
+              }
+            >
+              {" "}
+              Comprar todos los productos por $ {total}
+            </Button>
           ) : (
-              <Button className="col align-self-center" href={buttonUrl}>
-                <BiMoney /> Pagar con MercadoPago
-              </Button>
+            <Button className="col align-self-center" href={buttonUrl}>
+              <BiMoney /> Pagar con MercadoPago
+            </Button>
           )}
         </RowCart>
       </div>

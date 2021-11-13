@@ -5,7 +5,8 @@ import {
   mpPost,
   buyProductQuantity,
   get,
-  buyProductMP, changeStock,
+  buyProductMP,
+  changeStock,
 } from "../api/Api";
 import mercadopago from "mercadopago";
 
@@ -31,7 +32,10 @@ export const addProduct = (
   imgSrc,
   history,
   addProductToStore,
-  category
+  category,
+  setTittle,
+  setmessage,
+  setmodalShow
 ) => {
   let storage = localStorage.getItem("user");
   storage = JSON.parse(storage);
@@ -48,8 +52,9 @@ export const addProduct = (
     .then((res) => {
       console.log(res);
       addProductToStore(res.data);
-      alert("el producto fue guardado con exito");
-      history.push("/");
+      setTittle("Se ha añadido " + product.name);
+      setmessage("el producto fue guardado con exito");
+      setmodalShow(true);
     })
     .catch((err) => {
       console.log(err);
@@ -65,26 +70,34 @@ export const getOwnerData = (product, setOwnerData) => {
 };
 
 export const actualizeStock = (product) => {
-    changeStock(product.id,product.stock - product.buyQuantity).then(result => console.log(result)).catch(er => console.log(er))
+  changeStock(product.id, product.stock - product.buyQuantity)
+    .then((result) => console.log(result))
+    .catch((er) => console.log(er));
 };
 
 export const actualizeCartStock = (cart) => {
-  cart.forEach(prod => changeStock(prod))
+  cart.forEach((prod) => changeStock(prod));
 };
-
 
 export const getOwnerDataCart = (cart, setOwnerData) => {
-  let owners = []
-  cart.forEach(product =>
-      getBuyData(product.ownerUsername)
+  let owners = [];
+  cart.forEach((product) =>
+    getBuyData(product.ownerUsername)
       .then((data) => {
         owners.push(data.data);
-        setOwnerData(owners)
+        setOwnerData(owners);
       })
-      .catch((err) => console.log(err)))
+      .catch((err) => console.log(err))
+  );
 };
 
-export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
+export const buyProductNow = (
+  product,
+  setOwnerData,
+  setBuyNow,
+  buyNow,
+  history
+) => {
   getBuyData(product.ownerUsername)
     .then((data) => {
       console.log(data.data);
@@ -94,7 +107,10 @@ export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
   console.log(product);
   buyProduct(product)
     .then((data) => {
-      setBuyNow(!buyNow);
+      localStorage.setItem("mpBuy", JSON.stringify(product));
+      localStorage.setItem("lastBuy", "single");
+      history.push("/success");
+      //setBuyNow(!buyNow);
     })
     .catch((err) => console.log(err));
 };
@@ -112,7 +128,7 @@ export const buymp = (product, setButtonUrl) => {
   }).then((result) => {
     setButtonUrl(result.data);
     localStorage.setItem("mpBuy", JSON.stringify(product));
-    localStorage.setItem("lastBuy", 'single');
+    localStorage.setItem("lastBuy", "single");
   });
 };
 
@@ -123,12 +139,16 @@ export const buyAllProductsMP = (
   setButtonUrl
 ) => {
   console.log(cartstate);
-  const name = cartstate.reduce((name, product) =>
-     name + "," + product.name,'');
-  const price = cartstate.reduce((price, product) =>
-     price + product.price * product.buyQuantity,0);
-  console.log(price)
-  console.log(name)
+  const name = cartstate.reduce(
+    (name, product) => name + "," + product.name,
+    ""
+  );
+  const price = cartstate.reduce(
+    (price, product) => price + product.price * product.buyQuantity,
+    0
+  );
+  console.log(price);
+  console.log(name);
   mpPost("payment/new", {
     name: `${name}`,
     unit: 1,
@@ -141,24 +161,23 @@ export const buyAllProductsMP = (
   }).then((result) => {
     setButtonUrl(result.data);
     localStorage.setItem("mpBuy", JSON.stringify(cartstate));
-    localStorage.setItem("lastBuy", 'cart');
+    localStorage.setItem("lastBuy", "cart");
   });
 };
 
 export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {
   cartstate.map((product) =>
-      buyProductQuantity(product)
-          .then((response) => {
-            productsBuy = productsBuy + `${product.name} ${response.data} `;
-            alert(productsBuy);
-          })
-          .catch((err) => {
-            console.log(err);
-          })
+    buyProductQuantity(product)
+      .then((response) => {
+        productsBuy = productsBuy + `${product.name} ${response.data} `;
+        alert(productsBuy);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   );
   deleteAll();
 };
-
 
 export const getCategories = (setCategories) => {
   const URL = "products/categories";

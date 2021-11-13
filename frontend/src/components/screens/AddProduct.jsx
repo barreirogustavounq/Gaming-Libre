@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { addProductToStore } from "../Redux/ProductDuck";
 import { addProduct } from "../../service/ProductService";
 import categories from "../tools/CategoryList";
+import CustomModal from "../tools/CustomModal";
 
 const AddProduct = ({ addProductToStore, products }) => {
   const [nombre, setnombre] = useState("");
@@ -15,6 +16,9 @@ const AddProduct = ({ addProductToStore, products }) => {
   const [stock, setStock] = useState(1);
   const [imgSrc, setImgSrc] = useState("");
   const [category, setCategory] = useState("");
+  const [modalShow, setmodalShow] = useState(false);
+  const [tittle, setTittle] = useState("");
+  const [message, setmessage] = useState("");
   const history = useHistory();
 
   const handleClick = (e) => {
@@ -26,7 +30,11 @@ const AddProduct = ({ addProductToStore, products }) => {
       imgSrc === "" ||
       category === ""
     ) {
-      alert("Debes llenar todos los campos");
+      setTittle("No se puede agregar este producto");
+      setmessage(
+        "Todos los campos son obligatorios para poder agregar este producto"
+      );
+      setmodalShow(true);
       return;
     }
     addProduct(
@@ -37,8 +45,17 @@ const AddProduct = ({ addProductToStore, products }) => {
       imgSrc,
       history,
       addProductToStore,
-      category
+      category,
+      setTittle,
+      setmessage,
+      setmodalShow
     );
+  };
+  const handleHide = () => {
+    if (message === "el producto fue guardado con exito") {
+      history.push("/");
+    }
+    setmodalShow(false);
   };
   return (
     <div className="FormAddProduct">
@@ -104,6 +121,12 @@ const AddProduct = ({ addProductToStore, products }) => {
       >
         Guardar
       </button>
+      <CustomModal
+        tittle={tittle}
+        message={message}
+        show={modalShow}
+        onHide={() => handleHide()}
+      />
     </div>
   );
 };
