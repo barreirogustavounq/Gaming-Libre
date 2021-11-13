@@ -1,7 +1,13 @@
 import React, {useEffect, useState} from "react";
 
 import "../../style/Product.scss";
-import {actualizeStock, buyProductNow, getOwnerData, getOwnerDataCart} from "../../service/ProductService";
+import {
+    actualizeCartStock,
+    actualizeStock,
+    buyProductNow,
+    getOwnerData,
+    getOwnerDataCart
+} from "../../service/ProductService";
 import styled from "@emotion/styled";
 import {useHistory} from "react-router-dom";
 

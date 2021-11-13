@@ -33,7 +33,7 @@ export const getBuyData = (userName) => {
 };
 
 export const changeStock = (productId, newStock) => {
-    return axios.post(`${url}products/actualizeStock/${id}/${newStock}`);
+    return axios.post(`${url}products/actualizeStock/${productId}/${newStock}`);
 };
 
 export const buyProduct = (product) => {

@@ -68,8 +68,14 @@ export const actualizeStock = (product) => {
     changeStock(product.id,product.stock - product.buyQuantity).then(result => console.log(result)).catch(er => console.log(er))
 };
 
-export const actualizeCartStock = (cart) => {
-  cart.forEach(prod => changeStock(prod))
+export const actualizeCartStock = () => {
+  const cart = JSON.parse(localStorage.getItem("cart"))
+  console.log(cart)
+  cart.forEach(prod => {
+    console.log(prod)
+    console.log(prod.stock - prod.buyQuantity)
+    changeStock(prod.id, prod.stock - prod.buyQuantity).then(result => console.log(result)).catch(er => console.log(er))
+  })
 };
 
 
