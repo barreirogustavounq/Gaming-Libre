@@ -15,8 +15,16 @@ import styled from "@emotion/styled";
 import { BiMoney } from "react-icons/bi";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router";
+import { getAllProducts, updateProcts } from "../Redux/ProductDuck";
 
-const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
+const Cart = ({
+  cart,
+  addProduct,
+  deleteProduct,
+  deleteAll,
+  getAllProducts,
+  updateProcts,
+}) => {
   const history = useHistory();
   const [cartstate, setcartstate] = useState(
     localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
@@ -65,6 +73,7 @@ const Cart = ({ cart, addProduct, deleteProduct, deleteAll }) => {
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
       buyAllProductsNow(cartstate, productsBuy, deleteAll);
+      updateProcts(getAllProducts());
     }
     if (payMethod === "mercadopago") {
       buyAllProductsMP(cartstate, productsBuy, deleteAll, setButtonUrl);
@@ -187,9 +196,13 @@ const mapState = (state) => {
     cart: state.cart.cart,
   };
 };
-export default connect(mapState, { addProduct, deleteProduct, deleteAll })(
-  Cart
-);
+export default connect(mapState, {
+  addProduct,
+  deleteProduct,
+  deleteAll,
+  getAllProducts,
+  updateProcts,
+})(Cart);
 
 const ImageCart = styled.img`
   min-height: 12em;

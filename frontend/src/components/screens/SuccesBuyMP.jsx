@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import "../../style/Product.scss";
 import {
   actualizeCartStock,
@@ -10,26 +9,33 @@ import {
 } from "../../service/ProductService";
 import styled from "@emotion/styled";
 import { useHistory } from "react-router-dom";
+import { deleteAll } from "../Redux/CartDuck";
+import { updateProduct } from "../Redux/ProductDuck";
+import { connect } from "react-redux";
 
-export const SuccessBuyMP = () => {
-  const cart =
+const SuccessBuyMP = ({ cart, deleteAll, updateProduct }) => {
+  const cartLS =
     localStorage.getItem("lastBuy") === "cart"
       ? JSON.parse(localStorage.getItem("mpBuy"))
       : null;
-  const product =
+  const [product, setproduct] = useState(
     localStorage.getItem("lastBuy") === "single"
       ? JSON.parse(localStorage.getItem("mpBuy"))
-      : null;
+      : null
+  );
+
   const [ownerData, setOwnerData] = useState(null);
   const history = useHistory();
 
   useEffect(() => {
-    if (product) {
+    if (product.stock === JSON.parse(localStorage.getItem("mpBuy")).stock) {
       getOwnerData(product, setOwnerData);
       actualizeStock(product);
+      updateProduct(product);
     } else {
-      getOwnerDataCart(cart, setOwnerData);
-      actualizeCartStock(product);
+      getOwnerDataCart(cartLS, setOwnerData);
+      actualizeCartStock(cartLS);
+      deleteAll(cart);
     }
   }, []);
 
@@ -68,6 +74,14 @@ export const SuccessBuyMP = () => {
     </Wrapper>
   ) : null;
 };
+const mapState = (state) => {
+  return {
+    cart: state.cart.cart,
+    products: state.products.products,
+  };
+};
+
+export default connect(mapState, { deleteAll, updateProduct })(SuccessBuyMP);
 
 const Wrapper = styled.div`
   background: white;

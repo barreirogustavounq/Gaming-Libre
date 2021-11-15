@@ -37,8 +37,8 @@ const BuyProduct = ({ updateProduct, product }) => {
         },
       });
     }
-    product.stock = product.stock - 1;
-    updateProduct(product);
+    //product.stock = product.stock - 1;
+    //updateProduct(product);
   };
   const selectPaid = () => {
     Swal.fire({
