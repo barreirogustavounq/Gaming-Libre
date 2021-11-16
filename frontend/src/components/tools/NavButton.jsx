@@ -7,6 +7,7 @@ const NavButton = ({ logoutAction, user }) => {
 
   const logOut = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("cart")
     logoutAction();
   };
   const handleClick = () => {

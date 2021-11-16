@@ -61,7 +61,6 @@ public class ProductService {
         return productRepository.findByNameContains(product).stream().filter(prod -> prod.getCategory() == cat).collect(Collectors.toList());
     }
     public List<Product> findByCategory(String category) {
-
         Category cat = getCategory(category);
         if (Category.all == cat ) {
             return productRepository.findAll();
@@ -76,6 +75,10 @@ public class ProductService {
 
 
     public ResponseEntity<?> changeStock(String id, Integer newStock) throws ChangeSetPersister.NotFoundException {
+        if(newStock <= 0) {
+            productRepository.deleteById(id);
+            return new ResponseEntity<>("compró la ultima unidad del producto", HttpStatus.OK);
+        }
         Product product = productRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
         product.setStock(newStock);
         return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
