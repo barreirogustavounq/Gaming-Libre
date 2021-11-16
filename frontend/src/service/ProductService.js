@@ -75,8 +75,15 @@ export const actualizeStock = (product) => {
     .catch((er) => console.log(er));
 };
 
-export const actualizeCartStock = (cart) => {
-  cart.forEach((prod) => changeStock(prod));
+export const actualizeCartStock = () => {
+  const cart = JSON.parse(localStorage.getItem("cart"));
+  console.log(cart);
+  cart.forEach((prod) => {
+    console.log(prod);
+    changeStock(prod.id, prod.stock - prod.buyQuantity)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  });
 };
 
 export const getOwnerDataCart = (cart, setOwnerData) => {

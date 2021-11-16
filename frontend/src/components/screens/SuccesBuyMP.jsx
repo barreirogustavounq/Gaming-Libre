@@ -10,10 +10,14 @@ import {
 import styled from "@emotion/styled";
 import { useHistory } from "react-router-dom";
 import { deleteAll } from "../Redux/CartDuck";
-import { updateProduct } from "../Redux/ProductDuck";
+import {
+  getAllProducts,
+  updateProcts,
+  updateProduct,
+} from "../Redux/ProductDuck";
 import { connect } from "react-redux";
 
-const SuccessBuyMP = ({ cart, deleteAll, updateProduct }) => {
+const SuccessBuyMP = ({ cart, deleteAll, updateProduct, getAllProducts }) => {
   const cartLS =
     localStorage.getItem("lastBuy") === "cart"
       ? JSON.parse(localStorage.getItem("mpBuy"))
@@ -28,15 +32,19 @@ const SuccessBuyMP = ({ cart, deleteAll, updateProduct }) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (product.stock === JSON.parse(localStorage.getItem("mpBuy")).stock) {
+    if (
+      product &&
+      product.stock === JSON.parse(localStorage.getItem("mpBuy")).stock
+    ) {
       getOwnerData(product, setOwnerData);
       actualizeStock(product);
       updateProduct(product);
     } else {
       getOwnerDataCart(cartLS, setOwnerData);
-      actualizeCartStock(cartLS);
+      actualizeCartStock();
       deleteAll(cart);
     }
+    getAllProducts();
   }, []);
 
   return ownerData ? (
@@ -81,7 +89,9 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState, { deleteAll, updateProduct })(SuccessBuyMP);
+export default connect(mapState, { deleteAll, updateProduct, getAllProducts })(
+  SuccessBuyMP
+);
 
 const Wrapper = styled.div`
   background: white;
