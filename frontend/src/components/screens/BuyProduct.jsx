@@ -19,7 +19,7 @@ const BuyProduct = ({ updateProduct, product }) => {
 
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
-      buyProductNow(product, setOwnerData, setBuyNow, buyNow, history);
+      buyProductNow(product, setOwnerData);
     }
     if (payMethod === "mercadopago") {
       buymp(product, setButtonUrl);
@@ -37,8 +37,6 @@ const BuyProduct = ({ updateProduct, product }) => {
         },
       });
     }
-    //product.stock = product.stock - 1;
-    //updateProduct(product);
   };
   const selectPaid = () => {
     Swal.fire({
@@ -63,28 +61,7 @@ const BuyProduct = ({ updateProduct, product }) => {
       },
     });
   };
-  return buyNow ? (
-    <Card
-      style={{
-        position: "flex",
-        marginLeft: "16%",
-        marginTop: "10em",
-        width: "200em",
-      }}
-    >
-      <Card.Body>
-        <Card.Title>Ya casi es tuyo!</Card.Title>
-        <Card.Text>
-          Estos son los datos de contacto de {product.ownerUsername}
-        </Card.Text>
-        <Card.Text>Ahora podes coordinar la entrega!</Card.Text>
-        <Card.Text>E-mail: {ownerData.email}</Card.Text>
-        <Card.Text>Teléfono: {ownerData.phone}</Card.Text>
-        <Card.Text>Ciudad: {ownerData.city}</Card.Text>
-        <Card.Text>Dirección: {ownerData.address}</Card.Text>
-      </Card.Body>
-    </Card>
-  ) : (
+  return  (
     <Card
       style={{
         position: "flex",
