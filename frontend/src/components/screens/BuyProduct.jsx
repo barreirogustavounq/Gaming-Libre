@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { connect } from "react-redux";
 import "../../style/Product.scss";
@@ -9,15 +9,17 @@ import AddCarButton from "../tools/AddCarButton";
 import Swal from "sweetalert2";
 import { buymp, buyProductNow } from "../../service/ProductService";
 import { updateProduct } from "../Redux/ProductDuck";
+import { useHistory } from "react-router";
 
 const BuyProduct = ({ updateProduct, product }) => {
+  const history = useHistory();
   const [buyNow, setBuyNow] = useState(false);
   const [ownerData, setOwnerData] = useState(null);
   const [buttonUrl, setButtonUrl] = useState("");
 
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
-      buyProductNow(product, setOwnerData, setBuyNow, buyNow);
+      buyProductNow(product, setOwnerData);
     }
     if (payMethod === "mercadopago") {
       buymp(product, setButtonUrl);
@@ -35,8 +37,6 @@ const BuyProduct = ({ updateProduct, product }) => {
         },
       });
     }
-    updateProduct(product);
-    product.stock = product.stock - 1;
   };
   const selectPaid = () => {
     Swal.fire({
@@ -61,33 +61,11 @@ const BuyProduct = ({ updateProduct, product }) => {
       },
     });
   };
-
-  return buyNow ? (
+  return  (
     <Card
       style={{
         position: "flex",
-        marginLeft: "20em",
-        marginTop: "10em",
-        width: "200em",
-      }}
-    >
-      <Card.Body>
-        <Card.Title>Ya casi es tuyo!</Card.Title>
-        <Card.Text>
-          Estos son los datos de contacto de {product.ownerUsername}
-        </Card.Text>
-        <Card.Text>Ahora podes coordinar la entrega!</Card.Text>
-        <Card.Text>E-mail: {ownerData.email}</Card.Text>
-        <Card.Text>Teléfono: {ownerData.phone}</Card.Text>
-        <Card.Text>Ciudad: {ownerData.city}</Card.Text>
-        <Card.Text>Dirección: {ownerData.address}</Card.Text>
-      </Card.Body>
-    </Card>
-  ) : (
-    <Card
-      style={{
-        position: "flex",
-        marginLeft: "20em",
+        marginLeft: "16%",
         marginTop: "10em",
         width: "200em",
       }}
@@ -111,7 +89,15 @@ const BuyProduct = ({ updateProduct, product }) => {
 
           <div style={{ marginTop: "2em" }} />
           {buttonUrl === "" ? (
-            <Button className={"pagarAhora"} onClick={() => selectPaid()}>
+            <Button
+              disabled={product.stock <= 0}
+              className={"pagarAhora"}
+              onClick={() =>
+                localStorage.getItem("user")
+                  ? selectPaid()
+                  : history.push("/login")
+              }
+            >
               <BiMoney /> Comprar ahora
             </Button>
           ) : (

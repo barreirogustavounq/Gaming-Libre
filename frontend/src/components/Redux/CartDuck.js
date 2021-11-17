@@ -40,7 +40,7 @@ export const cartReducer = (state = initialData, action) => {
       return {
         ...state,
         fetching: false,
-        cart: [],
+        cart: action.payload,
       };
     default:
       return state;
@@ -100,7 +100,7 @@ export const deleteAll = () => (dispatch, getState) => {
   //console.log(product);
   dispatch({
     type: DELETE_ALL,
-    payload: deleteAll(),
+    payload: [],
   });
   //console.log(deleteProductOfArray(product, cart));
 

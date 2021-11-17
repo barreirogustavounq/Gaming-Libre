@@ -44,6 +44,7 @@ const Category = () => {
       </div>
 
       <div className="container">
+        <BackButton />
         <div className="row" id="result">
           <MyPagination products={products} />
         </div>

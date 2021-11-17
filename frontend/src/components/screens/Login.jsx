@@ -18,7 +18,8 @@ const Login = ({ loginAction, user }) => {
   }
   useEffect(() => {
     if (user.loggedIn) {
-      history.push("/");
+      //history.push("/");
+      history.goBack();
     }
   });
 
@@ -64,7 +65,7 @@ const Login = ({ loginAction, user }) => {
                 ? "Usuario y/o contraseña incorrectas: "
                 : "¿Aún no tienes una cuenta?"}
             </Alert.Heading>
-            <Alert.Link href="http://localhost:3000/register">
+            <Alert.Link onClick={() => history.push("/register")}>
               Click para registrarte
             </Alert.Link>
             .

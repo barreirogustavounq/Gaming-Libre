@@ -8,9 +8,8 @@ import styled from "@emotion/styled";
 const Product = ({ products }) => {
   const id = useParams().id;
   const selectedProduct = products.find((prod) => prod.id === id);
-  return (
-      selectedProduct ?
-              <div className="row">
+  return selectedProduct ? (
+    <div className="row">
       <div className="column">
         <Card
           style={{
@@ -34,7 +33,9 @@ const Product = ({ products }) => {
       <div className="column">
         <BuyProduct product={selectedProduct} />
       </div>
-    </div> : <h1>Cargando...</h1>
+    </div>
+  ) : (
+    <h1>Cargando...</h1>
   );
 };
 const mapState = (state) => {
@@ -44,9 +45,8 @@ const mapState = (state) => {
 };
 
 const Image = styled.img`
-    max-height: 13rem;
-    max-width: -webkit-fill-available;
-    
-`
+  max-height: 13rem;
+  max-width: -webkit-fill-available;
+`;
 
 export default connect(mapState)(Product);

@@ -33,7 +33,7 @@ export const getBuyData = (userName) => {
 };
 
 export const changeStock = (productId, newStock) => {
-    return axios.post(`${url}products/actualizeStock/${productId}/${newStock}`);
+  return axios.post(`${url}products/actualizeStock/${productId}/${newStock}`);
 };
 
 export const buyProduct = (product) => {
@@ -47,7 +47,6 @@ export const buyProductMP = (preference, url) => {
 export const buyProductQuantity = (product) => {
     return axios.post(`${url}products/buy/${product.id}/${product.buyQuantity}`);
 };
-
 
 export const login = (username, password) => {
   return axios.post(

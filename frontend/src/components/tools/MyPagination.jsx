@@ -107,8 +107,6 @@ const MyPagination = (props) => {
 export default MyPagination;
 
 const NotElement = styled.h1`
-  padding-left: 2em;
-  padding-top: 7em;
-  padding-bottom: 2em;
+  min-height: 6.5rem;
   color: white;
 `;

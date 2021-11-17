@@ -26,9 +26,12 @@ export const productReducer = (state = initialData, action) => {
       return {
         ...state,
         fetching: false,
-        products: state.products
-          .filter((prod) => prod.id !== action.payload.id)
-          .concat([action.payload]),
+        products:
+          action.payload.stock > 0
+            ? state.products
+                .filter((prod) => prod.id !== action.payload.id)
+                .concat([action.payload])
+            : state.products.filter((prod) => prod.id !== action.payload.id),
       };
     case ADD_PRODUCT:
       return {
@@ -47,6 +50,7 @@ export const getAllProducts = () => (dispatch, getState) => {
   });
   get("products/getAll")
     .then((res) => {
+      console.log(res);
       dispatch({
         type: GET_PRODUCTS_SUCCESS,
         payload: res.data,
@@ -68,9 +72,11 @@ export const updateProcts = (products) => (dispatch, getState) => {
 };
 
 export const updateProduct = (product) => (dispatch, getState) => {
+  product.stock = product.stock - product.buyQuantity;
+  let result = product;
   dispatch({
     type: UPDATE_PRODUCT,
-    payload: product,
+    payload: result,
   });
 };
 

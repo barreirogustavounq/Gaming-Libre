@@ -5,9 +5,9 @@ import {
   mpPost,
   buyProductQuantity,
   get,
-  buyProductMP, changeStock,
+  changeStock,
 } from "../api/Api";
-import mercadopago from "mercadopago";
+
 
 const accesTokenMP =
   "TEST-4470583120056903-092823-e8250e22361adffae3967c20cd11f87f-240182164";
@@ -31,7 +31,10 @@ export const addProduct = (
   imgSrc,
   history,
   addProductToStore,
-  category
+  category,
+  setTittle,
+  setmessage,
+  setmodalShow
 ) => {
   let storage = localStorage.getItem("user");
   storage = JSON.parse(storage);
@@ -48,8 +51,9 @@ export const addProduct = (
     .then((res) => {
       console.log(res);
       addProductToStore(res.data);
-      alert("el producto fue guardado con exito");
-      history.push("/");
+      setTittle("Se ha añadido " + product.name);
+      setmessage("el producto fue guardado con exito");
+      setmodalShow(true);
     })
     .catch((err) => {
       console.log(err);
@@ -70,10 +74,7 @@ export const actualizeStock = (product) => {
 
 export const actualizeCartStock = () => {
   const cart = JSON.parse(localStorage.getItem("cart"))
-  console.log(cart)
   cart.forEach(prod => {
-    console.log(prod)
-    console.log(prod.stock - prod.buyQuantity)
     changeStock(prod.id, prod.stock - prod.buyQuantity).then(result => console.log(result)).catch(er => console.log(er))
   })
 };
@@ -90,7 +91,7 @@ export const getOwnerDataCart = (cart, setOwnerData) => {
       .catch((err) => console.log(err)))
 };
 
-export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
+export const buyProductNow = (product, setOwnerData) => {
   getBuyData(product.ownerUsername)
     .then((data) => {
       console.log(data.data);
@@ -100,7 +101,9 @@ export const buyProductNow = (product, setOwnerData, setBuyNow, buyNow) => {
   console.log(product);
   buyProduct(product)
     .then((data) => {
-      setBuyNow(!buyNow);
+      localStorage.setItem("mpBuy", JSON.stringify(product));
+      localStorage.setItem("lastBuy", "single");
+      history.push("/success");
     })
     .catch((err) => console.log(err));
 };
@@ -133,8 +136,6 @@ export const buyAllProductsMP = (
      name + "," + product.name,'');
   const price = cartstate.reduce((price, product) =>
      price + product.price * product.buyQuantity,0);
-  console.log(price)
-  console.log(name)
   mpPost("payment/new", {
     name: `${name}`,
     unit: 1,
@@ -164,7 +165,6 @@ export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {
   );
   deleteAll();
 };
-
 
 export const getCategories = (setCategories) => {
   const URL = "products/categories";
