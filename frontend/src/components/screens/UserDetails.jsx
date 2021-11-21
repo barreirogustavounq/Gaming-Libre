@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import "../../style/UserDetails.scss";
 import { updateUser } from "../../api/Api";
 import { connect } from "react-redux";
 import { updateUserStorage } from "../Redux/UserDuck";
 import { updateUserService } from "../../service/UserService";
+import { getShoppingofUser } from "../../service/ShoppingService";
+import ShoppingsComponent from "../tools/ShoppingsComponent";
 
 const UserDetails = ({ updateUserStorage, userStorage }) => {
   const user = useParams().id;
   const [userstate, setuserstate] = useState(userStorage);
+  const [shopping, setshopping] = useState(undefined);
 
   const handleUpdate = () => {
     updateUserService(
@@ -19,7 +22,12 @@ const UserDetails = ({ updateUserStorage, userStorage }) => {
       setuserstate
     );
   };
-
+  useEffect(() => {
+    getShoppingofUser(userstate, setshopping);
+  }, [userstate]);
+  useEffect(() => {
+    console.log(shopping);
+  }, [shopping]);
   const handleChange = (e, attr) => {
     let userChange = userstate;
     userChange[attr] = e.target.value;
@@ -152,6 +160,16 @@ const UserDetails = ({ updateUserStorage, userStorage }) => {
             </div>
           </div>
         </div>
+      </div>
+      <h1>Mis compras</h1>
+      <div className="container">
+        {shopping ? (
+          shopping.map((shop) => {
+            return <ShoppingsComponent products={shop.productList} />;
+          })
+        ) : (
+          <h1>No hay compras</h1>
+        )}
       </div>
     </>
   ) : (
