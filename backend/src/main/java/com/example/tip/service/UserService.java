@@ -31,7 +31,7 @@ public class UserService {
 
     public User addUser(User user) {
         if (validateUser(user)) {
-            Optional<User> userCheck = userRepository.findByUsername(user.getUsername());
+            Optional<User> userCheck = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
             if (userCheck.isPresent()) throw new UserAlreadyExists(HttpStatus.ALREADY_REPORTED);
             return userRepository.save(user);
         } else {

@@ -36,8 +36,23 @@ export const registerService = (
   };
   register(user)
     .then((result) => {
-      setAlertVisible(!alertVisible);
-      history.push("/login");
+      console.log(result);
+      if (result.error) {
+        setAlertVisible(!alertVisible);
+      } else {
+        //history.push("/login");
+      }
+      return result.data;
+    })
+    .then((data) => {
+      if (data.error) {
+        alert(
+          "No se logro crear la cuenta, el usuario y/o mail ya se encuentran registrados"
+        );
+      } else {
+        alert("cuanta creada exitosamente");
+        history.push("/login");
+      }
     })
     .catch((error) => {
       alert(error);
