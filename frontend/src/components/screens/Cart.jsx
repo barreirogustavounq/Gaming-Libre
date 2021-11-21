@@ -24,6 +24,7 @@ const Cart = ({
   deleteAll,
   getAllProducts,
   updateProcts,
+  user,
 }) => {
   const history = useHistory();
   const [cartstate, setcartstate] = useState(
@@ -72,7 +73,7 @@ const Cart = ({
 
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
-      buyAllProductsNow(cartstate, productsBuy, deleteAll);
+      buyAllProductsNow(cartstate, productsBuy, deleteAll, user);
       updateProcts(getAllProducts());
     }
     if (payMethod === "mercadopago") {
@@ -194,6 +195,7 @@ const Cart = ({
 const mapState = (state) => {
   return {
     cart: state.cart.cart,
+    user: state.user.user,
   };
 };
 export default connect(mapState, {

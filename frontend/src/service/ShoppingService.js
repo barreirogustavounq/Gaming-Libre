@@ -1,4 +1,4 @@
-import { getShopping } from "../api/Api";
+import { addShopping, getShopping } from "../api/Api";
 
 export const getShoppingofUser = (user, setshopping) => {
   getShopping(user)
@@ -7,5 +7,11 @@ export const getShoppingofUser = (user, setshopping) => {
       console.log(data);
       setshopping(data);
     })
+    .catch((err) => console.log(err));
+};
+
+export const addShooppingService = (user, products) => {
+  addShopping(user, products)
+    .then((res) => console.log(res))
     .catch((err) => console.log(err));
 };

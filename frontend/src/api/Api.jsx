@@ -102,7 +102,7 @@ export const addShopping = (user, productList) => {
   return axios.post(
     `${url}shopping/add-shopping`,
     {
-      user: user.userName,
+      user: user.username,
       productList: productList,
     },
     header

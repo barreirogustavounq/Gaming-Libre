@@ -5,10 +5,8 @@ const ShoppingsComponent = ({ products }) => {
   const [productsState, setproductsState] = useState([]);
 
   useEffect(() => {
-    if (!productsState) {
-      setproductsState(products);
-    }
-  }, []);
+    setproductsState(products);
+  }, [products]);
   console.log(productsState);
   const renderElement = () => {
     if (productsState.length > 0) {
@@ -16,7 +14,7 @@ const ShoppingsComponent = ({ products }) => {
         <CardGroup>
           {productsState.map((prod) => {
             return (
-              <Card>
+              <Card key={prod.id}>
                 <Card.Img variant="top" src={prod.imgSrc} />
                 <Card.Body>
                   <Card.Title>{prod.name}</Card.Title>

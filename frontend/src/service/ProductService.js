@@ -7,6 +7,7 @@ import {
   get,
   changeStock,
 } from "../api/Api";
+import { addShooppingService } from "./ShoppingService";
 
 const accesTokenMP =
   "TEST-4470583120056903-092823-e8250e22361adffae3967c20cd11f87f-240182164";
@@ -94,7 +95,7 @@ export const getOwnerDataCart = (cart, setOwnerData) => {
   );
 };
 
-export const buyProductNow = (product, setOwnerData) => {
+export const buyProductNow = (product, setOwnerData, user) => {
   getBuyData(product.ownerUsername)
     .then((data) => {
       console.log(data.data);
@@ -108,6 +109,7 @@ export const buyProductNow = (product, setOwnerData) => {
       localStorage.setItem("lastBuy", "single");
     })
     .catch((err) => console.log(err));
+  addShooppingService(user, [product]);
 };
 
 export const buymp = (product, setButtonUrl) => {
@@ -158,7 +160,7 @@ export const buyAllProductsMP = (
   });
 };
 
-export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {
+export const buyAllProductsNow = (cartstate, productsBuy, deleteAll, user) => {
   cartstate.map((product) =>
     buyProductQuantity(product)
       .then((response) => {
@@ -170,6 +172,7 @@ export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {
       })
   );
   deleteAll();
+  addShooppingService(user, cartstate);
 };
 
 export const getCategories = (setCategories) => {

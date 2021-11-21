@@ -11,7 +11,7 @@ import { buymp, buyProductNow } from "../../service/ProductService";
 import { updateProduct } from "../Redux/ProductDuck";
 import { useHistory } from "react-router";
 
-const BuyProduct = ({ updateProduct, product }) => {
+const BuyProduct = ({ updateProduct, product, user }) => {
   const history = useHistory();
   const [buyNow, setBuyNow] = useState(false);
   const [ownerData, setOwnerData] = useState(null);
@@ -19,7 +19,7 @@ const BuyProduct = ({ updateProduct, product }) => {
 
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
-      buyProductNow(product, setOwnerData);
+      buyProductNow(product, setOwnerData, user);
     }
     if (payMethod === "mercadopago") {
       buymp(product, setButtonUrl);
@@ -61,7 +61,7 @@ const BuyProduct = ({ updateProduct, product }) => {
       },
     });
   };
-  return  (
+  return (
     <Card
       style={{
         position: "flex",
@@ -114,6 +114,7 @@ const BuyProduct = ({ updateProduct, product }) => {
 const mapState = (state) => {
   return {
     products: state.products.products,
+    user: state.user.user,
   };
 };
 
