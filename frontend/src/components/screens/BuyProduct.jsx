@@ -20,6 +20,8 @@ const BuyProduct = ({ updateProduct, product, user }) => {
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
       buyProductNow(product, setOwnerData, user);
+      updateProduct(product);
+      history.push(`/success`);
     }
     if (payMethod === "mercadopago") {
       buymp(product, setButtonUrl);
