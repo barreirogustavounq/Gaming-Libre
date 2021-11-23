@@ -1,10 +1,157 @@
-.column {
-  float: left;
-  width: 40%;
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+
+//$senape: #bcbd31;
+$senape: #0d6efd;
+$giallo: rgb(254, 203, 108);
+
+$cubicBounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+a {
+  text-decoration: none;
+  color: #3399ff;
 }
 
-/* Clear floats after the columns */
-.row:after {
-  display: table;
-  clear: both;
+#qt {
+  color: rgb(153, 153, 153);
+}
+
+p {
+  .fa[class~="angle"] {
+    font-size: 1.3rem;
+    position: relative;
+    top: 0.15rem;
+    margin: 0 20px;
+    cursor: pointer;
+    color: rgb(216, 216, 216);
+    transition: all 0.5s;
+    &:hover {
+      color: $senape;
+    }
+  }
+}
+
+.yellow {
+  color: $giallo;
+}
+.product {
+  height: 37rem;
+  width: 60rem;
+  background: white;
+  position: relative;
+  left: calc(37% - 300px);
+  margin-top: calc(50vh - 250px);
+  &.action {
+    animation: bounce 1s $cubicBounce infinite;
+  }
+  .header {
+    height: 40px;
+    position: relative;
+    padding: 20px;
+    .back {
+      position: relative;
+      width: 0px;
+      height: 0px;
+      border-top: 30px solid $senape;
+      border-bottom: 30px solid transparent;
+      border-left: 30px solid $senape;
+      border-right: 30px solid transparent;
+      &:before {
+        content: "←";
+        position: absolute;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.3rem;
+        font-weight: bold;
+        top: -22px;
+        left: -22px;
+      }
+    }
+  }
+  .main {
+    padding: 0 30px;
+    box-sizing: border-box;
+    .quantity {
+      margin-top: 40px;
+      color: #333;
+    }
+    h1 {
+      font-size: 4.5rem;
+      -webkit-margin-before: 0;
+      -webkit-margin-after: 0;
+      margin: 0 -5px -15px;
+      color: #232e3a;
+    }
+    h2 {
+      color: #999999;
+      -webkit-margin-before: 0;
+      -webkit-margin-after: 0;
+      margin: 0 0;
+      text-transform: uppercase;
+    }
+    h3 {
+      color: #232e3a;
+      margin: 0;
+    }
+    img {
+      max-width: 75%;
+      margin-left: 25px;
+      max-height: 20rem;
+      min-height: 20rem;
+      min-width: 15rem;
+    }
+    .left,
+    .right {
+      width: 50%;
+      padding: 0 calc(5% - 1px);
+    }
+    .right {
+      color: #999;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    padding: 5px 40px 5px 0;
+    width: calc(90% - 40px);
+    left: 10%;
+    border-top: 1px solid #ccc;
+    .left {
+      p:before {
+        content: "Total Price";
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        color: black;
+        position: absolute;
+        top: -12px;
+        width: 200%;
+      }
+    }
+    p {
+      color: gray;
+      position: relative;
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+@keyframes bounce {
+  50% {
+    transform: translateX(10px);
+  }
+}
+.btn-primary {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  min-width: 11rem;
 }
