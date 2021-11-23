@@ -21,7 +21,7 @@ const SuccessBuyMP = ({
   user,
   cart,
   deleteAll,
-  updateProduct,
+  updateProcts,
   getAllProducts,
 }) => {
   const cartLS =
@@ -42,7 +42,7 @@ const SuccessBuyMP = ({
     ) {
       getOwnerData(product, setOwnerData);
       actualizeStock(product);
-      updateProduct(product);
+      updateProcts([product]);
       addShooppingService(user, [product]);
     } else {
       getOwnerDataCart(cartLS, setOwnerData);
@@ -97,7 +97,7 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState, { deleteAll, updateProduct, getAllProducts })(
+export default connect(mapState, { deleteAll, updateProcts, getAllProducts })(
   SuccessBuyMP
 );
 

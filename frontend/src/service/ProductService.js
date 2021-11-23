@@ -26,6 +26,7 @@ let preference = {
 export const addProduct = (
   nombre,
   descripcion,
+  caracteristica,
   precio,
   stock,
   imgSrc,
@@ -42,11 +43,13 @@ export const addProduct = (
     ownerUsername: storage.username,
     name: nombre,
     description: descripcion,
-    stock,
+    stock: stock,
+    caracteristica: caracteristica,
     price: precio,
     imgSrc: imgSrc,
     category: category.replace(" ", ""),
   };
+  console.log(product);
   post("products/add", product)
     .then((res) => {
       console.log(res);
@@ -103,7 +106,7 @@ export const buyProductNow = (product, setOwnerData, user) => {
     })
     .catch((err) => console.log(err));
   console.log(product);
-  buyProduct(product)
+  buyProductQuantity(product)
     .then((data) => {
       localStorage.setItem("mpBuy", JSON.stringify(product));
       localStorage.setItem("lastBuy", "single");

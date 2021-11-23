@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router";
 import BuyProduct from "./BuyProduct";
-import { Card } from "react-bootstrap";
+import { Card, ListGroup } from "react-bootstrap";
 import styled from "@emotion/styled";
 import AddCarButton from "../tools/AddCarButton";
 import { FaShippingFast } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Loading from "./Loading";
 
 const Product = ({ products }) => {
   const id = useParams().id;
   let selectedProduct = products.find((prod) => prod.id === id);
+  setTimeout(() => {}, 6000);
   const [buyQuantity, setbuyQuantity] = useState(0);
 
   useEffect(() => {
@@ -49,7 +51,7 @@ const Product = ({ products }) => {
           <FaShippingFast /> Metodo de entrega: Retira en domicilio del
           vendedor.
           <p>En stock: {selectedProduct.stock}</p>
-          <p className="quantity">
+          <Description className="quantity">
             Cantidad{" "}
             <span
               className="fa fa-angle-left angle"
@@ -60,28 +62,33 @@ const Product = ({ products }) => {
               className="fa fa-angle-right angle"
               onClick={(e) => handleSum()}
             />
-          </p>
+            <span>
+              {" "}
+              <h4>${selectedProduct.price * selectedProduct.buyQuantity} </h4>
+            </span>
+          </Description>
         </div>
         <div className="container">
-          <CartButtonStyle className="col-12">
+          <CartButtonStyle className="col-3">
             <AddCarButton product={selectedProduct} />
           </CartButtonStyle>
-          <BuyButtonStyle className="col-12">
+          <BuyButtonStyle className="col-3">
             <BuyProduct product={selectedProduct} />
           </BuyButtonStyle>
         </div>
       </div>
       <div className="footer">
-        <div className="left">
-          <p id="price">
-            ${selectedProduct.price * selectedProduct.buyQuantity}
-          </p>
-        </div>
-        <div className="right"></div>
+        <p>Caracteristicas</p>
+
+        <ListGroup variant="flush">
+          {selectedProduct.caracteristica.map((c) => (
+            <ListGroup.Item>{c}</ListGroup.Item>
+          ))}
+        </ListGroup>
       </div>
     </div>
   ) : (
-    <h1>Cargando...</h1>
+    <Loading />
   );
 };
 const mapState = (state) => {
@@ -103,12 +110,12 @@ const Description = styled.p`
 const CartButtonStyle = styled.div`
   position: absolute;
   left: 34rem;
-  top: 30rem;
+  top: 31rem;
 `;
 const BuyButtonStyle = styled.div`
   position: absolute;
   left: 34rem;
-  top: 25rem;
+  top: 27rem;
 `;
 
 export default connect(mapState)(Product);

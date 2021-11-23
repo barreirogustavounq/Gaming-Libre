@@ -8,10 +8,10 @@ import { BiMoney } from "react-icons/bi";
 import AddCarButton from "../tools/AddCarButton";
 import Swal from "sweetalert2";
 import { buymp, buyProductNow } from "../../service/ProductService";
-import { updateProduct } from "../Redux/ProductDuck";
+import { updateProcts } from "../Redux/ProductDuck";
 import { useHistory } from "react-router";
 
-const BuyProduct = ({ updateProduct, product, user }) => {
+const BuyProduct = ({ updateProcts, product, user }) => {
   const history = useHistory();
   const [buyNow, setBuyNow] = useState(false);
   const [ownerData, setOwnerData] = useState(null);
@@ -20,7 +20,7 @@ const BuyProduct = ({ updateProduct, product, user }) => {
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
       buyProductNow(product, setOwnerData, user);
-      updateProduct(product);
+      updateProcts([product]);
       history.push(`/success`);
     }
     if (payMethod === "mercadopago") {
@@ -87,4 +87,4 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState, { updateProduct })(BuyProduct);
+export default connect(mapState, { updateProcts })(BuyProduct);

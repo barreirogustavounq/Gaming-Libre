@@ -72,7 +72,7 @@ export const updateProcts = (products) => (dispatch, getState) => {
 };
 
 export const updateProduct = (product) => (dispatch, getState) => {
-  product.stock = product.stock - product.buyQuantity;
+  product.stock -= product.buyQuantity;
   let result = product;
   dispatch({
     type: UPDATE_PRODUCT,

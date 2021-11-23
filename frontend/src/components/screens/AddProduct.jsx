@@ -8,6 +8,7 @@ import { addProductToStore } from "../Redux/ProductDuck";
 import { addProduct } from "../../service/ProductService";
 import categories from "../tools/CategoryList";
 import CustomModal from "../tools/CustomModal";
+import "../../style/AddProduct.css";
 
 const AddProduct = ({ addProductToStore, products }) => {
   const [nombre, setnombre] = useState("");
@@ -20,6 +21,54 @@ const AddProduct = ({ addProductToStore, products }) => {
   const [tittle, setTittle] = useState("");
   const [message, setmessage] = useState("");
   const history = useHistory();
+  const [contactCount, setContactCount] = useState(0);
+  const [caracteristica, setcaracteristica] = useState([]);
+
+  const getContactInputElements = () => {
+    let contactInputElements = [];
+    for (let i = 0; i <= contactCount; i++) {
+      contactInputElements.push(
+        <div
+          key={i}
+          id={"caracteristica_" + i}
+          className="input-group input-group-sm mb-3"
+        >
+          <div className="input-group-prepend">
+            <span className="input-group-text" id="inputGroup-sizing-sm">
+              {"caracteristica_" + i}
+            </span>
+          </div>
+          <input
+            type="text"
+            className="form-control"
+            aria-label="Small"
+            aria-describedby="inputGroup-sizing-sm"
+            placeholder="Ingrese una caracteristica"
+            onChange={handleInput}
+          />
+        </div>
+      );
+    }
+    return contactInputElements;
+  };
+
+  const handleInput = (e) => {
+    let eventClass = e.target.className;
+    switch (eventClass) {
+      case "add_contact":
+        setContactCount(contactCount + 1);
+        break;
+      case "form-control":
+        let name = e.target.name;
+        let id = e.target.parentElement.id;
+        let value = caracteristica[id] ? e.target.value : e.target.value;
+        let newcaracteristica = [value];
+        setcaracteristica(caracteristica.concat(newcaracteristica));
+        break;
+      default:
+        break;
+    }
+  };
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -40,6 +89,7 @@ const AddProduct = ({ addProductToStore, products }) => {
     addProduct(
       nombre,
       descripcion,
+      caracteristica,
       precio,
       stock,
       imgSrc,
@@ -75,6 +125,13 @@ const AddProduct = ({ addProductToStore, products }) => {
         function={setDescripcion}
         required={true}
       />
+      <div>
+        <button className="add_contact" onClick={handleInput}>
+          +
+        </button>
+        {getContactInputElements()}
+      </div>
+
       <FormAddProduct
         label={"$"}
         placeholder={"Ingrese el precio del producto"}
