@@ -85,7 +85,7 @@ const FilterForm = ({
               </Button>
             </WrapperButton>
           </div>
-          <div className="col-3">
+          <InputFilter className="col-3">
             <input
               type="number"
               className="form-control"
@@ -95,8 +95,8 @@ const FilterForm = ({
                 handleChangeinput(e, "minimo", setmin);
               }}
             />
-          </div>
-          <div className="col-3">
+          </InputFilter>
+          <InputFilter className="col-3">
             <input
               type="number"
               className="form-control"
@@ -106,7 +106,7 @@ const FilterForm = ({
                 handleChangeinput(e, "maximo", setmax);
               }}
             />
-          </div>
+          </InputFilter>
           <div className="col-2">
             <Button
               variant="primary"
@@ -172,3 +172,4 @@ const TitleResult = styled.h1`
 const WrapperButton = styled.div`
   margin-left: 2%;
 `;
+const InputFilter = styled.div``;

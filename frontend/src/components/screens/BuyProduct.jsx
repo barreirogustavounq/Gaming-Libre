@@ -8,10 +8,10 @@ import { BiMoney } from "react-icons/bi";
 import AddCarButton from "../tools/AddCarButton";
 import Swal from "sweetalert2";
 import { buymp, buyProductNow } from "../../service/ProductService";
-import { updateProduct } from "../Redux/ProductDuck";
+import { updateProcts } from "../Redux/ProductDuck";
 import { useHistory } from "react-router";
 
-const BuyProduct = ({ updateProduct, product, user }) => {
+const BuyProduct = ({ updateProcts, product, user }) => {
   const history = useHistory();
   const [buyNow, setBuyNow] = useState(false);
   const [ownerData, setOwnerData] = useState(null);
@@ -20,7 +20,7 @@ const BuyProduct = ({ updateProduct, product, user }) => {
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
       buyProductNow(product, setOwnerData, user);
-      updateProduct(product);
+      updateProcts([product]);
       history.push(`/success`);
     }
     if (payMethod === "mercadopago") {
@@ -63,53 +63,20 @@ const BuyProduct = ({ updateProduct, product, user }) => {
       },
     });
   };
-  return (
-    <Card
-      style={{
-        position: "flex",
-        marginLeft: "16%",
-        marginTop: "10em",
-        width: "200em",
-      }}
+  return buttonUrl === "" ? (
+    <Button
+      disabled={product.stock <= 0}
+      className={"pagarAhora"}
+      onClick={() =>
+        localStorage.getItem("user") ? selectPaid() : history.push("/login")
+      }
     >
-      <Card.Body>
-        <Card.Title>Compra tu producto: {product.name}</Card.Title>
-        <div style={{ marginTop: "2em" }} />
-        <Card.Subtitle className="mb-2 text-muted">Descripción:</Card.Subtitle>
-        <Card.Text>{product.description}</Card.Text>
-        <div style={{ marginTop: "2em" }} />
-        <Card.Text>
-          <FaShippingFast /> Metodo de entrega: Retira en domicilio del
-          vendedor.
-        </Card.Text>
-        <div style={{ marginTop: "2em" }} />
-        <Card.Text>Cantidad disponible: {product.stock}</Card.Text>
-        <div style={{ marginTop: "2em" }} />
-        <Card.Footer>
-          <div style={{ marginTop: "2em" }} />
-          <AddCarButton product={product} />
-
-          <div style={{ marginTop: "2em" }} />
-          {buttonUrl === "" ? (
-            <Button
-              disabled={product.stock <= 0}
-              className={"pagarAhora"}
-              onClick={() =>
-                localStorage.getItem("user")
-                  ? selectPaid()
-                  : history.push("/login")
-              }
-            >
-              <BiMoney /> Comprar ahora
-            </Button>
-          ) : (
-            <Button href={buttonUrl} className={"pagarAhora"}>
-              <BiMoney /> Pagar con MercadoPago
-            </Button>
-          )}
-        </Card.Footer>
-      </Card.Body>
-    </Card>
+      <BiMoney /> Comprar ahora
+    </Button>
+  ) : (
+    <Button href={buttonUrl} className={"pagarAhora"}>
+      <BiMoney /> Pagar con MercadoPago
+    </Button>
   );
 };
 
@@ -120,4 +87,4 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState, { updateProduct })(BuyProduct);
+export default connect(mapState, { updateProcts })(BuyProduct);
