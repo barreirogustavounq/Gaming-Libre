@@ -46,7 +46,7 @@ const Product = ({ products }) => {
           <img src={selectedProduct.imgSrc} alt="" />
         </div>
         <div className="right">
-          <p id="price">Descripcion:</p>
+          <h4 id="price">Descripcion:</h4>
           <Description>{selectedProduct.description}</Description>
           <FaShippingFast /> Metodo de entrega: Retira en domicilio del
           vendedor.
@@ -78,7 +78,7 @@ const Product = ({ products }) => {
         </div>
       </div>
       <div className="footer">
-        <p>Caracteristicas</p>
+        <p>Caracteristicas:</p>
 
         <ListGroup variant="flush">
           {selectedProduct.caracteristica.map((c) => (
