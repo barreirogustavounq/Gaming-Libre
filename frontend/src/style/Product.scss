@@ -42,6 +42,7 @@ p {
   left: calc(37% - 300px);
   margin-top: calc(50vh - 250px);
   overflow-wrap: break-word;
+  min-height: 40rem;
   &.action {
     animation: bounce 1s $cubicBounce infinite;
   }
@@ -50,7 +51,7 @@ p {
     position: relative;
     padding: 20px;
     .back {
-      position: relative;
+      position: absolute;
       width: 0px;
       height: 0px;
       border-top: 30px solid $senape;
@@ -112,11 +113,9 @@ p {
     }
   }
   .footer {
-    position: absolute;
     bottom: 0;
     padding: 5px 40px 5px 0;
     width: calc(90% - 40px);
-    border-top: 1px solid #ccc;
     .left {
       p:before {
         content: "Precio Total";
@@ -130,7 +129,6 @@ p {
     }
     p {
       color: gray;
-      position: relative;
       font-size: 1.5rem;
     }
   }
@@ -158,5 +156,4 @@ p {
 .list-group-flush {
   border-radius: 0;
   width: 60rem;
-  position: absolute;
 }
