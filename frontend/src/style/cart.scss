@@ -6,6 +6,10 @@ $font-default: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
 $font-bold: "HelveticaNeue-Medium", "Helvetica Neue Medium";
 
 /* Global "table" column settings */
+#noHayElementos {
+  margin: 25rem;
+}
+
 .productcart-image {
   float: left;
   width: 20%;
