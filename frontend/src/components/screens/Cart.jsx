@@ -3,7 +3,7 @@ import { FaTrash } from "react-icons/fa";
 import { IoIosAdd, IoIosRemove } from "react-icons/io";
 import { connect } from "react-redux";
 import { deleteProduct, deleteAll, addProduct } from "../Redux/CartDuck";
-import "../../style/cart.css";
+import "../../style/cart.scss";
 import { Badge, Button } from "react-bootstrap";
 import {
   buyAllProductsMP,
@@ -32,6 +32,7 @@ const Cart = ({
   );
   const [buttonUrl, setButtonUrl] = useState("");
   let total = 0;
+  let envio = 500;
   const [size, setSize] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -117,79 +118,189 @@ const Cart = ({
     });
   };
 
+  const OldCart = () => {
+    return (
+      <ContainerCart className="container">
+        {cartstate.map((product) => {
+          total += product.price * product.buyQuantity;
+          return (
+            <RowCart key={product.id}>
+              <div className={size > 990 ? "col-3" : "col-5"}>
+                {" "}
+                <ImageCart src={product.imgSrc} alt={product.id} />)
+              </div>
+
+              {size > 990 ? (
+                <div className="col-3">
+                  <H1Cart> {product.name} </H1Cart>{" "}
+                </div>
+              ) : (
+                <></>
+              )}
+
+              <div className={size > 990 ? "col-2" : "col-3"}>
+                <H1Cart> $ {product.price} </H1Cart>{" "}
+              </div>
+              <div className="col-3">
+                <H1Cart>
+                  <Button onClick={(e) => handleRemoveOneToCart(product)}>
+                    <IoIosRemove />
+                  </Button>
+                  {"    "}
+                  {product.buyQuantity}
+                  {"    "}
+                  <Button onClick={(e) => handleAddOneToCart(product)}>
+                    <IoIosAdd />
+                  </Button>
+                </H1Cart>
+              </div>
+              <div className="col-1">
+                <H1Cart>
+                  {" "}
+                  <Button
+                    id="deleteIcon"
+                    onClick={(e) => handleDelete(product)}
+                  >
+                    <FaTrash />
+                  </Button>{" "}
+                </H1Cart>
+              </div>
+            </RowCart>
+          );
+        })}
+        <div className="container">
+          <RowCart>
+            {buttonUrl === "" ? (
+              <Button
+                className="col align-self-center"
+                onClick={() =>
+                  localStorage.getItem("user")
+                    ? selectPaid()
+                    : history.push("/login")
+                }
+              >
+                {" "}
+                Comprar todos los productos por $ {total}
+              </Button>
+            ) : (
+              <Button className="col align-self-center" href={buttonUrl}>
+                <BiMoney /> Pagar con MercadoPago
+              </Button>
+            )}
+          </RowCart>
+        </div>
+      </ContainerCart>
+    );
+  };
+  const NewCart = () => {
+    return (
+      <ContainerRow className="container">
+        <div className="column-labels">
+          <label className="productcart-image">Imagen</label>
+          <label className="productcart-details">Producto</label>
+          <label className="productcart-price">Precio</label>
+          <label className="productcart-quantity">Cantidad</label>
+          <label className="productcart-removal">Eliminar</label>
+          <label className="productcart-line-price">Total</label>
+        </div>
+        {cartstate.map((product) => {
+          total += product.price * product.buyQuantity;
+          return (
+            <div className="row">
+              <div className="col-12">
+                {" "}
+                <div className="shopping-cart">
+                  <div className="productcart">
+                    <div className="productcart-image">
+                      <img src={product.imgSrc} alt={product.id} />
+                    </div>
+                    <div className="productcart-details">
+                      <div className="productcart-title">{product.name}</div>
+                    </div>
+                    <div className="productcart-price">{product.price}</div>
+                    <div className="productcart-quantity">
+                      <IoIosRemove
+                        onClick={(e) => handleRemoveOneToCart(product)}
+                      />
+
+                      {"    "}
+                      {product.buyQuantity}
+                      {"    "}
+
+                      <IoIosAdd onClick={(e) => handleAddOneToCart(product)} />
+                    </div>
+                    <div className="productcart-removal">
+                      <button
+                        className="remove-productcart"
+                        onClick={(e) => handleDelete(product)}
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                    <div className="productcart-line-price">
+                      {product.price * product.buyQuantity}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+        <div className="container">
+          <RowTotal className="row">
+            <div className="col">
+              <Totals className="totals">
+                <div className="totals-item">
+                  <label>Subtotal</label>
+                  <div className="totals-value" id="cart-subtotal">
+                    {total}
+                  </div>
+                </div>
+                <div className="totals-item">
+                  <label>Envio</label>
+                  <div className="totals-value" id="cart-shipping">
+                    {envio}
+                  </div>
+                </div>
+                <hr />
+                <div className="totals-item totals-item-total">
+                  <label>Total</label>
+                  <div className="totals-value" id="cart-total">
+                    {total + envio}
+                  </div>
+                </div>
+              </Totals>
+              {buttonUrl === "" ? (
+                <Button
+                  className="checkout"
+                  onClick={() =>
+                    localStorage.getItem("user")
+                      ? selectPaid()
+                      : history.push("/login")
+                  }
+                >
+                  {" "}
+                  Comprar
+                </Button>
+              ) : (
+                <Button className="checkout" href={buttonUrl}>
+                  <BiMoney /> Pagar
+                </Button>
+              )}
+            </div>
+          </RowTotal>
+        </div>
+      </ContainerRow>
+    );
+  };
+
   return cartstate.length === 0 ? (
     <h1 id="noHayElementos">
       {" "}
       <Badge bg="secondary">No hay elementos en el carrito </Badge>{" "}
     </h1>
   ) : (
-    <ContainerCart className="container">
-      {cartstate.map((product) => {
-        total += product.price * product.buyQuantity;
-        return (
-          <RowCart key={product.id}>
-            <div className={size > 990 ? "col-3" : "col-5"}>
-              {" "}
-              <ImageCart src={product.imgSrc} alt={product.id} />)
-            </div>
-
-            {size > 990 ? (
-              <div className="col-3">
-                <H1Cart> {product.name} </H1Cart>{" "}
-              </div>
-            ) : (
-              <></>
-            )}
-
-            <div className={size > 990 ? "col-2" : "col-3"}>
-              <H1Cart> $ {product.price} </H1Cart>{" "}
-            </div>
-            <div className="col-3">
-              <H1Cart>
-                <Button onClick={(e) => handleRemoveOneToCart(product)}>
-                  <IoIosRemove />
-                </Button>
-                {"    "}
-                {product.buyQuantity}
-                {"    "}
-                <Button onClick={(e) => handleAddOneToCart(product)}>
-                  <IoIosAdd />
-                </Button>
-              </H1Cart>
-            </div>
-            <div className="col-1">
-              <H1Cart>
-                {" "}
-                <Button id="deleteIcon" onClick={(e) => handleDelete(product)}>
-                  <FaTrash />
-                </Button>{" "}
-              </H1Cart>
-            </div>
-          </RowCart>
-        );
-      })}
-      <div className="container">
-        <RowCart>
-          {buttonUrl === "" ? (
-            <Button
-              className="col align-self-center"
-              onClick={() =>
-                localStorage.getItem("user")
-                  ? selectPaid()
-                  : history.push("/login")
-              }
-            >
-              {" "}
-              Comprar todos los productos por $ {total}
-            </Button>
-          ) : (
-            <Button className="col align-self-center" href={buttonUrl}>
-              <BiMoney /> Pagar con MercadoPago
-            </Button>
-          )}
-        </RowCart>
-      </div>
-    </ContainerCart>
+    <NewCart />
   );
 };
 const mapState = (state) => {
@@ -220,6 +331,14 @@ const H1Cart = styled.h5`
 const ContainerCart = styled.div`
   margin-top: 14rem;
 `;
+const ContainerRow = styled.div`
+  margin-top: 11rem;
+  background-color: white;
+`;
+const Totals = styled.div`
+  padding-right: 106px;
+`;
+
 const RowCart = styled.div`
   --bs-gutter-y: 0;
   display: flex;
@@ -227,4 +346,12 @@ const RowCart = styled.div`
   margin-top: calc(var(--bs-gutter-y) * -1);
   margin-right: calc(var(--bs-gutter-x) * -0.5);
   margin-left: calc(var(--bs-gutter-x) * -0.5);
+`;
+const RowTotal = styled.div`
+  bottom: 3rem;
+  right: 5rem;
+  z-index: 1;
+  background-color: #ffffffa8;
+  border-radius: 10%;
+  min-width: 19rem;
 `;
