@@ -8,8 +8,6 @@ import { Badge, Button } from "react-bootstrap";
 import {
   buyAllProductsMP,
   buyAllProductsNow,
-  buymp,
-  buyProductNow,
 } from "../../service/ProductService";
 import styled from "@emotion/styled";
 import { BiMoney } from "react-icons/bi";
@@ -74,7 +72,7 @@ const Cart = ({
 
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
-      buyAllProductsNow(cartstate, productsBuy, deleteAll, user);
+      buyAllProductsNow(cartstate, productsBuy, deleteAll, history, user);
       updateProcts(getAllProducts());
     }
     if (payMethod === "mercadopago") {

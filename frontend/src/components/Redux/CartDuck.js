@@ -10,9 +10,7 @@ const DELETE_CART = "DELETE_CART";
 const DELETE_ALL = "DELETE_ALL";
 
 export const deleteProductOfArray = (product, array) => {
-  console.log(product);
   let result = array.filter((prod) => product.id !== prod.id);
-  console.log(result);
   return result;
 };
 

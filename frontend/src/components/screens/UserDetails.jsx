@@ -138,6 +138,17 @@ const UserDetails = ({ updateUserStorage, userStorage }) => {
                   />
                 </div>
                 <div className="col-md-12">
+                  <label className="labels">Cbu para recibir el dinero de las ventas</label>
+                  <input
+                      type="number"
+                      maxLength={22}
+                      className="form-control"
+                      placeholder="Ingrese su cbu para recibir el dinero de las ventas que realize"
+                      defaultValue={userstate.cbu}
+                      onChange={(e) => handleChange(e, "cbu")}
+                  />
+                </div>
+                <div className="col-md-12">
                   <label className="labels">Fecha de Nacimiento</label>
                   <input
                     type="text"

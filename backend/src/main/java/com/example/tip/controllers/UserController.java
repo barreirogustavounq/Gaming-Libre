@@ -8,7 +8,11 @@ import com.example.tip.model.User;
 import com.example.tip.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +30,7 @@ public class UserController {
         return userService.getAll();}
 
     @PostMapping(value = "user/add-user")
-    public User addUser(@RequestBody User user){
+    public ResponseEntity<?> addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
 
@@ -53,7 +57,6 @@ public class UserController {
     public UserDTO login(@RequestBody LoginDTO login){
         return userService.login(login);
     }
-
 
     @GetMapping(value="user/buyData/{username}")
     public BuyDataDTO getBuyData(@PathVariable String username){
