@@ -66,11 +66,15 @@ const App = ({ user }) => {
   };
   return (
     <>
-      <header>
+      <header className="headerLayout">
         <Nav user={user} />
       </header>
-      <Routes />
-      <Footer />
+      <div className="bodyLayout">
+        <Routes />
+      </div>
+      <div className="footerLayout">
+        <Footer />
+      </div>
     </>
   );
 };

@@ -44,7 +44,7 @@ const AddProduct = ({ addProductToStore, products }) => {
             aria-label="Small"
             aria-describedby="inputGroup-sizing-sm"
             placeholder="Ingrese una caracteristica"
-            onChange={handleInput}
+            onChange={(e) => handleInput(e, i)}
           />
         </div>
       );
@@ -52,18 +52,24 @@ const AddProduct = ({ addProductToStore, products }) => {
     return contactInputElements;
   };
 
-  const handleInput = (e) => {
+  const handleInput = (e, i) => {
+    console.log(i);
     let eventClass = e.target.className;
     switch (eventClass) {
       case "add_contact":
         setContactCount(contactCount + 1);
         break;
       case "form-control":
+        console.log(e);
         let name = e.target.name;
-        let id = e.target.parentElement.id;
-        let value = caracteristica[id] ? e.target.value : e.target.value;
-        let newcaracteristica = [value];
-        setcaracteristica(caracteristica.concat(newcaracteristica));
+        let value = e.target.value;
+        let newcaracteristica = value;
+        let newList = caracteristica;
+        console.log(newList);
+        newList[i] = value;
+        console.log(newList);
+        setcaracteristica(newList);
+        console.log(caracteristica);
         break;
       default:
         break;
