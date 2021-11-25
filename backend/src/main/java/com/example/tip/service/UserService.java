@@ -72,7 +72,8 @@ public class UserService {
                 user.getPhone(),
                 user.getFavorites(),
                 user.getShopping(),
-                user.getCart()
+                user.getCart(),
+                user.getCbu()
         );
         if (user.getPassword().equals(login.getPassword().trim())) {
             return userDTO;
@@ -97,9 +98,10 @@ public class UserService {
                 user.getPhone(),
                 user.getFavorites(),
                 user.getShopping(),
-                user.getCart());
-        userRepository.deleteById(user.getId());
-        return userRepository.insert(userResult);
+                user.getCart(),
+                user.getCbu());
+        //userRepository.deleteById(user.getId());
+        return  userRepository.save(user);
     }
 
     public BuyDataDTO getBuyData(String username) {

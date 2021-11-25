@@ -51,8 +51,13 @@ export const registerService = (
           "No se logro crear la cuenta, el usuario y/o mail ya se encuentran registrados"
         );
       } else {
-        alert("cuanta creada exitosamente");
-        history.push("/login");
+        Swal.fire({
+          icon: 'success',
+          title: 'Cuenta creada exitosamente',
+          showConfirmButton: true,
+        }).then(() =>{
+          history.push("/login");
+        })
       }
     })
     .catch((error) => {

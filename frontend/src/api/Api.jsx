@@ -63,17 +63,22 @@ export const updateUser = (user) => {
   return axios.put(
     `${url}user/update`,
     {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      username: user.username,
-      password: user.password,
-      address: user.address,
-      email: user.email,
-      phone: user.phone,
-      favorites: user.favorites,
-      shopping: user.shopping,
-      cart: user.cart,
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        password: user.password,
+        address: user.address,
+        email: user.email,
+        phone: user.phone,
+        favorites: user.favorites,
+        shopping: user.shopping,
+        cart: user.cart,
+        city: user.city,
+        state: user.state,
+        postalCode: user.postalCode,
+        birthday: user.birthday,
+        cbu: user.cbu
     },
     header
   );
