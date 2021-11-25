@@ -8,8 +8,6 @@ import { Badge, Button } from "react-bootstrap";
 import {
   buyAllProductsMP,
   buyAllProductsNow,
-  buymp,
-  buyProductNow,
 } from "../../service/ProductService";
 import styled from "@emotion/styled";
 import { BiMoney } from "react-icons/bi";
