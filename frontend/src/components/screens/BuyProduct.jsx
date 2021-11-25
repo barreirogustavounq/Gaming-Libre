@@ -13,7 +13,6 @@ import { useHistory } from "react-router";
 
 const BuyProduct = ({ updateProcts, product, user }) => {
   const history = useHistory();
-  const [buyNow, setBuyNow] = useState(false);
   const [ownerData, setOwnerData] = useState(null);
   const [buttonUrl, setButtonUrl] = useState("");
 
@@ -22,6 +21,7 @@ const BuyProduct = ({ updateProcts, product, user }) => {
       buyProductNow(product, setOwnerData, user);
       updateProcts([product]);
       history.push(`/success`);
+      buyProductNow(product, setOwnerData, history);
     }
     if (payMethod === "mercadopago") {
       buymp(product, setButtonUrl);
@@ -55,7 +55,6 @@ const BuyProduct = ({ updateProcts, product, user }) => {
           if (value === undefined || value === "") {
             resolve("Selecciona un medio de pago");
           } else {
-            console.log(value);
             handleBuyNow(value);
             resolve();
           }

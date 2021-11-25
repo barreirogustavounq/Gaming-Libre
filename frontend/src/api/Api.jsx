@@ -2,7 +2,7 @@ import axios from "axios";
 
 const url = "http://localhost:8080/";
 const mpUrl = "http://localhost:3001/";
-const header = { headers: { "Access-Control-Allow-Origin": "*" } };
+const header = { headers: { "Access-Control-Allow-Origin": "*" }}
 
 export const get = (endpoint) => {
   return axios.get(url + endpoint);
@@ -63,17 +63,22 @@ export const updateUser = (user) => {
   return axios.put(
     `${url}user/update`,
     {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      username: user.username,
-      password: user.password,
-      address: user.address,
-      email: user.email,
-      phone: user.phone,
-      favorites: user.favorites,
-      shopping: user.shopping,
-      cart: user.cart,
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        password: user.password,
+        address: user.address,
+        email: user.email,
+        phone: user.phone,
+        favorites: user.favorites,
+        shopping: user.shopping,
+        cart: user.cart,
+        city: user.city,
+        state: user.state,
+        postalCode: user.postalCode,
+        birthday: user.birthday,
+        cbu: user.cbu
     },
     header
   );
@@ -94,8 +99,8 @@ export const register = (user) => {
       shopping: [],
       cart: [],
     },
-    header
-  );
+      header
+  )
 };
 
 export const addShopping = (user, productList) => {

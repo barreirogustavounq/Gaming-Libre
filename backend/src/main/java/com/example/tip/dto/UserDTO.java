@@ -23,8 +23,9 @@ public class UserDTO {
     private List<Product> favorites;
     private List<Product> shopping;
     private List<Product> cart;
+    private String cbu;
 
-    public UserDTO(String id, String firstName, String lastName, String username, String address, String city, String state, int postalCode, String birthday, String email, int phone, List<Product> favorites, List<Product> shopping, List<Product> cart) {
+    public UserDTO(String id, String firstName, String lastName, String username, String address, String city, String state, int postalCode, String birthday, String email, int phone, List<Product> favorites, List<Product> shopping, List<Product> cart, String cbu) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,5 +40,6 @@ public class UserDTO {
         this.favorites = favorites;
         this.shopping = shopping;
         this.cart = cart;
+        this.cbu = cbu;
     }
 }

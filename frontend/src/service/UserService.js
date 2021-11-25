@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 export const logInService = (
   username,
   password,
@@ -6,7 +8,6 @@ export const logInService = (
   loginAction
 ) => {
   loginAction(username, password);
-  console.log(user.loggedIn, user.fetching);
   if (!user.loggedIn || !user.fetching) {
     setError(true);
   }
@@ -50,12 +51,21 @@ export const registerService = (
           "No se logro crear la cuenta, el usuario y/o mail ya se encuentran registrados"
         );
       } else {
-        alert("cuanta creada exitosamente");
-        history.push("/login");
+        Swal.fire({
+          icon: 'success',
+          title: 'Cuenta creada exitosamente',
+          showConfirmButton: true,
+        }).then(() =>{
+          history.push("/login");
+        })
       }
     })
     .catch((error) => {
-      alert(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'No se ha podido registrar',
+        text: 'El nombre de usuario y/o email ya están siendo utilizados',
+      })
     });
 };
 

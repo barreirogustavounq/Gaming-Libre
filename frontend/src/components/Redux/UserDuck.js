@@ -67,7 +67,6 @@ export const loginAction = (username, password) => (dispatch, getState) => {
       localStorage.setItem("user", JSON.stringify(res.data));
     })
     .catch((error) => {
-      console.log(error);
       dispatch({
         type: LOGIN_ERROR,
         payload: error.response.message,

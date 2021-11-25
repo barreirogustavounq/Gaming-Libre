@@ -50,14 +50,12 @@ export const getAllProducts = () => (dispatch, getState) => {
   });
   get("products/getAll")
     .then((res) => {
-      console.log(res);
       dispatch({
         type: GET_PRODUCTS_SUCCESS,
         payload: res.data,
       });
     })
     .catch((error) => {
-      console.log(error);
       dispatch({
         type: GET_PRODUCTS_ERROR,
         payload: error.message,
