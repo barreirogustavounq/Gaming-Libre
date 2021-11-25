@@ -7,6 +7,7 @@ import {
   get,
   changeStock,
 } from "../api/Api";
+import {useHistory} from "react-router-dom";
 
 
 const accesTokenMP =
@@ -49,7 +50,6 @@ export const addProduct = (
   };
   post("products/add", product)
     .then((res) => {
-      console.log(res);
       addProductToStore(res.data);
       setTittle("Se ha añadido " + product.name);
       setmessage("el producto fue guardado con exito");
@@ -85,20 +85,18 @@ export const getOwnerDataCart = (cart, setOwnerData) => {
   cart.forEach(product =>
       getBuyData(product.ownerUsername)
       .then((data) => {
-        owners.push(data.data);
+        owners.push({product:product.name, data:data.data});
         setOwnerData(owners)
       })
       .catch((err) => console.log(err)))
 };
 
-export const buyProductNow = (product, setOwnerData) => {
+export const buyProductNow = (product, setOwnerData, history) => {
   getBuyData(product.ownerUsername)
     .then((data) => {
-      console.log(data.data);
       setOwnerData(data.data);
     })
     .catch((err) => console.log(err));
-  console.log(product);
   buyProduct(product)
     .then((data) => {
       localStorage.setItem("mpBuy", JSON.stringify(product));
@@ -152,18 +150,22 @@ export const buyAllProductsMP = (
   });
 };
 
-export const buyAllProductsNow = (cartstate, productsBuy, deleteAll) => {
+export const buyAllProductsNow = (cartstate, productsBuy, deleteAll,history) => {
   cartstate.map((product) =>
       buyProductQuantity(product)
           .then((response) => {
             productsBuy = productsBuy + `${product.name} ${response.data} `;
-            alert(productsBuy);
           })
           .catch((err) => {
             console.log(err);
-          })
+          }).finally(() =>{
+
+      })
   );
+  localStorage.setItem("mpBuy", JSON.stringify(cartstate));
+  localStorage.setItem("lastBuy", 'cart');
   deleteAll();
+  history.push("/success");
 };
 
 export const getCategories = (setCategories) => {

@@ -43,26 +43,27 @@ const SuccessBuyMP = ({cart, deleteAll, updateProduct, getAllProducts}) => {
             <Subtitle>
                 Estos son los datos de contacto de {product ? product.ownerUsername : 'tu carrito'}
             </Subtitle>
+            <Content>Ahora podes coordinar la entrega!</Content>
             <>
                 {product ? (
-                        <>
-                            <Content>Ahora podes coordinar la entrega!</Content>
+                        <ProductWrapper>
+                            <Content>Producto : {product.name}</Content>
                             <Content>E-mail: {ownerData.email}</Content>
                             <Content>Teléfono: {ownerData.phone}</Content>
                             <Content>Teléfono: {ownerData.phone}</Content>
                             <Content>Ciudad: {ownerData.city}</Content>
                             <Content>Dirección: {ownerData.address}</Content>
-                        </>
+                        </ProductWrapper>
                     ) :
                     ownerData.map((owner) => (
-                        <>
-                            <Content>Ahora podes coordinar la entrega!</Content>
-                            <Content>E-mail: {owner.email}</Content>
-                            <Content>Teléfono: {owner.phone}</Content>
-                            <Content>Teléfono: {owner.phone}</Content>
-                            <Content>Ciudad: {owner.city}</Content>
-                            <Content>Dirección: {owner.address}</Content>
-                        </>
+                        <ProductWrapper>
+                            <Content>Producto : {owner.product}</Content>
+                            <Content>E-mail: {owner.data.email}</Content>
+                            <Content>Teléfono: {owner.data.phone}</Content>
+                            <Content>Teléfono: {owner.data.phone}</Content>
+                            <Content>Ciudad: {owner.data.city}</Content>
+                            <Content>Dirección: {owner.data.address}</Content>
+                        </ProductWrapper>
                     ))
                 }
             </>
@@ -92,6 +93,12 @@ const Wrapper = styled.div`
     margin-top: 10em;
     padding-bottom: 2em;
     padding-top: 2em;
+`;
+
+const ProductWrapper = styled.div`
+    margin-top: 1em;
+    margin-bottom: 0.1em;
+    border-bottom: 1px solid lightgray;
 `;
 const Subtitle = styled.div`
     margin-bottom: 1em;

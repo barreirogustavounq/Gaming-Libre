@@ -2,7 +2,7 @@ import axios from "axios";
 
 const url = "http://localhost:8080/";
 const mpUrl = "http://localhost:3001/";
-const header = { headers: { "Access-Control-Allow-Origin": "*" } };
+const header = { headers: { "Access-Control-Allow-Origin": "*" }}
 
 export const get = (endpoint) => {
   return axios.get(url + endpoint);
@@ -94,6 +94,6 @@ export const register = (user) => {
       shopping: [],
       cart: [],
     },
-    header
-  );
+      header
+  )
 };
