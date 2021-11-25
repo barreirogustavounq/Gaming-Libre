@@ -12,9 +12,9 @@ export const post = (endpoint, body) => {
   return axios.post(url + endpoint, body, header);
 };
 
-export const mpPost = (endpoint,body) => {
-    return axios.post(mpUrl + endpoint, body, header);
-}
+export const mpPost = (endpoint, body) => {
+  return axios.post(mpUrl + endpoint, body, header);
+};
 
 export const getUser = (userName) => {
   let user;
@@ -41,11 +41,11 @@ export const buyProduct = (product) => {
 };
 
 export const buyProductMP = (preference, url) => {
-    return axios.post(url, preference)
-}
+  return axios.post(url, preference);
+};
 
 export const buyProductQuantity = (product) => {
-    return axios.post(`${url}products/buy/${product.id}/${product.buyQuantity}`);
+  return axios.post(`${url}products/buy/${product.id}/${product.buyQuantity}`);
 };
 
 export const login = (username, password) => {
@@ -96,4 +96,19 @@ export const register = (user) => {
     },
       header
   )
+};
+
+export const addShopping = (user, productList) => {
+  return axios.post(
+    `${url}shopping/add-shopping`,
+    {
+      user: user.username,
+      productList: productList,
+    },
+    header
+  );
+};
+
+export const getShopping = (user) => {
+  return axios.get(`${url}${user.username}/shopping`, header);
 };

@@ -7,8 +7,7 @@ import {
   get,
   changeStock,
 } from "../api/Api";
-import {useHistory} from "react-router-dom";
-
+import { addShooppingService } from "./ShoppingService";
 
 const accesTokenMP =
   "TEST-4470583120056903-092823-e8250e22361adffae3967c20cd11f87f-240182164";
@@ -27,6 +26,7 @@ let preference = {
 export const addProduct = (
   nombre,
   descripcion,
+  caracteristica,
   precio,
   stock,
   imgSrc,
@@ -43,7 +43,8 @@ export const addProduct = (
     ownerUsername: storage.username,
     name: nombre,
     description: descripcion,
-    stock,
+    stock: stock,
+    caracteristica: caracteristica,
     price: precio,
     imgSrc: imgSrc,
     category: category.replace(" ", ""),
@@ -69,16 +70,19 @@ export const getOwnerData = (product, setOwnerData) => {
 };
 
 export const actualizeStock = (product) => {
-    changeStock(product.id,product.stock - product.buyQuantity).then(result => console.log(result)).catch(er => console.log(er))
+  changeStock(product.id, product.stock - product.buyQuantity)
+    .then((result) => console.log(result))
+    .catch((er) => console.log(er));
 };
 
 export const actualizeCartStock = () => {
-  const cart = JSON.parse(localStorage.getItem("cart"))
-  cart.forEach(prod => {
-    changeStock(prod.id, prod.stock - prod.buyQuantity).then(result => console.log(result)).catch(er => console.log(er))
-  })
+  const cart = JSON.parse(localStorage.getItem("cart"));
+  cart.forEach((prod) => {
+    changeStock(prod.id, prod.stock - prod.buyQuantity)
+      .then((result) => console.log(result))
+      .catch((er) => console.log(er));
+  });
 };
-
 
 export const getOwnerDataCart = (cart, setOwnerData) => {
   let owners = []
@@ -91,19 +95,20 @@ export const getOwnerDataCart = (cart, setOwnerData) => {
       .catch((err) => console.log(err)))
 };
 
-export const buyProductNow = (product, setOwnerData, history) => {
+export const buyProductNow = (product, setOwnerData,history, user) => {
   getBuyData(product.ownerUsername)
     .then((data) => {
       setOwnerData(data.data);
     })
     .catch((err) => console.log(err));
-  buyProduct(product)
+  buyProductQuantity(product)
     .then((data) => {
       localStorage.setItem("mpBuy", JSON.stringify(product));
       localStorage.setItem("lastBuy", "single");
       history.push("/success");
     })
     .catch((err) => console.log(err));
+  addShooppingService(user, [product]);
 };
 
 export const buymp = (product, setButtonUrl) => {
@@ -130,10 +135,14 @@ export const buyAllProductsMP = (
   setButtonUrl
 ) => {
   console.log(cartstate);
-  const name = cartstate.reduce((name, product) =>
-     name + "," + product.name,'');
-  const price = cartstate.reduce((price, product) =>
-     price + product.price * product.buyQuantity,0);
+  const name = cartstate.reduce(
+    (name, product) => name + "," + product.name,
+    ""
+  );
+  const price = cartstate.reduce(
+    (price, product) => price + product.price * product.buyQuantity,
+    0
+  );
   mpPost("payment/new", {
     name: `${name}`,
     unit: 1,
@@ -150,7 +159,7 @@ export const buyAllProductsMP = (
   });
 };
 
-export const buyAllProductsNow = (cartstate, productsBuy, deleteAll,history) => {
+export const buyAllProductsNow = (cartstate, productsBuy, deleteAll, history, user) => {
   cartstate.map((product) =>
       buyProductQuantity(product)
           .then((response) => {
@@ -158,13 +167,12 @@ export const buyAllProductsNow = (cartstate, productsBuy, deleteAll,history) => 
           })
           .catch((err) => {
             console.log(err);
-          }).finally(() =>{
-
-      })
+          })
   );
   localStorage.setItem("mpBuy", JSON.stringify(cartstate));
   localStorage.setItem("lastBuy", 'cart');
   deleteAll();
+  addShooppingService(user, cartstate);
   history.push("/success");
 };
 

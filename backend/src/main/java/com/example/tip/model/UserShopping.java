@@ -14,19 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document
-public class Product {
-
+public class UserShopping {
     @Id
     private String id;
-
-    private Integer buyQuantity;
-    private String ownerUsername;
-    private String name;
-    private Integer stock;
-    private String description;
-    private Integer price;
-    private String imgSrc;
-    private Category category;
-    private List<String> caracteristica;
-
+    private String user;
+    private List<Product> productList;
 }

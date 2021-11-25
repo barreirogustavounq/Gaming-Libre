@@ -15,11 +15,23 @@ import {
     updateProduct,
 } from "../Redux/ProductDuck";
 import {connect} from "react-redux";
+import { addShooppingService } from "../../service/ShoppingService";
 
-const SuccessBuyMP = ({cart, deleteAll, updateProduct, getAllProducts}) => {
-
-    const cartLS = localStorage.getItem("lastBuy") === 'cart' ? JSON.parse(localStorage.getItem("mpBuy")) : null;
-    const product = localStorage.getItem("lastBuy") === 'single' ? JSON.parse(localStorage.getItem("mpBuy")) : null;
+const SuccessBuyMP = ({
+  user,
+  cart,
+  deleteAll,
+  updateProcts,
+  getAllProducts,
+}) => {
+  const cartLS =
+    localStorage.getItem("lastBuy") === "cart"
+      ? JSON.parse(localStorage.getItem("mpBuy"))
+      : null;
+  const product =
+    localStorage.getItem("lastBuy") === "single"
+      ? JSON.parse(localStorage.getItem("mpBuy"))
+      : null;
     const [ownerData, setOwnerData] = useState(null);
     const history = useHistory();
 
@@ -27,10 +39,12 @@ const SuccessBuyMP = ({cart, deleteAll, updateProduct, getAllProducts}) => {
         if (product && product.stock === JSON.parse(localStorage.getItem("mpBuy")).stock) {
             getOwnerData(product, setOwnerData);
             actualizeStock(product);
-            updateProduct(product);
+            updateProcts([product]);
+            addShooppingService(user, [product]);
         } else {
             getOwnerDataCart(cartLS, setOwnerData);
             actualizeCartStock();
+            addShooppingService(user, cart);
             deleteAll(cart);
         }
         getAllProducts();
@@ -72,14 +86,15 @@ const SuccessBuyMP = ({cart, deleteAll, updateProduct, getAllProducts}) => {
 };
 
 const mapState = (state) => {
-    return {
-        cart: state.cart.cart,
-        products: state.products.products,
-    };
+  return {
+    cart: state.cart.cart,
+    products: state.products.products,
+    user: state.user.user,
+  };
 };
 
-export default connect(mapState, {deleteAll, updateProduct, getAllProducts})(
-    SuccessBuyMP
+export default connect(mapState, { deleteAll, updateProcts, getAllProducts })(
+  SuccessBuyMP
 );
 
 const Wrapper = styled.div`

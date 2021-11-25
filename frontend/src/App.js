@@ -25,10 +25,10 @@ const App = ({ user }) => {
           <Home />
         </Route>
         <Route path="/success">
-          <SuccessBuyMP />
+          {user ? <SuccessBuyMP /> : <Redirect to="/" />}
         </Route>
         <Route path="/error">
-          <FailedBuyMP />
+          {user ? <FailedBuyMP /> : <Redirect to="/" />}
         </Route>
         <Route
           exact
@@ -43,7 +43,7 @@ const App = ({ user }) => {
           <Product />
         </Route>
         <Route exact path="/products/add-product">
-          <AddProduct />
+          {user ? <AddProduct /> : <Redirect to="/" />}
         </Route>
         <Route exact path="/user/count/:id">
           {user ? <UserDetails /> : <Redirect to="/" />}

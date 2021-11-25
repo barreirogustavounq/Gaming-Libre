@@ -87,4 +87,11 @@ const Price = styled.p`
   font-weight: bold;
 `;
 
-const ProductDescription = styled.div``;
+const ProductDescription = styled.div`
+  overflow: hidden;
+  width: 26rem;
+  text-align: justify;
+  max-height: 3rem;
+  text-overflow: ellipsis;
+  min-height: 3rem;
+`;
