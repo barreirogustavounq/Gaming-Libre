@@ -18,12 +18,14 @@ const BuyProduct = ({ updateProcts, product, user }) => {
 
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
-      buyProductNow(product, setOwnerData, user);
+      localStorage.setItem('medioDePago', 'efectivo')
+      buyProductNow(product, setOwnerData,history, user);
       updateProcts([product]);
       history.push(`/success`);
-      buyProductNow(product, setOwnerData, history);
+      buyProductNow(product, setOwnerData,history, history);
     }
     if (payMethod === "mercadopago") {
+      localStorage.setItem('medioDePago', 'mercadopago')
       buymp(product, setButtonUrl);
       let timerInterval;
       Swal.fire({
