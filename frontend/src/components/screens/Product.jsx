@@ -41,16 +41,18 @@ const Product = ({ products }) => {
       <div className="main">
         <div className="left">
           <h2>{selectedProduct.name}</h2>
-          <h3>${selectedProduct.price}.00</h3>
           <img src={selectedProduct.imgSrc} alt="" />
         </div>
         <div className="right">
           <h4 id="price">Descripcion:</h4>
           <Description>{selectedProduct.description}</Description>
+          <div style={{marginTop:'1em'}}>
           <FaShippingFast /> Metodo de entrega: Retira en domicilio del
           vendedor.
+          </div>
           <p>En stock: {selectedProduct.stock}</p>
           <Description className="quantity">
+            <div style={{marginTop:'1em', marginBottom:'1em'}}>
             Cantidad{" "}
             <span
               className="fa fa-angle-left angle"
@@ -61,30 +63,31 @@ const Product = ({ products }) => {
               className="fa fa-angle-right angle"
               onClick={(e) => handleSum()}
             />
+            </div>
             <span>
               {" "}
-              <h4>${selectedProduct.price * selectedProduct.buyQuantity} </h4>
+              <h4 style={{marginBottom:'1em'}}>Precio: ${selectedProduct.price * selectedProduct.buyQuantity} </h4>
             </span>
           </Description>
         </div>
-        <div className="container">
+        <ButtonsWrapper className="container">
           <CartButtonStyle className="col-3">
             <AddCarButton product={selectedProduct} />
           </CartButtonStyle>
           <BuyButtonStyle className="col-3">
             <BuyProduct product={selectedProduct} />
           </BuyButtonStyle>
-        </div>
+        </ButtonsWrapper>
       </div>
-      <div className="footer">
-        <p>Caracteristicas:</p>
+        <CaracteristicasWrapper>
+        <CaracteristicasTitle>Caracteristicas:</CaracteristicasTitle>
 
         <ListGroup variant="flush">
           {selectedProduct.caracteristica.map((c) => (
             <ListGroup.Item>{c}</ListGroup.Item>
           ))}
         </ListGroup>
-      </div>
+        </CaracteristicasWrapper>
     </div>
   ) : (
     <Loading />
@@ -96,25 +99,28 @@ const mapState = (state) => {
   };
 };
 
-const Image = styled.img`
-  max-height: 13rem;
-  max-width: -webkit-fill-available;
+const CaracteristicasTitle = styled.div`
+    font-size: 20px;
+    font-weight: bold;
+`;
+const CaracteristicasWrapper = styled.div`
+    padding: 5px 40px 5px 13px;
+    width: calc(90% - 40px);
+`;
+const ButtonsWrapper = styled.div`
+    display: flex;
+    margin-left: 29em;
 `;
 const Description = styled.p`
-  min-height: 15rem;
-  max-height: 15rem;
   text-align: justify;
   word-wrap: break-word;
+  max-height: fit-content;
 `;
 const CartButtonStyle = styled.div`
-  position: absolute;
-  left: 34rem;
-  top: 31rem;
+
 `;
 const BuyButtonStyle = styled.div`
-  position: absolute;
-  left: 34rem;
-  top: 27rem;
+
 `;
 
 export default connect(mapState)(Product);

@@ -23,6 +23,7 @@ const BuyProduct = ({ updateProcts, product, user }) => {
       history.push(`/success`);
     }
     if (payMethod === "mercadopago") {
+      localStorage.setItem('medioDePago', 'mercadopago')
       buymp(product, setButtonUrl);
       let timerInterval;
       Swal.fire({

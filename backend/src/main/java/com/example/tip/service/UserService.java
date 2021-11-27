@@ -36,8 +36,14 @@ public class UserService {
         if (validateUser(user)) {
             Optional<User> userCheck = userRepository.findByUsername(user.getUsername());
             Optional<User> userMailCheck = userRepository.findByEmail(user.getEmail());
-            if (userCheck.isPresent()) return new ResponseEntity<>(new ErrorDTO(UserAlreadyExists.message), UserAlreadyExists.status);
-            if (userMailCheck.isPresent()) return new ResponseEntity<>(new ErrorDTO(UserMailAlreadyUsed.message), UserMailAlreadyUsed.status);
+            if (userCheck.isPresent()) {
+                userRepository.save(userCheck.get());
+                return new ResponseEntity<>(new ErrorDTO(UserAlreadyExists.message), UserAlreadyExists.status);
+            }
+            if (userMailCheck.isPresent()) {
+                userRepository.save(userMailCheck.get());
+                return new ResponseEntity<>(new ErrorDTO(UserMailAlreadyUsed.message), UserMailAlreadyUsed.status);
+            }
         }
         return new ResponseEntity<>(userRepository.save(user),HttpStatus.OK);
     }
@@ -100,8 +106,7 @@ public class UserService {
                 user.getShopping(),
                 user.getCart(),
                 user.getCbu());
-        //userRepository.deleteById(user.getId());
-        return  userRepository.save(user);
+        return  userRepository.save(userResult);
     }
 
     public BuyDataDTO getBuyData(String username) {
