@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { IoIosAdd, IoIosRemove } from "react-icons/io";
 import { connect } from "react-redux";
-import { deleteProduct, deleteAll, addProduct } from "../Redux/CartDuck";
+import { deleteProduct, addProduct } from "../Redux/CartDuck";
 import "../../style/cart.scss";
 import { Badge, Button } from "react-bootstrap";
 import {
@@ -19,7 +19,6 @@ const Cart = ({
   cart,
   addProduct,
   deleteProduct,
-  deleteAll,
   getAllProducts,
   updateProcts,
   user,
@@ -53,7 +52,7 @@ const Cart = ({
   let productsBuy = "";
 
   const handleBuy = (e) => {
-    buyAllProductsMP(cartstate, productsBuy, deleteAll);
+    buyAllProductsMP(cartstate, productsBuy);
   };
 
   const handleAddOneToCart = (product) => {
@@ -72,11 +71,11 @@ const Cart = ({
 
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
-      buyAllProductsNow(cartstate, productsBuy, deleteAll, history, user);
+      buyAllProductsNow(cartstate, productsBuy, history, user);
       updateProcts(getAllProducts());
     }
     if (payMethod === "mercadopago") {
-      buyAllProductsMP(cartstate, productsBuy, deleteAll, setButtonUrl);
+      buyAllProductsMP(cartstate, productsBuy, setButtonUrl);
       let timerInterval;
       Swal.fire({
         title: "Procesando información...",
@@ -310,7 +309,6 @@ const mapState = (state) => {
 export default connect(mapState, {
   addProduct,
   deleteProduct,
-  deleteAll,
   getAllProducts,
   updateProcts,
 })(Cart);

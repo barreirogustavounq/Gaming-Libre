@@ -104,8 +104,8 @@ export const register = (user) => {
 };
 
 export const addShopping = (user, productList) => {
-  console.log(user);
-  console.log(productList);
+  //console.log(user);
+  //console.log(productList);
   return axios.post(
     `${url}shopping/add-shopping`,
     {

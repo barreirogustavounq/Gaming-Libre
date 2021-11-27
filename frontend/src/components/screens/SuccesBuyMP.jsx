@@ -8,15 +8,11 @@ import {
 } from "../../service/ProductService";
 import styled from "@emotion/styled";
 import { useHistory } from "react-router-dom";
-import { deleteAll } from "../Redux/CartDuck";
-import {
-  getAllProducts,
-  updateProcts,
-  updateProduct,
-} from "../Redux/ProductDuck";
+import { getAllProducts, updateProcts } from "../Redux/ProductDuck";
 import { connect } from "react-redux";
 import { addShooppingService } from "../../service/ShoppingService";
-import { mg } from "../../Mailgun/MailgunCredentials";
+import { apiKey, DOMAIN } from "../../Mailgun/MailgunCredentials";
+import { deleteAll } from "../Redux/CartDuck";
 
 const SuccessBuyMP = ({
   user,
@@ -41,96 +37,53 @@ const SuccessBuyMP = ({
       product &&
       product.stock === JSON.parse(localStorage.getItem("mpBuy")).stock
     ) {
-      getOwnerData(product, setOwnerData);
+      getOwnerData(product, setOwnerData, sendMailSingle, user);
       actualizeStock(product);
       updateProcts([product]);
       addShooppingService(user, [product]);
     } else {
-      getOwnerDataCart(cartLS, setOwnerData);
+      getOwnerDataCart(cartLS, setOwnerData, sendMailSingle, user);
       actualizeCartStock();
       addShooppingService(user, cart);
       deleteAll(cart);
     }
     getAllProducts();
   }, []);
-  useEffect(() => {
-    if (product && ownerData) {
-      console.log(user);
-      const mailgun = require("mailgun-js");
-      const DOMAIN = "sandboxe52772b36c094d068ee17d260e021970.mailgun.org";
-      const mg = mailgun({
-        apiKey: "62b0d1b9b9758378d7d8ef0259a1ea04-7dcc6512-01fe4060",
-        domain: DOMAIN,
-      });
-      const dataComprador = {
-        from: "Mailgun Sandbox <postmaster@sandboxe52772b36c094d068ee17d260e021970.mailgun.org>",
-        to: "gaminglibretip2021@gmail.com",
-        subject: "Tu compra ya esta casi lista",
-        text: `Este es el codigo con el que deberas acercarte a una sucursal de Rapipago> KJLHljkLKJHLkjgblkGJ8765jhvgkY5 \n
-                Producto : ${product.name} \n
-                E-mail: ${ownerData.email} \n
-                Teléfono: ${ownerData.phone} \n
-                Ciudad: ${ownerData.city} \n
-                Dirección: ${ownerData.address} }`,
-      };
-      const dataVendedor = {
-        from: "Mailgun Sandbox <postmaster@sandboxe52772b36c094d068ee17d260e021970.mailgun.org>",
-        to: "gaminglibretip2021@gmail.com",
-        subject: `${user.usermane} ha comprado ${product.name}`,
-        text: `Solo debes aguardar que realice el pago \n
-               A continuacion los datos de ${user.usermane}
-                E-mail: ${user.email} \n
-                Teléfono: ${user.phone ? user.phone : "no aporta"} \n
-                Ciudad: ${user.city ? user.city : "no aporta"} \n
-                Dirección: ${user.address ? user.address : "no aporta"} `,
-      };
+  const sendMailSingle = (prod, owner, userShop) => {
+    const mailgun = require("mailgun-js");
+    const mg = mailgun({ apiKey: apiKey, domain: DOMAIN });
 
-      mg.messages().send(dataComprador, function (error, body) {
-        console.log(body);
-      });
-      mg.messages().send(dataVendedor, function (error, body) {
-        console.log(body);
-      });
-    } else {
-      if (ownerData) {
-        cartLS.map((product) => {
-          console.log(product);
-          const dataComprador = {
-            from: "Mailgun Sandbox <postmaster@sandboxe52772b36c094d068ee17d260e021970.mailgun.org>",
-            to: "gaminglibretip2021@gmail.com",
-            subject: "Tu compra ya esta casi lista",
-            text: `Este es el codigo con el que deberas acercarte a una sucursal de Rapipago> KJLHljkLKJHLkjgblkGJ8765jhvgkY5 \n
-                              Producto : ${product.name} \n
-                              E-mail: ${ownerData.email} \n
-                              Teléfono: ${ownerData.phone} \n
-                              Dirección: ${ownerData.address} }`,
-          };
-          const dataVendedor = {
-            from: "Mailgun Sandbox <postmaster@sandboxe52772b36c094d068ee17d260e021970.mailgun.org>",
-            to: "gaminglibretip2021@gmail.com",
-            subject: `${user.usermane} ha comprado ${product.name}`,
-            text: `Solo debes aguardar que realice el pago \n
-                             A continuacion los datos de ${user.usermane}
-                              E-mail: ${user.email} \n
-                              Teléfono: ${
-                                user.phone ? user.phone : "no aporta"
-                              } \n
-                              Ciudad: ${user.city ? user.city : "no aporta"} \n
-                              Dirección: ${
-                                user.address ? user.address : "no aporta"
-                              } `,
-          };
+    const dataComprador = {
+      from: "Gaming Libre <postmaster@" + DOMAIN + ">",
+      to: userShop.email,
+      subject: "Tu compra ya esta casi lista",
+      text: `Este es el codigo con el que deberas acercarte a una sucursal de Rapipago: KJLHljkLKJHLkjgblkGJ8765jhvgkY5 \n
+              Producto : ${prod.name} \n
+              E-mail: ${owner.email} \n
+              Teléfono: ${owner.phone} \n
+              Ciudad: ${owner.city} \n
+              Dirección: ${owner.address} }`,
+    };
+    const dataVendedor = {
+      from: "Gaming Libre <postmaster@" + DOMAIN + ">",
+      to: owner.email,
+      subject: `${userShop.username} ha comprado ${prod.name}`,
+      text: `Solo debes aguardar que realice el pago \n
+             A continuacion los datos de ${userShop.username}
+              E-mail: ${userShop.email} \n
+              Teléfono: ${userShop.phone ? userShop.phone : "no aporta"} \n
+              Ciudad: ${userShop.city ? userShop.city : "no aporta"} \n
+              Dirección: ${userShop.address ? userShop.address : "no aporta"} `,
+    };
 
-          mg.messages().send(dataComprador, function (error, body) {
-            console.log(body);
-          });
-          mg.messages().send(dataVendedor, function (error, body) {
-            console.log(body);
-          });
-        });
-      }
-    }
-  }, []);
+    mg.messages().send(dataComprador, function (error, body) {
+      console.log(body);
+    });
+    mg.messages().send(dataVendedor, function (error, body) {
+      console.log(body);
+    });
+  };
+
   return ownerData ? (
     <Wrapper>
       <Tilde />

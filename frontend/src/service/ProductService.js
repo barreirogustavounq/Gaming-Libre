@@ -61,16 +61,6 @@ export const addProduct = (
     });
 };
 
-export const getOwnerData = (product, setOwnerData) => {
-  getBuyData(product.ownerUsername)
-    .then((res) => res.data)
-    .then((data) => {
-      console.log(data);
-      setOwnerData(data);
-    })
-    .catch((err) => console.log(err));
-};
-
 export const actualizeStock = (product) => {
   changeStock(product.id, product.stock - product.buyQuantity)
     .then((result) => console.log(result))
@@ -86,13 +76,29 @@ export const actualizeCartStock = () => {
   });
 };
 
-export const getOwnerDataCart = (cart, setOwnerData) => {
+export const getOwnerData = (product, setOwnerData, sendMailSingle, user) => {
+  getBuyData(product.ownerUsername)
+    .then((res) => res.data)
+    .then((data) => {
+      console.log(data);
+      setOwnerData(data);
+      sendMailSingle(product, data, user);
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getOwnerDataCart = (cart, setOwnerData, sendMailSingle, user) => {
   let owners = [];
+  let currentOwner;
   cart.forEach((product) =>
     getBuyData(product.ownerUsername)
+      .then((res) => res.data)
       .then((data) => {
-        owners.push({ product: product.name, data: data.data });
+        currentOwner = { product: product.name, data: data };
+        owners.push(currentOwner);
         setOwnerData(owners);
+        console.log("mail enviado");
+        sendMailSingle(product, data, user);
       })
       .catch((err) => console.log(err))
   );
@@ -130,12 +136,7 @@ export const buymp = (product, setButtonUrl) => {
   });
 };
 
-export const buyAllProductsMP = (
-  cartstate,
-  productsBuy,
-  deleteAll,
-  setButtonUrl
-) => {
+export const buyAllProductsMP = (cartstate, productsBuy, setButtonUrl) => {
   console.log(cartstate);
   const name = cartstate.reduce(
     (name, product) => name + "," + product.name,
@@ -161,13 +162,7 @@ export const buyAllProductsMP = (
   });
 };
 
-export const buyAllProductsNow = (
-  cartstate,
-  productsBuy,
-  deleteAll,
-  history,
-  user
-) => {
+export const buyAllProductsNow = (cartstate, productsBuy, history, user) => {
   cartstate.map((product) =>
     buyProductQuantity(product)
       .then((response) => {
@@ -179,7 +174,7 @@ export const buyAllProductsNow = (
   );
   localStorage.setItem("mpBuy", JSON.stringify(cartstate));
   localStorage.setItem("lastBuy", "cart");
-  deleteAll();
+  //deleteAll();
   addShooppingService(user, cartstate);
   history.push("/success");
 };
