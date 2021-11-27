@@ -16,6 +16,7 @@ import {
 } from "../Redux/ProductDuck";
 import { connect } from "react-redux";
 import { addShooppingService } from "../../service/ShoppingService";
+import { mg } from "../../Mailgun/MailgunCredentials";
 
 const SuccessBuyMP = ({
   user,
@@ -93,12 +94,6 @@ const SuccessBuyMP = ({
     } else {
       if (ownerData) {
         cartLS.map((product) => {
-          const mailgun = require("mailgun-js");
-          const DOMAIN = "sandboxe52772b36c094d068ee17d260e021970.mailgun.org";
-          const mg = mailgun({
-            apiKey: "62b0d1b9b9758378d7d8ef0259a1ea04-7dcc6512-01fe4060",
-            domain: DOMAIN,
-          });
           console.log(product);
           const dataComprador = {
             from: "Mailgun Sandbox <postmaster@sandboxe52772b36c094d068ee17d260e021970.mailgun.org>",
