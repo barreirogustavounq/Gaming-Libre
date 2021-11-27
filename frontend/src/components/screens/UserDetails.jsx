@@ -7,6 +7,7 @@ import { updateUserStorage } from "../Redux/UserDuck";
 import { updateUserService } from "../../service/UserService";
 import { getShoppingofUser } from "../../service/ShoppingService";
 import ShoppingsComponent from "../tools/ShoppingsComponent";
+import styled from "@emotion/styled";
 
 const UserDetails = ({ updateUserStorage, userStorage }) => {
   const user = useParams().id;
@@ -172,7 +173,7 @@ const UserDetails = ({ updateUserStorage, userStorage }) => {
           </div>
         </div>
       </div>
-      <h1>Mis compras</h1>
+      <MisComprasTitle>Mis compras</MisComprasTitle>
       <div className="container">
         {shopping ? (
           shopping.map((shop) => {
@@ -192,5 +193,12 @@ const mapState = (state) => {
     userStorage: state.user.user,
   };
 };
+
+const MisComprasTitle = styled.div`
+    padding: 1em;
+    padding-left: 2em;
+    color: white;
+    font-size: 33px;
+`
 
 export default connect(mapState, { updateUserStorage })(UserDetails);

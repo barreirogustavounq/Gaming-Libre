@@ -9,7 +9,6 @@ const ShoppingsComponent = ({ products }) => {
   }, [products]);
   console.log(productsState);
   const renderElement = () => {
-    if (productsState.length > 0) {
       return (
         <CardGroup>
           {productsState.map((prod) => {
@@ -30,9 +29,6 @@ const ShoppingsComponent = ({ products }) => {
           })}
         </CardGroup>
       );
-    } else {
-      return <p>No hay elementos</p>;
-    }
   };
   return renderElement();
 };
