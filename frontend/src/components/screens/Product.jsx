@@ -12,7 +12,6 @@ import Loading from "./Loading";
 const Product = ({ products }) => {
   const id = useParams().id;
   let selectedProduct = products.find((prod) => prod.id === id);
-  setTimeout(() => {}, 6000);
   const [buyQuantity, setbuyQuantity] = useState(0);
 
   useEffect(() => {

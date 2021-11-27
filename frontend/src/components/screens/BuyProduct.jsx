@@ -21,7 +21,6 @@ const BuyProduct = ({ updateProcts, product, user }) => {
       buyProductNow(product, setOwnerData, user);
       updateProcts([product]);
       history.push(`/success`);
-      buyProductNow(product, setOwnerData, history);
     }
     if (payMethod === "mercadopago") {
       buymp(product, setButtonUrl);

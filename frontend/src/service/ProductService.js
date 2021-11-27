@@ -63,8 +63,10 @@ export const addProduct = (
 
 export const getOwnerData = (product, setOwnerData) => {
   getBuyData(product.ownerUsername)
+    .then((res) => res.data)
     .then((data) => {
-      setOwnerData(data.data);
+      console.log(data);
+      setOwnerData(data);
     })
     .catch((err) => console.log(err));
 };
@@ -85,17 +87,18 @@ export const actualizeCartStock = () => {
 };
 
 export const getOwnerDataCart = (cart, setOwnerData) => {
-  let owners = []
-  cart.forEach(product =>
-      getBuyData(product.ownerUsername)
+  let owners = [];
+  cart.forEach((product) =>
+    getBuyData(product.ownerUsername)
       .then((data) => {
-        owners.push({product:product.name, data:data.data});
-        setOwnerData(owners)
+        owners.push({ product: product.name, data: data.data });
+        setOwnerData(owners);
       })
-      .catch((err) => console.log(err)))
+      .catch((err) => console.log(err))
+  );
 };
 
-export const buyProductNow = (product, setOwnerData,history, user) => {
+export const buyProductNow = (product, setOwnerData, user) => {
   getBuyData(product.ownerUsername)
     .then((data) => {
       setOwnerData(data.data);
@@ -105,7 +108,6 @@ export const buyProductNow = (product, setOwnerData,history, user) => {
     .then((data) => {
       localStorage.setItem("mpBuy", JSON.stringify(product));
       localStorage.setItem("lastBuy", "single");
-      history.push("/success");
     })
     .catch((err) => console.log(err));
   addShooppingService(user, [product]);
@@ -124,7 +126,7 @@ export const buymp = (product, setButtonUrl) => {
   }).then((result) => {
     setButtonUrl(result.data);
     localStorage.setItem("mpBuy", JSON.stringify(product));
-    localStorage.setItem("lastBuy", 'single');
+    localStorage.setItem("lastBuy", "single");
   });
 };
 
@@ -155,22 +157,28 @@ export const buyAllProductsMP = (
   }).then((result) => {
     setButtonUrl(result.data);
     localStorage.setItem("mpBuy", JSON.stringify(cartstate));
-    localStorage.setItem("lastBuy", 'cart');
+    localStorage.setItem("lastBuy", "cart");
   });
 };
 
-export const buyAllProductsNow = (cartstate, productsBuy, deleteAll, history, user) => {
+export const buyAllProductsNow = (
+  cartstate,
+  productsBuy,
+  deleteAll,
+  history,
+  user
+) => {
   cartstate.map((product) =>
-      buyProductQuantity(product)
-          .then((response) => {
-            productsBuy = productsBuy + `${product.name} ${response.data} `;
-          })
-          .catch((err) => {
-            console.log(err);
-          })
+    buyProductQuantity(product)
+      .then((response) => {
+        productsBuy = productsBuy + `${product.name} ${response.data} `;
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   );
   localStorage.setItem("mpBuy", JSON.stringify(cartstate));
-  localStorage.setItem("lastBuy", 'cart');
+  localStorage.setItem("lastBuy", "cart");
   deleteAll();
   addShooppingService(user, cartstate);
   history.push("/success");
