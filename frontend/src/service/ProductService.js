@@ -90,9 +90,9 @@ export const getOwnerDataCart = (cart, setOwnerData) => {
       getBuyData(product.ownerUsername)
       .then((data) => {
         owners.push({product:product.name, data:data.data});
-        setOwnerData(owners)
       })
       .catch((err) => console.log(err)))
+  setOwnerData(owners)
 };
 
 export const buyProductNow = (product, setOwnerData,history, user) => {
