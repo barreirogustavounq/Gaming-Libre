@@ -1,20 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "../../style/Product.scss";
 import {
-    actualizeCartStock,
-    actualizeStock,
-    getOwnerData,
-    getOwnerDataCart,
+  actualizeCartStock,
+  actualizeStock,
+  getOwnerData,
+  getOwnerDataCart,
 } from "../../service/ProductService";
 import styled from "@emotion/styled";
-import {useHistory} from "react-router-dom";
-import {deleteAll} from "../Redux/CartDuck";
-import {
-    getAllProducts,
-    updateProcts,
-} from "../Redux/ProductDuck";
-import {connect} from "react-redux";
+import { useHistory } from "react-router-dom";
+import { getAllProducts, updateProcts } from "../Redux/ProductDuck";
+import { connect } from "react-redux";
 import { addShooppingService } from "../../service/ShoppingService";
+import { apiKey, DOMAIN } from "../../Mailgun/MailgunCredentials";
+import { deleteAll } from "../Redux/CartDuck";
 
 const SuccessBuyMP = ({
   user,
@@ -31,24 +29,61 @@ const SuccessBuyMP = ({
     localStorage.getItem("lastBuy") === "single"
       ? JSON.parse(localStorage.getItem("mpBuy"))
       : null;
-    const medioDePago = localStorage.getItem('medioDePago')
-    const [ownerData, setOwnerData] = useState(null);
-    const history = useHistory();
+  const [ownerData, setOwnerData] = useState(null);
+  const history = useHistory();
+  const medioDePago = localStorage.getItem('medioDePago')
 
-    useEffect(() => {
-        if (product && product.stock === JSON.parse(localStorage.getItem("mpBuy")).stock) {
-            getOwnerData(product, setOwnerData);
-            actualizeStock(product);
-            updateProcts([product]);
-            addShooppingService(user, [product]);
-        } else {
-            getOwnerDataCart(cartLS, setOwnerData);
-            actualizeCartStock();
-            addShooppingService(user, cart);
-            deleteAll(cart);
-        }
-        getAllProducts();
-    }, []);
+  useEffect(() => {
+    if (
+      product &&
+      product.stock === JSON.parse(localStorage.getItem("mpBuy")).stock
+    ) {
+      getOwnerData(product, setOwnerData, sendMailSingle, user);
+      actualizeStock(product);
+      updateProcts([product]);
+      addShooppingService(user, [product]);
+    } else {
+      getOwnerDataCart(cartLS, setOwnerData, sendMailSingle, user);
+      actualizeCartStock();
+      addShooppingService(user, cart);
+      deleteAll(cart);
+    }
+    getAllProducts();
+  }, []);
+  const sendMailSingle = (prod, owner, userShop) => {
+    const mailgun = require("mailgun-js");
+    const mg = mailgun({ apiKey: apiKey, domain: DOMAIN });
+
+    const dataComprador = {
+      from: "Gaming Libre <postmaster@" + DOMAIN + ">",
+      to: userShop.email,
+      subject: "Tu compra ya esta casi lista",
+      text: `Este es el codigo con el que deberas acercarte a una sucursal de Rapipago: KJLHljkLKJHLkjgblkGJ8765jhvgkY5 \n
+              Producto : ${prod.name} \n
+              E-mail: ${owner.email} \n
+              Teléfono: ${owner.phone} \n
+              Ciudad: ${owner.city} \n
+              Dirección: ${owner.address} }`,
+    };
+    const dataVendedor = {
+      from: "Gaming Libre <postmaster@" + DOMAIN + ">",
+      to: owner.email,
+      subject: `${userShop.username} ha comprado ${prod.name}`,
+      text: `Solo debes aguardar que realice el pago \n
+             A continuacion los datos de ${userShop.username}
+              E-mail: ${userShop.email} \n
+              Teléfono: ${userShop.phone ? userShop.phone : "no aporta"} \n
+              Ciudad: ${userShop.city ? userShop.city : "no aporta"} \n
+              Dirección: ${userShop.address ? userShop.address : "no aporta"} `,
+    };
+
+    mg.messages().send(dataComprador, function (error, body) {
+      console.log(body);
+    });
+    mg.messages().send(dataVendedor, function (error, body) {
+      console.log(body);
+    });
+  };
 
     return ownerData ? (
         <Wrapper>
@@ -118,14 +153,14 @@ const ProductWrapper = styled.div`
     border-bottom: 1px solid lightgray;
 `;
 const Subtitle = styled.div`
-    margin-bottom: 1em;
-    margin-right: 2em;
-    margin-left: 2em;
+  margin-bottom: 1em;
+  margin-right: 2em;
+  margin-left: 2em;
 `;
 const Title = styled.div`
-    text-align: center;
-    font-size: 20px;
-    padding: 1em;
+  text-align: center;
+  font-size: 20px;
+  padding: 1em;
 `;
 
 const Tilde = styled.div`
@@ -136,8 +171,8 @@ const Tilde = styled.div`
     background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 50 50' style='enable-background:new 0 0 50 50;' xml:space='preserve'%3E%3Ccircle style='fill:%2325AE88;' cx='25' cy='25' r='25'/%3E%3Cpolyline style='fill:none;stroke:%23FFFFFF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;' points=' 38,15 22,33 12,25 '/%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3C/svg%3E%0A");
 `;
 const Content = styled.div`
-    margin-right: 2em;
-    margin-left: 2em;
+  margin-right: 2em;
+  margin-left: 2em;
 `;
 
 const Button = styled.button`

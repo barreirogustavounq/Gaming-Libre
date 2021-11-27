@@ -4,8 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-
-./MercadoPagoCheckout/node_modules
+/src/Mailgun
 
 # testing
 /coverage
