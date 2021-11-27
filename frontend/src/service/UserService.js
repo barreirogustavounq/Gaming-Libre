@@ -40,8 +40,6 @@ export const registerService = (
       console.log(result);
       if (result.error) {
         setAlertVisible(!alertVisible);
-      } else {
-        //history.push("/login");
       }
       return result.data;
     })
