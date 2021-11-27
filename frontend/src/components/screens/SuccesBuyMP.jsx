@@ -108,7 +108,6 @@ const SuccessBuyMP = ({
                               Producto : ${product.name} \n
                               E-mail: ${ownerData.email} \n
                               Teléfono: ${ownerData.phone} \n
-                              Ciudad: ${ownerData.city} \n
                               Dirección: ${ownerData.address} }`,
           };
           const dataVendedor = {
