@@ -35,13 +35,14 @@ p {
   color: $giallo;
 }
 .product {
-  width: 60rem;
+  width: 75%;
   background: white;
   position: relative;
-  left: calc(37% - 300px);
+  //left: calc(37% - 300px);
   margin-top: calc(50vh - 250px);
-  overflow-wrap: break-word;
+  // overflow-wrap: break-word;
   min-height: 40rem;
+  min-width: 26rem;
   &.action {
     animation: bounce 1s $cubicBounce infinite;
   }
@@ -100,11 +101,7 @@ p {
       min-height: 20rem;
       min-width: 15rem;
     }
-    .left,
-    .right {
-      width: 50%;
-      padding: 0 calc(5% - 1px);
-    }
+
     .right {
       color: #999;
       font-size: 0.78rem;
@@ -154,5 +151,4 @@ p {
 }
 .list-group-flush {
   border-radius: 0;
-  width: 60rem;
 }
