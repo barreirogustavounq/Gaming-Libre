@@ -10,7 +10,6 @@ import {
 } from "react-bootstrap";
 import "../../style/MyPagination.css";
 import styled from "@emotion/styled";
-import BackButton from "./BackButton";
 
 const MyPagination = (props) => {
   const products = props.products;

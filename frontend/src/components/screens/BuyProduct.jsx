@@ -2,10 +2,8 @@ import React, { useState } from "react";
 
 import { connect } from "react-redux";
 import "../../style/Product.scss";
-import { Button, Card } from "react-bootstrap";
-import { FaShippingFast } from "react-icons/fa";
+import { Button } from "react-bootstrap";
 import { BiMoney } from "react-icons/bi";
-import AddCarButton from "../tools/AddCarButton";
 import Swal from "sweetalert2";
 import { buymp, buyProductNow } from "../../service/ProductService";
 import { updateProcts } from "../Redux/ProductDuck";
@@ -19,11 +17,12 @@ const BuyProduct = ({ updateProcts, product, user }) => {
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
       buyProductNow(product, setOwnerData, user);
+      console.log(ownerData);
       updateProcts([product]);
       history.push(`/success`);
     }
     if (payMethod === "mercadopago") {
-      localStorage.setItem('medioDePago', 'mercadopago')
+      localStorage.setItem("medioDePago", "mercadopago");
       buymp(product, setButtonUrl);
       let timerInterval;
       Swal.fire({

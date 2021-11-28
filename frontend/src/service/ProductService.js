@@ -1,5 +1,4 @@
 import {
-  buyProduct,
   getBuyData,
   post,
   mpPost,
@@ -9,10 +8,10 @@ import {
 } from "../api/Api";
 import { addShooppingService } from "./ShoppingService";
 
-const accesTokenMP =
+/*const accesTokenMP =
   "TEST-4470583120056903-092823-e8250e22361adffae3967c20cd11f87f-240182164";
 const mpApi = `https://api.mercadopago.com/preferences?access_token=${accesTokenMP}`;
-// Crea un objeto de preferencia
+ Crea un objeto de preferencia
 let preference = {
   items: [
     {
@@ -22,7 +21,7 @@ let preference = {
     },
   ],
 };
-
+*/
 export const addProduct = (
   nombre,
   descripcion,

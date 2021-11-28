@@ -31,7 +31,7 @@ const SuccessBuyMP = ({
       : null;
   const [ownerData, setOwnerData] = useState(null);
   const history = useHistory();
-  const medioDePago = localStorage.getItem('medioDePago')
+  const medioDePago = localStorage.getItem("medioDePago");
 
   useEffect(() => {
     if (
@@ -49,7 +49,7 @@ const SuccessBuyMP = ({
       deleteAll(cart);
     }
     getAllProducts();
-  }, []);
+  }, [product, cartLS, user, cart, deleteAll, updateProcts, getAllProducts]);
   const sendMailSingle = (prod, owner, userShop) => {
     const mailgun = require("mailgun-js");
     const mg = mailgun({ apiKey: apiKey, domain: DOMAIN });
@@ -85,39 +85,45 @@ const SuccessBuyMP = ({
     });
   };
 
-    return ownerData ? (
-        <Wrapper>
-            <Tilde/>
-            <Title>{medioDePago === 'efectivo' ? 'Estás a un paso de tu compra!' :'Se acreditó tu pago'}</Title>
-            <Subtitle>
-                Estos son los datos de contacto de {product ? product.ownerUsername : 'tu carrito'}
-            </Subtitle>
-            <Content>Ahora podes coordinar la entrega!</Content>
-            <>
-                {product ? (
-                        <ProductWrapper>
-                            <Content>Producto : {product.name}</Content>
-                            <Content>E-mail: {ownerData.email}</Content>
-                            <Content>Teléfono: {ownerData.phone}</Content>
-                            <Content>Teléfono: {ownerData.phone}</Content>
-                            <Content>Ciudad: {ownerData.city}</Content>
-                            <Content>Dirección: {ownerData.address}</Content>
-                        </ProductWrapper>
-                    ) :
-                    ownerData.map((owner) => (
-                        <ProductWrapper>
-                            <Content>Producto : {owner.product}</Content>
-                            <Content>E-mail: {owner.data.email}</Content>
-                            <Content>Teléfono: {owner.data.phone}</Content>
-                            <Content>Teléfono: {owner.data.phone}</Content>
-                            <Content>Ciudad: {owner.data.city}</Content>
-                            <Content>Dirección: {owner.data.address}</Content>
-                        </ProductWrapper>
-                    ))
-                }
-            </>
-            <Button onClick={() => history.push('/')}>Volver al inicio</Button>
-        </Wrapper>) : null
+  return ownerData ? (
+    <Wrapper>
+      <Tilde />
+      <Title>
+        {medioDePago === "efectivo"
+          ? "Estás a un paso de tu compra!"
+          : "Se acreditó tu pago"}
+      </Title>
+      <Subtitle>
+        Estos son los datos de contacto de{" "}
+        {product ? product.ownerUsername : "tu carrito"}
+      </Subtitle>
+      <Content>Ahora podes coordinar la entrega!</Content>
+      <>
+        {product ? (
+          <ProductWrapper>
+            <Content>Producto : {product.name}</Content>
+            <Content>E-mail: {ownerData.email}</Content>
+            <Content>Teléfono: {ownerData.phone}</Content>
+            <Content>Teléfono: {ownerData.phone}</Content>
+            <Content>Ciudad: {ownerData.city}</Content>
+            <Content>Dirección: {ownerData.address}</Content>
+          </ProductWrapper>
+        ) : (
+          ownerData.map((owner) => (
+            <ProductWrapper>
+              <Content>Producto : {owner.product}</Content>
+              <Content>E-mail: {owner.data.email}</Content>
+              <Content>Teléfono: {owner.data.phone}</Content>
+              <Content>Teléfono: {owner.data.phone}</Content>
+              <Content>Ciudad: {owner.data.city}</Content>
+              <Content>Dirección: {owner.data.address}</Content>
+            </ProductWrapper>
+          ))
+        )}
+      </>
+      <Button onClick={() => history.push("/")}>Volver al inicio</Button>
+    </Wrapper>
+  ) : null;
 };
 
 const mapState = (state) => {
@@ -133,24 +139,24 @@ export default connect(mapState, { deleteAll, updateProcts, getAllProducts })(
 );
 
 const Wrapper = styled.div`
-    text-align: -webkit-center;
-    background: white;
-    min-width: fit-content;
-    min-height: fit-content;
-    border-radius: 50px;
-    max-width: fit-content;
-    max-height: fit-content;
-    margin-left: 35%;
-    margin-top: 10em;
-    padding-bottom: 2em;
-    padding-top: 2em;
+  text-align: -webkit-center;
+  background: white;
+  min-width: fit-content;
+  min-height: fit-content;
+  border-radius: 50px;
+  max-width: fit-content;
+  max-height: fit-content;
+  margin-left: 35%;
+  margin-top: 10em;
+  padding-bottom: 2em;
+  padding-top: 2em;
 `;
 
 const ProductWrapper = styled.div`
-    text-align: left;
-    margin-top: 1em;
-    margin-bottom: 0.1em;
-    border-bottom: 1px solid lightgray;
+  text-align: left;
+  margin-top: 1em;
+  margin-bottom: 0.1em;
+  border-bottom: 1px solid lightgray;
 `;
 const Subtitle = styled.div`
   margin-bottom: 1em;
@@ -164,11 +170,11 @@ const Title = styled.div`
 `;
 
 const Tilde = styled.div`
-    margin-top: 1em;
-    width: 4em;
-    height: 4em;
-    background-repeat: no-repeat;
-    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 50 50' style='enable-background:new 0 0 50 50;' xml:space='preserve'%3E%3Ccircle style='fill:%2325AE88;' cx='25' cy='25' r='25'/%3E%3Cpolyline style='fill:none;stroke:%23FFFFFF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;' points=' 38,15 22,33 12,25 '/%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3C/svg%3E%0A");
+  margin-top: 1em;
+  width: 4em;
+  height: 4em;
+  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 50 50' style='enable-background:new 0 0 50 50;' xml:space='preserve'%3E%3Ccircle style='fill:%2325AE88;' cx='25' cy='25' r='25'/%3E%3Cpolyline style='fill:none;stroke:%23FFFFFF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;' points=' 38,15 22,33 12,25 '/%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3C/svg%3E%0A");
 `;
 const Content = styled.div`
   margin-right: 2em;
@@ -176,9 +182,9 @@ const Content = styled.div`
 `;
 
 const Button = styled.button`
-    border: none;
-    background: lightblue;
-    border-radius: 7px;
-    padding: 8px;
-    margin-top: 1em;
+  border: none;
+  background: lightblue;
+  border-radius: 7px;
+  padding: 8px;
+  margin-top: 1em;
 `;

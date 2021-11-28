@@ -50,20 +50,20 @@ export const registerService = (
         );
       } else {
         Swal.fire({
-          icon: 'success',
-          title: 'Cuenta creada exitosamente',
+          icon: "success",
+          title: "Cuenta creada exitosamente",
           showConfirmButton: true,
-        }).then(() =>{
+        }).then(() => {
           history.push("/login");
-        })
+        });
       }
     })
     .catch((error) => {
       Swal.fire({
-        icon: 'error',
-        title: 'No se ha podido registrar',
-        text: 'El nombre de usuario y/o email ya están siendo utilizados',
-      })
+        icon: "error",
+        title: "No se ha podido registrar",
+        text: "El nombre de usuario y/o email ya están siendo utilizados",
+      });
     });
 };
 

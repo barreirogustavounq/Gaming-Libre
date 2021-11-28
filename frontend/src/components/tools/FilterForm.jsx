@@ -1,4 +1,3 @@
-import { useParams } from "react-router";
 import "../../style/ResultSearch.css";
 import { Button, Form, Modal } from "react-bootstrap";
 import styled from "@emotion/styled";
@@ -18,7 +17,6 @@ const FilterForm = ({
   setmin,
   setmax,
 }) => {
-  const param = useParams();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleApply = (e) => {
@@ -163,12 +161,6 @@ const FilterForm = ({
 
 export default FilterForm;
 
-const TitleResult = styled.h1`
-  padding-left: 2em;
-  padding-top: 2em;
-  padding-bottom: 2em;
-  color: white;
-`;
 const WrapperButton = styled.div`
   margin-left: 2%;
 `;

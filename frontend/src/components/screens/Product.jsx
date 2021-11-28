@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router";
 import BuyProduct from "./BuyProduct";
-import { Card, ListGroup } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
 import styled from "@emotion/styled";
 import AddCarButton from "../tools/AddCarButton";
 import { FaShippingFast } from "react-icons/fa";

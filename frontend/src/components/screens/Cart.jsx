@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { FaTrash } from "react-icons/fa";
 import { IoIosAdd, IoIosRemove } from "react-icons/io";
 import { connect } from "react-redux";
 import { deleteProduct, addProduct } from "../Redux/CartDuck";
@@ -42,6 +41,7 @@ const Cart = ({
 
   useEffect(() => {
     setcartstate(JSON.parse(localStorage.getItem("cart")));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     cartstate.map((product) => (total += product.price));
   }, [cart]);
 
@@ -51,10 +51,11 @@ const Cart = ({
 
   let productsBuy = "";
 
+  /*
   const handleBuy = (e) => {
     buyAllProductsMP(cartstate, productsBuy);
   };
-
+*/
   const handleAddOneToCart = (product) => {
     if (product.stock > product.buyQuantity) {
       product.buyQuantity = 1;
@@ -115,80 +116,6 @@ const Cart = ({
     });
   };
 
-  const OldCart = () => {
-    return (
-      <ContainerCart className="container">
-        {cartstate.map((product) => {
-          total += product.price * product.buyQuantity;
-          return (
-            <RowCart key={product.id}>
-              <div className={size > 990 ? "col-3" : "col-5"}>
-                {" "}
-                <ImageCart src={product.imgSrc} alt={product.id} />)
-              </div>
-
-              {size > 990 ? (
-                <div className="col-3">
-                  <H1Cart> {product.name} </H1Cart>{" "}
-                </div>
-              ) : (
-                <></>
-              )}
-
-              <div className={size > 990 ? "col-2" : "col-3"}>
-                <H1Cart> $ {product.price} </H1Cart>{" "}
-              </div>
-              <div className="col-3">
-                <H1Cart>
-                  <Button onClick={(e) => handleRemoveOneToCart(product)}>
-                    <IoIosRemove />
-                  </Button>
-                  {"    "}
-                  {product.buyQuantity}
-                  {"    "}
-                  <Button onClick={(e) => handleAddOneToCart(product)}>
-                    <IoIosAdd />
-                  </Button>
-                </H1Cart>
-              </div>
-              <div className="col-1">
-                <H1Cart>
-                  {" "}
-                  <Button
-                    id="deleteIcon"
-                    onClick={(e) => handleDelete(product)}
-                  >
-                    <FaTrash />
-                  </Button>{" "}
-                </H1Cart>
-              </div>
-            </RowCart>
-          );
-        })}
-        <div className="container">
-          <RowCart>
-            {buttonUrl === "" ? (
-              <Button
-                className="col align-self-center"
-                onClick={() =>
-                  localStorage.getItem("user")
-                    ? selectPaid()
-                    : history.push("/login")
-                }
-              >
-                {" "}
-                Comprar todos los productos por $ {total}
-              </Button>
-            ) : (
-              <Button className="col align-self-center" href={buttonUrl}>
-                <BiMoney /> Pagar con MercadoPago
-              </Button>
-            )}
-          </RowCart>
-        </div>
-      </ContainerCart>
-    );
-  };
   const NewCart = () => {
     return (
       <ContainerRow className="container">
@@ -313,20 +240,6 @@ export default connect(mapState, {
   updateProcts,
 })(Cart);
 
-const ImageCart = styled.img`
-  min-height: 12em;
-  max-height: 10em;
-  border-radius: 23%;
-  margin-bottom: 3rem;
-`;
-
-const H1Cart = styled.h5`
-  padding-top: 5rem;
-  color: aliceblue;
-`;
-const ContainerCart = styled.div`
-  margin-top: 14rem;
-`;
 const ContainerRow = styled.div`
   margin-top: 11rem;
   background-color: white;
@@ -335,14 +248,6 @@ const Totals = styled.div`
   padding-right: 106px;
 `;
 
-const RowCart = styled.div`
-  --bs-gutter-y: 0;
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: calc(var(--bs-gutter-y) * -1);
-  margin-right: calc(var(--bs-gutter-x) * -0.5);
-  margin-left: calc(var(--bs-gutter-x) * -0.5);
-`;
 const RowTotal = styled.div`
   bottom: 3rem;
   right: 5rem;
