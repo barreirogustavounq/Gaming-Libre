@@ -159,7 +159,6 @@ export const buyAllProductsNow = (cartstate, productsBuy, history, user) => {
   );
   localStorage.setItem("mpBuy", JSON.stringify(cartstate));
   localStorage.setItem("lastBuy", "cart");
-  //deleteAll();
   addShooppingService(user, cartstate);
   history.push("/success");
 };

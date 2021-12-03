@@ -21,7 +21,8 @@ export const getBuyData = (userName) => {
 };
 
 export const changeStock = (productId, newStock) => {
-  return axios.post(`${url}products/actualizeStock/${productId}/${newStock}`);
+    let user = JSON.parse(localStorage.getItem("user"))
+  return axios.post(`${url}products/actualizeStock/${productId}/${newStock}/${user.id}`);
 };
 
 export const buyProductQuantity = (product) => {

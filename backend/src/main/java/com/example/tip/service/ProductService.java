@@ -103,6 +103,18 @@ public class ProductService {
         return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
     }
 
+    public ResponseEntity<?> changeStock(String id, Integer newStock, String userId) throws ChangeSetPersister.NotFoundException {
+        Product product = productRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
+        Optional<BuyDTO> buyDTO = buyRepository.findById(userId);
+        addToBuyRepository(userId, product, buyDTO);
+        if (newStock <= 0) {
+            productRepository.deleteById(id);
+            return new ResponseEntity<>("compró la ultima unidad del producto", HttpStatus.OK);
+        }
+        product.setStock(newStock);
+        return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+    }
+
     public ResponseEntity<?> buyProduct(String id, Integer quantity, String userId) throws ChangeSetPersister.NotFoundException {
         Product product = productRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
         int stock = product.getStock() - quantity;

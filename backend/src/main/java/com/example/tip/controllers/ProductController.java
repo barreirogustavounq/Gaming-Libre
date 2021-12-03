@@ -80,6 +80,12 @@ public class ProductController {
         return productService.changeStock(id,newStock);
     }
 
+    @PostMapping("actualizeStock/{id}/{newStock}/{userId}")
+    public ResponseEntity<?> actualizeStock(@PathVariable String id, @PathVariable Integer newStock, @PathVariable String userId) throws ChangeSetPersister.NotFoundException {
+        return productService.changeStock(id,newStock, userId);
+    }
+
+
     @GetMapping("getBuys/{userId}")
     public List<Product> getBuys(@PathVariable String userId){
         return productService.getBuys(userId);
