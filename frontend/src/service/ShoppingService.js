@@ -1,4 +1,4 @@
-import { addShopping, getShopping } from "../api/Api";
+import { addShopping, getShopping, getShippingPrice } from "../api/Api";
 
 export const getShoppingofUser = (user, setshopping) => {
   getShopping(user)
@@ -9,6 +9,10 @@ export const getShoppingofUser = (user, setshopping) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const getShippingPriceOf = (postalCode) => {
+    getShippingPrice(postalCode).then(r => console.log(r))
+}
 
 export const addShooppingService = (user, products) => {
   addShopping(user, products)
