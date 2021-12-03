@@ -4,7 +4,8 @@ import {
   mpPost,
   buyProductQuantity,
   get,
-  changeStock, getShippingPrice,
+  changeStock,
+  getShippingPrice,
 } from "../api/Api";
 import { addShooppingService } from "./ShoppingService";
 
@@ -179,7 +180,9 @@ export const buyAllProductsNow = (cartstate, productsBuy, history, user) => {
 };
 
 export const getCategories = (setCategories) => {
-  getShippingPrice(1991).then(r => console.log(r))
+  getShippingPrice(1991)
+    .then((response) => response.json())
+    .then((data) => console.log(data));
   const URL = "products/categories";
   get(URL)
     .then((res) => res.data)

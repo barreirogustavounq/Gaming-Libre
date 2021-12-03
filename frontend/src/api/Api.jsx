@@ -117,17 +117,31 @@ export const addShopping = (user, productList) => {
 };
 
 export const getShippingPrice = (postalCode) => {
-    return axios.get('https://apisqa.andreani.com/v1/tarifas?cpDestino=4440&contrato=400006709&bultos%5B1%5D%5B1001%5D=1200', {
-        headers:{
-            "Access-Control-Allow-Origin": "*"
-        },
-        auth: {
-            username: 'lautariver35@gmail.com',
-            password: 'TIP123456'
-        }
-    });
-}
+  /*
+  axios.get(
+    "https://apisqa.andreani.com/v1/tarifas?cpDestino=4440&contrato=400006709&bultos%5B1%5D%5B1001%5D=1200",
+    {
+      mode: "cors",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers":
+          "POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin",
+        "Content-Type": "application/json",
+      },
+      auth: {
+        username: "lautariver35@gmail.com",
+        password: "TIP123456",
+      },
+    }
+  */
 
+  return fetch(
+    "https://apisqa.andreani.com/v1/tarifas?cpDestino=4440&contrato=400006709&bultos%5B1%5D%5B1001%5D=1200",
+    {
+      mode: "cors",
+    }
+  );
+};
 
 export const getShopping = (user) => {
   return axios.get(`${url}${user.username}/shopping`, header);
