@@ -9,13 +9,14 @@ import { buymp, buyProductNow } from "../../service/ProductService";
 import { updateProcts } from "../Redux/ProductDuck";
 import { useHistory } from "react-router";
 
-const BuyProduct = ({ updateProcts, product, user }) => {
+const BuyProduct = ({ updateProcts, product, user, shipping }) => {
   const history = useHistory();
   const [ownerData, setOwnerData] = useState(null);
   const [buttonUrl, setButtonUrl] = useState("");
 
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
+      product.price += shipping;
       buyProductNow(product, setOwnerData, user);
       console.log(ownerData);
       updateProcts([product]);

@@ -116,7 +116,7 @@ export const addShopping = (user, productList) => {
   );
 };
 
-export const getShippingPrice = (postalCode) => {
+export const getShippingPrice = (postalCode, cantidad) => {
   /*
   axios.get(
     "https://apisqa.andreani.com/v1/tarifas?cpDestino=4440&contrato=400006709&bultos%5B1%5D%5B1001%5D=1200",
@@ -135,8 +135,12 @@ export const getShippingPrice = (postalCode) => {
     }
   */
 
+  let bultos = "";
+  for (let i = 0; i < cantidad; i++) {
+    bultos = bultos.concat(`&bultos[${i}][volumen]=2000`);
+  }
   return fetch(
-    "https://apisqa.andreani.com/v1/tarifas?cpDestino=4440&contrato=400006709&bultos%5B1%5D%5B1001%5D=1200",
+    `https://apisqa.andreani.com/v1/tarifas?cpDestino=${postalCode}&contrato=400006709${bultos}`,
     {
       mode: "cors",
     }

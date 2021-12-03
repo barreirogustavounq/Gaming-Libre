@@ -180,9 +180,6 @@ export const buyAllProductsNow = (cartstate, productsBuy, history, user) => {
 };
 
 export const getCategories = (setCategories) => {
-  getShippingPrice(1991)
-    .then((response) => response.json())
-    .then((data) => console.log(data));
   const URL = "products/categories";
   get(URL)
     .then((res) => res.data)
@@ -213,5 +210,19 @@ export const searchProduct = (setProducts, param) => {
   get(URL)
     .then((res) => res.data)
     .then((data) => setProducts(data))
+    .catch((err) => console.log(err));
+};
+
+export const getShippingCost = (postalCode, quantity, setShipping) => {
+  getShippingPrice(postalCode, quantity)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.tarifaConIva);
+      return data.tarifaConIva;
+    })
+    .then((tarifa) => {
+      console.log(tarifa.total);
+      setShipping(tarifa.total);
+    })
     .catch((err) => console.log(err));
 };

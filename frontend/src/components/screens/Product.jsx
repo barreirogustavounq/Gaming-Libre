@@ -8,19 +8,22 @@ import AddCarButton from "../tools/AddCarButton";
 import { FaShippingFast } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
+import { getShippingCost } from "../../service/ProductService";
 
-const Product = ({ products }) => {
+const Product = ({ products, user }) => {
   const id = useParams().id;
   let selectedProduct = products.find((prod) => prod.id === id);
   const [buyQuantity, setbuyQuantity] = useState(0);
   const [size, setSize] = useState(window.innerWidth);
-
+  const [shipping, setShipping] = useState([]);
+  const [doShipping, setdoShipping] = useState(false);
   useEffect(() => {
     const handleResize = () => setSize(window.innerWidth);
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      console.log(shipping);
     };
   }, [size]);
 
@@ -29,6 +32,9 @@ const Product = ({ products }) => {
       setbuyQuantity(1);
     }
   }, [selectedProduct]);
+  useEffect(() => {
+    getConstoEnvio();
+  }, [buyQuantity, shipping]);
 
   const handleSum = () => {
     selectedProduct.buyQuantity = buyQuantity + 1;
@@ -41,6 +47,11 @@ const Product = ({ products }) => {
       setbuyQuantity(buyQuantity - 1);
     }
   };
+
+  const getConstoEnvio = () => {
+    getShippingCost(user.postalCode, buyQuantity, setShipping);
+  };
+
   return selectedProduct ? (
     <>
       <div
@@ -75,9 +86,24 @@ const Product = ({ products }) => {
             <h4 id="price">Descripcion:</h4>
             <Description>{selectedProduct.description}</Description>
             <div style={{ marginTop: "1em" }}>
-              <FaShippingFast /> Metodo de entrega: Retira en domicilio del
-              vendedor.
+              <FaShippingFast /> Metodo de entrega:
             </div>
+            <span>
+              <SelectStyled
+                className="form-select form-select-sm"
+                aria-label=".form-select-sm example"
+                onChange={(e) => {
+                  getConstoEnvio();
+                  setdoShipping(e.target.value);
+                }}
+              >
+                <option hidden value="">
+                  Seleccione un metodo de envio
+                </option>
+                <option value={true}> Envio a domicilio ${shipping}</option>
+                <option value={false}>Acordar con el vendedor</option>
+              </SelectStyled>
+            </span>
             <p>En stock: {selectedProduct.stock}</p>
             <Description className="quantity">
               <div style={{ marginTop: "1em", marginBottom: "1em" }}>
@@ -109,7 +135,10 @@ const Product = ({ products }) => {
                 style={{ padding: "6px", marginLeft: "2rem" }}
                 className="col-5"
               >
-                <BuyProduct product={selectedProduct} />
+                <BuyProduct
+                  product={selectedProduct}
+                  shipping={doShipping ? shipping : 0}
+                />
               </BuyButtonStyle>
             </div>
           </ButtonsWrapper>
@@ -131,6 +160,7 @@ const Product = ({ products }) => {
 const mapState = (state) => {
   return {
     products: state.products.products,
+    user: state.user.user,
   };
 };
 
@@ -149,6 +179,10 @@ const Description = styled.p`
   text-align: justify;
   word-wrap: break-word;
   max-height: fit-content;
+`;
+const SelectStyled = styled.select`
+  margin-top: 5%;
+  margin-bottom: 5%;
 `;
 const CartButtonStyle = styled.div``;
 const BuyButtonStyle = styled.div``;

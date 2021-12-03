@@ -49,7 +49,7 @@ const SuccessBuyMP = ({
       deleteAll(cart);
     }
     getAllProducts();
-  }, [product, cartLS, user, cart, deleteAll, updateProcts, getAllProducts]);
+  }, []);
   const sendMailSingle = (prod, owner, userShop) => {
     const mailgun = require("mailgun-js");
     const mg = mailgun({ apiKey: apiKey, domain: DOMAIN });
