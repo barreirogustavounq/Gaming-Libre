@@ -16,6 +16,8 @@ import NotFound from "./components/screens/NotFound";
 import Category from "./components/screens/Category";
 import SuccessBuyMP from "./components/screens/SuccesBuyMP";
 import { FailedBuyMP } from "./components/screens/FailedBuyMP";
+import {Buys} from "./components/screens/Buys";
+import {Publications} from "./components/screens/Publications";
 
 const App = ({ user }) => {
   const Routes = () => {
@@ -48,6 +50,12 @@ const App = ({ user }) => {
         <Route exact path="/user/count/:id">
           {user ? <UserDetails /> : <Redirect to="/" />}
         </Route>
+          <Route exact path="/user/buys/:id">
+              {user ? <Buys/> : <Redirect to="/" />}
+          </Route>
+          <Route exact path="/user/publications/:id">
+              {user ? <Publications/> : <Redirect to="/" />}
+          </Route>
         <Route exact path="/user/cart">
           <Cart />
         </Route>

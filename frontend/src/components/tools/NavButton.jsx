@@ -18,6 +18,14 @@ const NavButton = ({ logoutAction, user }) => {
     history.push("/products/add-product");
   };
 
+  const goToBuys = () => {
+    history.push(`/user/buys/${user.id}`);
+  };
+
+  const goToPublications = () => {
+    history.push(`/user/publications/${user.id}`);
+  };
+
   if (user) {
     return (
       <div className="btn-group">
@@ -40,6 +48,12 @@ const NavButton = ({ logoutAction, user }) => {
             onClick={goToAddProduct}
           >
             Agregar producto
+          </button>
+          <button className="dropdown-item" type="button" onClick={goToBuys}>
+            Mis compras
+          </button>
+          <button className="dropdown-item" type="button" onClick={goToPublications}>
+            Mis Publicaciones
           </button>
           <button className="dropdown-item" type="button" onClick={logOut}>
             Cerrar Sesion

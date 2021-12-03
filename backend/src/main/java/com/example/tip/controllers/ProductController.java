@@ -1,5 +1,6 @@
 package com.example.tip.controllers;
 
+import com.example.tip.dto.BuyDTO;
 import com.example.tip.model.Category;
 import com.example.tip.model.Product;
 import com.example.tip.service.ProductService;
@@ -27,6 +28,11 @@ public class ProductController {
     @PostMapping("add")
     public Product addProduct(@RequestBody Product product) {
         return productService.addProduct(product);
+    }
+
+    @PostMapping("add/{userId}")
+    public Product addProduct(@RequestBody Product product, @PathVariable String userId) {
+        return productService.addProduct(product, userId);
     }
 
     @GetMapping("categories")
@@ -64,9 +70,24 @@ public class ProductController {
         return productService.buyProduct(id, quantity);
     }
 
+    @PostMapping("buy/{id}/{quantity}/{userId}")
+    public ResponseEntity<?> buyProduct(@PathVariable String id, @PathVariable Integer quantity, @PathVariable String userId) throws ChangeSetPersister.NotFoundException {
+        return productService.buyProduct(id, quantity, userId);
+    }
+
     @PostMapping("actualizeStock/{id}/{newStock}")
     public ResponseEntity<?> actualizeStock(@PathVariable String id, @PathVariable Integer newStock) throws ChangeSetPersister.NotFoundException {
         return productService.changeStock(id,newStock);
+    }
+
+    @GetMapping("getBuys/{userId}")
+    public List<Product> getBuys(@PathVariable String userId){
+        return productService.getBuys(userId);
+    }
+
+    @GetMapping("getPublications/{userId}")
+    public List<Product> getPublications(@PathVariable String userId){
+        return productService.getPublications(userId);
     }
 
 }

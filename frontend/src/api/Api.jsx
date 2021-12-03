@@ -16,18 +16,6 @@ export const mpPost = (endpoint, body) => {
   return axios.post(mpUrl + endpoint, body, header);
 };
 
-export const getUser = (userName) => {
-  let user;
-  axios
-    .get(`${url}user/${userName}`)
-    .then((res) => res)
-    .then((data) => {
-      user = data.data;
-    })
-    .catch((err) => console.log(err));
-  return user;
-};
-
 export const getBuyData = (userName) => {
   return axios.get(`${url}user/buyData/${userName}`);
 };
@@ -36,16 +24,9 @@ export const changeStock = (productId, newStock) => {
   return axios.post(`${url}products/actualizeStock/${productId}/${newStock}`);
 };
 
-export const buyProduct = (product) => {
-  return axios.post(`${url}products/buy/${product.id}`);
-};
-
-export const buyProductMP = (preference, url) => {
-  return axios.post(url, preference);
-};
-
 export const buyProductQuantity = (product) => {
-  return axios.post(`${url}products/buy/${product.id}/${product.buyQuantity}`);
+    let user = JSON.parse(localStorage.getItem("user"))
+  return axios.post(`${url}products/buy/${product.id}/${product.buyQuantity}/${user.id}`);
 };
 
 export const login = (username, password) => {
@@ -58,6 +39,19 @@ export const login = (username, password) => {
     header
   );
 };
+export const getBuys= (setBuys) => {
+    let user = JSON.parse(localStorage.getItem("user"))
+    return axios.get(`${url}products/getBuys/${user.id}`, header).then(res => {
+        setBuys(res.data)
+    });
+}
+
+export const getPublications= (setPublications) => {
+    let user = JSON.parse(localStorage.getItem("user"))
+    return axios.get(`${url}products/getPublications/${user.id}`, header).then(res => {
+        setPublications(res.data)
+    });
+}
 
 export const updateUser = (user) => {
   return axios.put(
@@ -104,8 +98,6 @@ export const register = (user) => {
 };
 
 export const addShopping = (user, productList) => {
-  //console.log(user);
-  //console.log(productList);
   return axios.post(
     `${url}shopping/add-shopping`,
     {
@@ -117,24 +109,6 @@ export const addShopping = (user, productList) => {
 };
 
 export const getShippingPrice = (postalCode, cantidad) => {
-  /*
-  axios.get(
-    "https://apisqa.andreani.com/v1/tarifas?cpDestino=4440&contrato=400006709&bultos%5B1%5D%5B1001%5D=1200",
-    {
-      mode: "cors",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers":
-          "POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin",
-        "Content-Type": "application/json",
-      },
-      auth: {
-        username: "lautariver35@gmail.com",
-        password: "TIP123456",
-      },
-    }
-  */
-
   let bultos = "";
   for (let i = 0; i < cantidad; i++) {
     bultos = bultos.concat(`&bultos[${i}][volumen]=2000`);

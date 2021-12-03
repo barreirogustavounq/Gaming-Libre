@@ -9,20 +9,6 @@ import {
 } from "../api/Api";
 import { addShooppingService } from "./ShoppingService";
 
-/*const accesTokenMP =
-  "TEST-4470583120056903-092823-e8250e22361adffae3967c20cd11f87f-240182164";
-const mpApi = `https://api.mercadopago.com/preferences?access_token=${accesTokenMP}`;
- Crea un objeto de preferencia
-let preference = {
-  items: [
-    {
-      title: "Mi producto",
-      unit_price: 100,
-      quantity: 1,
-    },
-  ],
-};
-*/
 export const addProduct = (
   nombre,
   descripcion,
@@ -37,8 +23,7 @@ export const addProduct = (
   setmessage,
   setmodalShow
 ) => {
-  let storage = localStorage.getItem("user");
-  storage = JSON.parse(storage);
+  let storage = JSON.parse(localStorage.getItem("user"));
   let product = {
     ownerUsername: storage.username,
     name: nombre,
@@ -49,7 +34,7 @@ export const addProduct = (
     imgSrc: imgSrc,
     category: category.replace(" ", ""),
   };
-  post("products/add", product)
+  post(`products/add/${storage.id}`, product)
     .then((res) => {
       addProductToStore(res.data);
       setTittle("Se ha añadido " + product.name);
