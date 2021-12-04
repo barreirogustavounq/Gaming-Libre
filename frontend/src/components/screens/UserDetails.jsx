@@ -169,20 +169,12 @@ const UserDetails = ({ updateUserStorage, userStorage }) => {
               >
                 Guardar
               </button>
+              <Separator/>
             </div>
           </div>
         </div>
       </div>
-      <MisComprasTitle>Mis compras</MisComprasTitle>
-      <div className="container">
-        {shopping ? (
-          shopping.map((shop) => {
-            return <ShoppingsComponent products={shop.productList} />;
-          })
-        ) : (
-          <h1>No hay compras</h1>
-        )}
-      </div>
+
     </>
   ) : (
     <h1>Loading...</h1>
@@ -194,11 +186,9 @@ const mapState = (state) => {
   };
 };
 
-const MisComprasTitle = styled.div`
-    padding: 1em;
-    padding-left: 2em;
-    color: white;
-    font-size: 33px;
+const Separator = styled.div`
+    padding:1em;
 `
+
 
 export default connect(mapState, { updateUserStorage })(UserDetails);
