@@ -16,8 +16,8 @@ const Product = ({ products, user }) => {
   const [buyQuantity, setbuyQuantity] = useState(0);
   const [size, setSize] = useState(window.innerWidth);
   const [shipping, setShipping] = useState(0);
-  const [envio, setEnvio] = useState(true)
-  const [neutral, setNeutral] = useState(true)
+  const [envio, setEnvio] = useState(true);
+  const [neutral, setNeutral] = useState(true);
   useEffect(() => {
     const handleResize = () => setSize(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -26,7 +26,7 @@ const Product = ({ products, user }) => {
       window.removeEventListener("resize", handleResize);
       console.log(shipping);
     };
-  }, [size,envio]);
+  }, [size, envio]);
 
   useEffect(() => {
     if (selectedProduct) {
@@ -53,8 +53,11 @@ const Product = ({ products, user }) => {
     getShippingCost(user.postalCode, buyQuantity, setShipping);
   };
   const getPrice = () => {
-    return  (buyQuantity * selectedProduct.price) + (envio && !neutral ? parseInt(shipping) : 0)
-  }
+    return (
+      buyQuantity * selectedProduct.price +
+      (envio && !neutral ? parseInt(shipping) : 0)
+    );
+  };
 
   return selectedProduct ? (
     <>
@@ -71,7 +74,11 @@ const Product = ({ products, user }) => {
           <div
             style={
               size > 880
-                ? { width: "50%", padding: "0 calc(5% - 1px)" }
+                ? {
+                    width: "50%",
+                    padding: "0 calc(5% - 1px)",
+                    borderStyle: "groove",
+                  }
                 : { width: "100%" }
             }
             className="left"
@@ -90,7 +97,12 @@ const Product = ({ products, user }) => {
             <h4 id="price">Descripcion:</h4>
             <Description>{selectedProduct.description}</Description>
             <div style={{ marginTop: "1em" }}>
-              <FaShippingFast /> Metodo de entrega: {neutral ? 'Elegir' : envio  ? 'Envio a domicilio': 'Acordar con el vendedor'}
+              <FaShippingFast /> Metodo de entrega:{" "}
+              {neutral
+                ? "Elegir"
+                : envio
+                ? "Envio a domicilio"
+                : "Acordar con el vendedor"}
             </div>
             <span>
               <SelectStyled
@@ -98,8 +110,8 @@ const Product = ({ products, user }) => {
                 aria-label=".form-select-sm example"
                 onChange={(e) => {
                   getConstoEnvio();
-                  setEnvio(!envio)
-                  setNeutral(false)
+                  setEnvio(!envio);
+                  setNeutral(false);
                 }}
               >
                 <option hidden value="">
@@ -126,33 +138,46 @@ const Product = ({ products, user }) => {
               <span>
                 {" "}
                 <h6 style={{ marginBottom: "1em" }}>
-                  {envio && !neutral ? `Envio: $${shipping}`: null}
+                  {envio && !neutral ? `Envio: $${shipping}` : null}
                 </h6>
                 <h4 style={{ marginBottom: "1em" }}>
                   Precio Total: ${getPrice()}{" "}
                 </h4>
               </span>
+
+              <ButtonsWrapper className={size > 880 ? "right" : "left"}>
+                {!neutral ? (
+                  <div className="row">
+                    <CartButtonStyle
+                      style={{ padding: "6px" }}
+                      className="col-5"
+                    >
+                      <AddCarButton product={selectedProduct} />
+                    </CartButtonStyle>
+                    <BuyButtonStyle
+                      style={{ padding: "6px", marginLeft: "2rem" }}
+                      className="col-5"
+                    >
+                      <BuyProduct
+                        product={selectedProduct}
+                        shipping={envio ? shipping : 0}
+                      />
+                    </BuyButtonStyle>
+                  </div>
+                ) : (
+                  <SelectShippingMessage>
+                    Seleccione un metodo de entrega
+                  </SelectShippingMessage>
+                )}
+              </ButtonsWrapper>
             </Description>
           </div>
-          <ButtonsWrapper className={size > 880 ? "right" : "left"}>
-            {!neutral ?
-            <div className="row">
-              <CartButtonStyle style={{ padding: "6px" }} className="col-5">
-                <AddCarButton product={selectedProduct} />
-              </CartButtonStyle>
-              <BuyButtonStyle
-                style={{ padding: "6px", marginLeft: "2rem" }}
-                className="col-5"
-              >
-                <BuyProduct
-                  product={selectedProduct}
-                  shipping={envio ? shipping : 0}
-                />
-              </BuyButtonStyle>
-            </div>
-            : <SelectShippingMessage>Seleccione un metodo de entrega</SelectShippingMessage>}
-          </ButtonsWrapper>
         </div>
+      </div>
+      <div
+        className="productCaracteristica"
+        style={size > 620 ? { marginLeft: "15%" } : { marginLeft: "5%" }}
+      >
         <CaracteristicasWrapper>
           <CaracteristicasTitle>Caracteristicas:</CaracteristicasTitle>
           <ListGroup variant="flush">
