@@ -16,6 +16,8 @@ const BuyProduct = ({ updateProcts, product, user, shipping }) => {
 
   const handleBuyNow = (payMethod) => {
     if (payMethod === "efectivo") {
+      localStorage.removeItem("medioDePago");
+      localStorage.setItem("medioDePago", "efectivo");
       product.price += shipping;
       buyProductNow(product, setOwnerData, user);
       console.log(ownerData);
@@ -23,6 +25,7 @@ const BuyProduct = ({ updateProcts, product, user, shipping }) => {
       history.push(`/success`);
     }
     if (payMethod === "mercadopago") {
+      localStorage.removeItem("medioDePago");
       localStorage.setItem("medioDePago", "mercadopago");
       buymp(product, setButtonUrl);
       let timerInterval;

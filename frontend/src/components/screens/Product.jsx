@@ -15,8 +15,9 @@ const Product = ({ products, user }) => {
   let selectedProduct = products.find((prod) => prod.id === id);
   const [buyQuantity, setbuyQuantity] = useState(0);
   const [size, setSize] = useState(window.innerWidth);
-  const [shipping, setShipping] = useState([]);
-  const [doShipping, setdoShipping] = useState(false);
+  const [shipping, setShipping] = useState(0);
+  const [envio, setEnvio] = useState(true)
+  const [neutral, setNeutral] = useState(true)
   useEffect(() => {
     const handleResize = () => setSize(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -25,16 +26,16 @@ const Product = ({ products, user }) => {
       window.removeEventListener("resize", handleResize);
       console.log(shipping);
     };
-  }, [size]);
+  }, [size,envio]);
 
   useEffect(() => {
     if (selectedProduct) {
       setbuyQuantity(1);
     }
-  }, [selectedProduct]);
+  }, [selectedProduct, envio]);
   useEffect(() => {
     getConstoEnvio();
-  }, [buyQuantity, shipping]);
+  }, [buyQuantity, shipping, envio]);
 
   const handleSum = () => {
     selectedProduct.buyQuantity = buyQuantity + 1;
@@ -51,6 +52,9 @@ const Product = ({ products, user }) => {
   const getConstoEnvio = () => {
     getShippingCost(user.postalCode, buyQuantity, setShipping);
   };
+  const getPrice = () => {
+    return  (buyQuantity * selectedProduct.price) + (envio && !neutral ? parseInt(shipping) : 0)
+  }
 
   return selectedProduct ? (
     <>
@@ -86,7 +90,7 @@ const Product = ({ products, user }) => {
             <h4 id="price">Descripcion:</h4>
             <Description>{selectedProduct.description}</Description>
             <div style={{ marginTop: "1em" }}>
-              <FaShippingFast /> Metodo de entrega:
+              <FaShippingFast /> Metodo de entrega: {neutral ? 'Elegir' : envio  ? 'Envio a domicilio': 'Acordar con el vendedor'}
             </div>
             <span>
               <SelectStyled
@@ -94,14 +98,15 @@ const Product = ({ products, user }) => {
                 aria-label=".form-select-sm example"
                 onChange={(e) => {
                   getConstoEnvio();
-                  setdoShipping(e.target.value);
+                  setEnvio(!envio)
+                  setNeutral(false)
                 }}
               >
                 <option hidden value="">
                   Seleccione un metodo de envio
                 </option>
-                <option value={true}> Envio a domicilio ${shipping}</option>
-                <option value={false}>Acordar con el vendedor</option>
+                <option> Envio a domicilio ${shipping}</option>
+                <option>Acordar con el vendedor</option>
               </SelectStyled>
             </span>
             <p>En stock: {selectedProduct.stock}</p>
@@ -120,13 +125,17 @@ const Product = ({ products, user }) => {
               </div>
               <span>
                 {" "}
+                <h6 style={{ marginBottom: "1em" }}>
+                  {envio && !neutral ? `Envio: $${shipping}`: null}
+                </h6>
                 <h4 style={{ marginBottom: "1em" }}>
-                  Precio: ${selectedProduct.price * selectedProduct.buyQuantity}{" "}
+                  Precio Total: ${getPrice()}{" "}
                 </h4>
               </span>
             </Description>
           </div>
           <ButtonsWrapper className={size > 880 ? "right" : "left"}>
+            {!neutral ?
             <div className="row">
               <CartButtonStyle style={{ padding: "6px" }} className="col-5">
                 <AddCarButton product={selectedProduct} />
@@ -137,10 +146,11 @@ const Product = ({ products, user }) => {
               >
                 <BuyProduct
                   product={selectedProduct}
-                  shipping={doShipping ? shipping : 0}
+                  shipping={envio ? shipping : 0}
                 />
               </BuyButtonStyle>
             </div>
+            : <SelectShippingMessage>Seleccione un metodo de entrega</SelectShippingMessage>}
           </ButtonsWrapper>
         </div>
         <CaracteristicasWrapper>
@@ -167,6 +177,12 @@ const mapState = (state) => {
 const CaracteristicasTitle = styled.div`
   font-size: 20px;
   font-weight: bold;
+`;
+
+const SelectShippingMessage = styled.div`
+  font-size: 28px;
+  color: darkred;
+  margin-right: 5em !important;
 `;
 const CaracteristicasWrapper = styled.div`
   padding: 5px 40px 5px 13px;
