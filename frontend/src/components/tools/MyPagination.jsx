@@ -13,6 +13,7 @@ import styled from "@emotion/styled";
 
 const MyPagination = (props) => {
   const products = props.products;
+  const type = props.type;
   const [page, setPage] = useState(0);
   const cantOfElems = 5;
 
@@ -31,7 +32,7 @@ const MyPagination = (props) => {
       }
 
       const result = res.map((product) => {
-        return <CardOfProduct key={product.id} product={product} />;
+        return <CardOfProduct key={product.id} product={product} type={type} />;
       });
 
       const numerosDePaginacion = () => {

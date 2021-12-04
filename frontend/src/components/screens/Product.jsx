@@ -24,7 +24,6 @@ const Product = ({ products, user }) => {
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      console.log(shipping);
     };
   }, [size, envio]);
 

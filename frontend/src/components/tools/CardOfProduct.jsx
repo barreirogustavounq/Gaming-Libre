@@ -4,6 +4,7 @@ import "../../style/Card.scss";
 import styled from "@emotion/styled";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 const CardOfProduct = (props) => {
+  const type = props.type;
   const product = props.product;
   const history = useHistory();
   const [size, setSize] = useState(window.innerWidth);
@@ -23,8 +24,13 @@ const CardOfProduct = (props) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-
-    history.push(`/product/${product.id}`);
+    console.log(type);
+    if (!type) {
+      history.push(`/product/${product.id}`);
+    } else {
+      localStorage.setItem("showProduct", JSON.stringify(product));
+      history.push(`/show/product`);
+    }
   };
   return product ? (
     <ProductButton onClick={handleClick}>

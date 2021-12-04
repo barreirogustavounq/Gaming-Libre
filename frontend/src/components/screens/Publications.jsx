@@ -24,7 +24,7 @@ export const Publications = () => {
         <Container>
           <Row>
             <Col xs={8}>
-              <MyPagination products={publications} />
+              <MyPagination products={publications} type={true} />
             </Col>
           </Row>
         </Container>
