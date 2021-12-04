@@ -68,7 +68,6 @@ public class ProductService {
         return productRepository.findAllByCategory(category);
     }
 
-
     private Category getCategory(String category) {
         return Arrays.stream(Category.values()).filter(cat -> Category.valueOf(category) == cat).findFirst().orElseThrow(NoSuchFieldError::new);
     }
@@ -79,7 +78,6 @@ public class ProductService {
         addToBuyRepository(userId, product, buyDTO);
         if (newStock <= 0) {
             productRepository.deleteById(id);
-            deleteProductPublication(userId, id);
             return new ResponseEntity<>("compró la ultima unidad del producto", HttpStatus.OK);
         }
         product.setStock(newStock);
@@ -98,22 +96,9 @@ public class ProductService {
             product.setStock(stock);
             productRepository.save(product);
         } else {
-            deleteProductPublication(userId, id);
             productRepository.deleteById(id);
         }
         return new ResponseEntity<>("ok", HttpStatus.OK);
-    }
-
-    private void deleteProductPublication(String userId, String productId) {
-        Optional<Publication> publication = publicationRepository.findById(userId);
-        Publication publicToSave;
-        if(publication.isPresent()){
-            List<Product> products= publication.get().getProducts();
-            products = products.stream().filter(product -> product.getId() != productId).collect(Collectors.toList());
-            publicToSave = publication.get();
-            publicToSave.setProducts(products);
-            publicationRepository.save(publicToSave);
-        }
     }
 
     private void addToBuyRepository(String userId, Product product, Optional<Buy> buyDTO) {
