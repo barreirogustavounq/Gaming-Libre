@@ -6,7 +6,7 @@ import "../../style/cart.scss";
 import { Badge, Button } from "react-bootstrap";
 import {
   buyAllProductsMP,
-  buyAllProductsNow,
+  buyAllProductsNow, getShippingCost,
 } from "../../service/ProductService";
 import styled from "@emotion/styled";
 import { BiMoney } from "react-icons/bi";
@@ -28,16 +28,8 @@ const Cart = ({
   );
   const [buttonUrl, setButtonUrl] = useState("");
   let total = 0;
-  let envio = 500;
+  const [shippingPrice, setShippingPrice] = useState(0)
   const [size, setSize] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setSize(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [size]);
 
   useEffect(() => {
     setcartstate(JSON.parse(localStorage.getItem("cart")));
@@ -51,17 +43,21 @@ const Cart = ({
 
   let productsBuy = "";
 
-  /*
-  const handleBuy = (e) => {
-    buyAllProductsMP(cartstate, productsBuy);
-  };
-*/
   const handleAddOneToCart = (product) => {
     if (product.stock > product.buyQuantity) {
       product.buyQuantity = 1;
       addProduct(product);
     }
   };
+
+  useEffect(() => {
+    const handleResize = () => setSize(window.innerWidth);
+    getShippingCost(user.postalCode, cart.reduce((a,b) => a+ (b["buyQuantity"] || 0),0), setShippingPrice);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [size, handleAddOneToCart]);
 
   const handleRemoveOneToCart = (product) => {
     if (product.buyQuantity > 1) {
@@ -183,14 +179,14 @@ const Cart = ({
                 <div className="totals-item">
                   <label>Envio</label>
                   <div className="totals-value" id="cart-shipping">
-                    {envio}
+                    {shippingPrice}
                   </div>
                 </div>
                 <hr />
                 <div className="totals-item totals-item-total">
                   <label>Total</label>
                   <div className="totals-value" id="cart-total">
-                    {total + envio}
+                    {total + parseInt(shippingPrice)}
                   </div>
                 </div>
               </Totals>
