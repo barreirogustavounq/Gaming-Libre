@@ -117,7 +117,10 @@ const Product = ({ products, user }) => {
                 <option hidden value="">
                   Seleccione un metodo de envio
                 </option>
-                <option> Envio a domicilio ${shipping}</option>
+                <option hidden={shipping === 0}>
+                  {" "}
+                  Envio a domicilio ${shipping}
+                </option>
                 <option>Acordar con el vendedor</option>
               </SelectStyled>
             </span>

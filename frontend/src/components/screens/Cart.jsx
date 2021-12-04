@@ -6,7 +6,8 @@ import "../../style/cart.scss";
 import { Badge, Button } from "react-bootstrap";
 import {
   buyAllProductsMP,
-  buyAllProductsNow, getShippingCost,
+  buyAllProductsNow,
+  getShippingCost,
 } from "../../service/ProductService";
 import styled from "@emotion/styled";
 import { BiMoney } from "react-icons/bi";
@@ -28,7 +29,7 @@ const Cart = ({
   );
   const [buttonUrl, setButtonUrl] = useState("");
   let total = 0;
-  const [shippingPrice, setShippingPrice] = useState(0)
+  const [shippingPrice, setShippingPrice] = useState(0);
   const [size, setSize] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -52,7 +53,13 @@ const Cart = ({
 
   useEffect(() => {
     const handleResize = () => setSize(window.innerWidth);
-    getShippingCost(user.postalCode, cart.reduce((a,b) => a+ (b["buyQuantity"] || 0),0), setShippingPrice);
+    if (user) {
+      getShippingCost(
+        user.postalCode,
+        cart.reduce((a, b) => a + (b["buyQuantity"] || 0), 0),
+        setShippingPrice
+      );
+    }
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
