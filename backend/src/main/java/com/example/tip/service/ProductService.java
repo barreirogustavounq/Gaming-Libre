@@ -36,11 +36,6 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product addProduct(Product product) {
-        product.setBuyQuantity(1);
-        return productRepository.save(product);
-    }
-
     public Product addProduct(Product product, String userId) {
         product.setBuyQuantity(1);
         Optional<PublicationDTO> publicationDTO = publicationRepository.findById(userId);
@@ -54,21 +49,6 @@ public class ProductService {
 
     public List<Product> getProductsByName(String name) {
         return productRepository.findByNameRegex(name);
-    }
-
-    public ResponseEntity<?> buyProduct(String id, Integer quantity) throws ChangeSetPersister.NotFoundException {
-        Product product = productRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
-        int stock = product.getStock() - quantity;
-        if (stock < 0) {
-            return new ResponseEntity<>("no hay stock suficiente del producto " + product.getName(), HttpStatus.BAD_REQUEST);
-        }
-        if (stock > 0) {
-            product.setStock(stock);
-            productRepository.save(product);
-        } else {
-            productRepository.deleteById(id);
-        }
-        return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
     public List<Product> findByCategory(String category, String product) {
@@ -90,17 +70,6 @@ public class ProductService {
 
     private Category getCategory(String category) {
         return Arrays.stream(Category.values()).filter(cat -> Category.valueOf(category) == cat).findFirst().orElseThrow(NoSuchFieldError::new);
-    }
-
-
-    public ResponseEntity<?> changeStock(String id, Integer newStock) throws ChangeSetPersister.NotFoundException {
-        if (newStock <= 0) {
-            productRepository.deleteById(id);
-            return new ResponseEntity<>("compró la ultima unidad del producto", HttpStatus.OK);
-        }
-        Product product = productRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
-        product.setStock(newStock);
-        return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
     }
 
     public ResponseEntity<?> changeStock(String id, Integer newStock, String userId) throws ChangeSetPersister.NotFoundException {

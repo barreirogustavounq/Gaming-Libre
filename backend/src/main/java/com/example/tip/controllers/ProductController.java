@@ -25,10 +25,6 @@ public class ProductController {
         return productService.getProducts();
     }
 
-    @PostMapping("add")
-    public Product addProduct(@RequestBody Product product) {
-        return productService.addProduct(product);
-    }
 
     @PostMapping("add/{userId}")
     public Product addProduct(@RequestBody Product product, @PathVariable String userId) {
@@ -60,24 +56,9 @@ public class ProductController {
         return productService.getProductsByName(name);
     }
 
-    @PostMapping("buy/{id}")
-    public ResponseEntity<?> buyProduct(@PathVariable String id) throws ChangeSetPersister.NotFoundException {
-        return productService.buyProduct(id,1);
-    }
-
-    @PostMapping("buy/{id}/{quantity}")
-    public ResponseEntity<?> buyProduct(@PathVariable String id, @PathVariable Integer quantity) throws ChangeSetPersister.NotFoundException {
-        return productService.buyProduct(id, quantity);
-    }
-
     @PostMapping("buy/{id}/{quantity}/{userId}")
     public ResponseEntity<?> buyProduct(@PathVariable String id, @PathVariable Integer quantity, @PathVariable String userId) throws ChangeSetPersister.NotFoundException {
         return productService.buyProduct(id, quantity, userId);
-    }
-
-    @PostMapping("actualizeStock/{id}/{newStock}")
-    public ResponseEntity<?> actualizeStock(@PathVariable String id, @PathVariable Integer newStock) throws ChangeSetPersister.NotFoundException {
-        return productService.changeStock(id,newStock);
     }
 
     @PostMapping("actualizeStock/{id}/{newStock}/{userId}")
