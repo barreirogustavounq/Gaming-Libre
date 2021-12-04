@@ -1,4 +1,4 @@
-package com.example.tip.dto;
+package com.example.tip.model;
 
 import com.example.tip.model.Product;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PublicationDTO {
+public class Publication {
 
     @Id
     public String userId;

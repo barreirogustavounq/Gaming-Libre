@@ -1,6 +1,5 @@
 package com.example.tip.controllers;
 
-import com.example.tip.dto.BuyDTO;
 import com.example.tip.model.Category;
 import com.example.tip.model.Product;
 import com.example.tip.service.ProductService;

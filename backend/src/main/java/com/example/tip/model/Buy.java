@@ -1,6 +1,5 @@
-package com.example.tip.dto;
+package com.example.tip.model;
 
-import com.example.tip.model.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BuyDTO {
+public class Buy {
     @Id
     public String userId;
     public List<Product> products;

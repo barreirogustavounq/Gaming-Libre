@@ -1,7 +1,7 @@
 package com.example.tip.service;
 
-import com.example.tip.dto.BuyDTO;
-import com.example.tip.dto.PublicationDTO;
+import com.example.tip.model.Buy;
+import com.example.tip.model.Publication;
 import com.example.tip.model.Category;
 import com.example.tip.model.Product;
 import com.example.tip.repository.BuyRepository;
@@ -38,7 +38,7 @@ public class ProductService {
 
     public Product addProduct(Product product, String userId) {
         product.setBuyQuantity(1);
-        Optional<PublicationDTO> publicationDTO = publicationRepository.findById(userId);
+        Optional<Publication> publicationDTO = publicationRepository.findById(userId);
         addToPublicationRepository(userId, product, publicationDTO);
         return productRepository.save(product);
     }
@@ -74,10 +74,11 @@ public class ProductService {
 
     public ResponseEntity<?> changeStock(String id, Integer newStock, String userId) throws ChangeSetPersister.NotFoundException {
         Product product = productRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
-        Optional<BuyDTO> buyDTO = buyRepository.findById(userId);
+        Optional<Buy> buyDTO = buyRepository.findById(userId);
         addToBuyRepository(userId, product, buyDTO);
         if (newStock <= 0) {
             productRepository.deleteById(id);
+            deleteProductPublication(userId, id);
             return new ResponseEntity<>("compró la ultima unidad del producto", HttpStatus.OK);
         }
         product.setStock(newStock);
@@ -87,7 +88,7 @@ public class ProductService {
     public ResponseEntity<?> buyProduct(String id, Integer quantity, String userId) throws ChangeSetPersister.NotFoundException {
         Product product = productRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
         int stock = product.getStock() - quantity;
-        Optional<BuyDTO> buyDTO = buyRepository.findById(userId);
+        Optional<Buy> buyDTO = buyRepository.findById(userId);
         addToBuyRepository(userId, product, buyDTO);
         if (stock < 0) {
             return new ResponseEntity<>("no hay stock suficiente del producto " + product.getName(), HttpStatus.BAD_REQUEST);
@@ -96,19 +97,32 @@ public class ProductService {
             product.setStock(stock);
             productRepository.save(product);
         } else {
+            deleteProductPublication(userId, id);
             productRepository.deleteById(id);
         }
         return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
-    private void addToBuyRepository(String userId, Product product, Optional<BuyDTO> buyDTO) {
-        BuyDTO buy;
+    private void deleteProductPublication(String userId, String productId) {
+        Optional<Publication> publication = publicationRepository.findById(userId);
+        Publication publicToSave;
+        if(publication.isPresent()){
+            List<Product> products= publication.get().getProducts();
+            products = products.stream().filter(product -> product.getId() != productId).collect(Collectors.toList());
+            publicToSave = publication.get();
+            publicToSave.setProducts(products);
+            publicationRepository.save(publicToSave);
+        }
+    }
+
+    private void addToBuyRepository(String userId, Product product, Optional<Buy> buyDTO) {
+        Buy buy;
         if (buyDTO.isPresent()) {
             buy = buyDTO.get();
             List<Product> products = buy.getProducts();
             products.add(product);
         } else {
-            buy = new BuyDTO();
+            buy = new Buy();
             List<Product> products = new ArrayList<>();
             products.add(product);
             buy.setProducts(products);
@@ -117,14 +131,14 @@ public class ProductService {
         buyRepository.save(buy);
     }
 
-    private void addToPublicationRepository(String userId, Product product, Optional<PublicationDTO> publicationDTO) {
-        PublicationDTO publication;
+    private void addToPublicationRepository(String userId, Product product, Optional<Publication> publicationDTO) {
+        Publication publication;
         if (publicationDTO.isPresent()) {
             publication = publicationDTO.get();
             List<Product> products = publication.getProducts();
             products.add(product);
         } else {
-            publication = new PublicationDTO();
+            publication = new Publication();
             List<Product> products = new ArrayList<>();
             products.add(product);
             publication.setProducts(products);
@@ -134,13 +148,13 @@ public class ProductService {
     }
 
     public List<Product> getBuys(String userId) {
-        Optional<BuyDTO> buy = buyRepository.findById(userId);
+        Optional<Buy> buy = buyRepository.findById(userId);
         if (buy.isPresent()) return buy.get().getProducts();
         return new ArrayList<>();
     }
 
     public List<Product> getPublications(String userId) {
-        Optional<PublicationDTO> publication = publicationRepository.findById(userId);
+        Optional<Publication> publication = publicationRepository.findById(userId);
         if (publication.isPresent()) return publication.get().getProducts();
         return new ArrayList<>();
     }
