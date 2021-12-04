@@ -16,7 +16,7 @@ const Product = ({ products, user }) => {
   const [buyQuantity, setbuyQuantity] = useState(0);
   const [size, setSize] = useState(window.innerWidth);
   const [shipping, setShipping] = useState(0);
-  const [envio, setEnvio] = useState(true);
+  const [envio, setEnvio] = useState(false);
   const [neutral, setNeutral] = useState(true);
   useEffect(() => {
     const handleResize = () => setSize(window.innerWidth);
