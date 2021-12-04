@@ -38,6 +38,10 @@ public class ProductService {
 
     public Product addProduct(Product product, String userId) {
         product.setBuyQuantity(1);
+        Optional<PublicationDTO> publicationDTO = publicationRepository.findById(userId);
+        Product repoProduct = productRepository.save(product);
+        addToPublicationRepository(userId, repoProduct, publicationDTO);
+        return repoProduct;
         Optional<Publication> publicationDTO = publicationRepository.findById(userId);
         addToPublicationRepository(userId, product, publicationDTO);
         return productRepository.save(product);

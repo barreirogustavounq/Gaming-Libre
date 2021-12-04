@@ -34,6 +34,13 @@ p {
 .yellow {
   color: $giallo;
 }
+.productCaracteristica {
+  width: 75%;
+  background: white;
+  min-height: 24rem;
+  min-width: 26rem;
+  margin-left: 15%;
+}
 .product {
   width: 75%;
   background: white;
@@ -49,7 +56,6 @@ p {
   .header {
     height: 40px;
     position: relative;
-    padding: 20px;
     .back {
       position: absolute;
       width: 0px;
