@@ -28,13 +28,11 @@ const Product = ({ products, user }) => {
   }, [size, envio]);
 
   useEffect(() => {
-    if (selectedProduct) {
-      setbuyQuantity(1);
-    }
-  }, [selectedProduct, envio]);
+    setbuyQuantity(1);
+  }, []);
   useEffect(() => {
     getConstoEnvio();
-  }, [buyQuantity, shipping, envio]);
+  }, [buyQuantity, shipping, envio, user]);
 
   const handleSum = () => {
     selectedProduct.buyQuantity = buyQuantity + 1;
@@ -108,14 +106,16 @@ const Product = ({ products, user }) => {
                 className="form-select form-select-sm"
                 aria-label=".form-select-sm example"
                 onChange={(e) => {
-                  getConstoEnvio();
-                  setEnvio(!envio);
                   setNeutral(false);
+                  getConstoEnvio();
+                  if (e.target.value === "Acordar con el vendedor") {
+                    setEnvio(false);
+                  } else {
+                    setEnvio(true);
+                  }
                 }}
               >
-                <option hidden value="">
-                  Seleccione un metodo de envio
-                </option>
+                <option hidden>Seleccione un metodo de envio</option>
                 <option hidden={shipping === 0}>
                   {" "}
                   Envio a domicilio ${shipping}
