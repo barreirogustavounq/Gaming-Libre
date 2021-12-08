@@ -53,6 +53,13 @@ const Cart = ({
 
   useEffect(() => {
     const handleResize = () => setSize(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [size]);
+
+  useEffect(() => {
     if (user) {
       getShippingCost(
         user.postalCode,
@@ -60,12 +67,7 @@ const Cart = ({
         setShippingPrice
       );
     }
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [size, handleAddOneToCart]);
-
+  }, [cart]);
   const handleRemoveOneToCart = (product) => {
     if (product.buyQuantity > 1) {
       product.buyQuantity = -1;
