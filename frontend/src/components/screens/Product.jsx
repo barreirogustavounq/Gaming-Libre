@@ -35,8 +35,10 @@ const Product = ({ products, user }) => {
   }, [buyQuantity, shipping, envio, user]);
 
   const handleSum = () => {
-    selectedProduct.buyQuantity = buyQuantity + 1;
-    setbuyQuantity(buyQuantity + 1);
+    if (selectedProduct.stock > selectedProduct.buyQuantity) {
+      selectedProduct.buyQuantity = buyQuantity + 1;
+      setbuyQuantity(buyQuantity + 1);
+    }
   };
 
   const handleAbs = () => {
