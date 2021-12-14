@@ -104,7 +104,6 @@ const SuccessBuyMP = ({
             <Content>Producto : {product.name}</Content>
             <Content>E-mail: {ownerData.email}</Content>
             <Content>Teléfono: {ownerData.phone}</Content>
-            <Content>Teléfono: {ownerData.phone}</Content>
             <Content>Ciudad: {ownerData.city}</Content>
             <Content>Dirección: {ownerData.address}</Content>
           </ProductWrapper>
@@ -112,11 +111,10 @@ const SuccessBuyMP = ({
           ownerData.map((owner) => (
             <ProductWrapper>
               <Content>Producto : {owner.product}</Content>
-              <Content>E-mail: {owner.data.email}</Content>
-              <Content>Teléfono: {owner.data.phone}</Content>
-              <Content>Teléfono: {owner.data.phone}</Content>
-              <Content>Ciudad: {owner.data.city}</Content>
-              <Content>Dirección: {owner.data.address}</Content>
+              <Content>E-mail: {owner.data.data.email}</Content>
+              <Content>Teléfono: {owner.data.data.phone}</Content>
+              <Content>Ciudad: {owner.data.data.city}</Content>
+              <Content>Dirección: {owner.data.data.address}</Content>
             </ProductWrapper>
           ))
         )}

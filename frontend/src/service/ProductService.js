@@ -77,16 +77,15 @@ export const getOwnerDataCart = (cart, setOwnerData, sendMailSingle, user) => {
   let currentOwner;
   cart.forEach((product) =>
     getBuyData(product.ownerUsername)
-      .then((res) => res.data)
       .then((data) => {
         currentOwner = { product: product.name, data: data };
         owners.push(currentOwner);
-        setOwnerData(owners);
         console.log("mail enviado");
         sendMailSingle(product, data, user);
       })
       .catch((err) => console.log(err))
   );
+    setOwnerData(owners);
 };
 
 export const buyProductNow = (product, setOwnerData, user) => {
