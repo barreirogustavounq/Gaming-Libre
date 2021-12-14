@@ -55,9 +55,9 @@ public class ProductService {
     public List<Product> findByCategory(String category, String product) {
         Category cat = getCategory(category);
         if (Category.all == cat) {
-            return productRepository.findByNameContains(product);
+            return productRepository.findByNameRegex(product);
         }
-        return productRepository.findByNameContains(product).stream().filter(prod -> prod.getCategory() == cat).collect(Collectors.toList());
+        return productRepository.findByNameRegex(product).stream().filter(prod -> prod.getCategory() == cat).collect(Collectors.toList());
     }
 
     public List<Product> findByCategory(String category) {
