@@ -85,6 +85,7 @@ export const getOwnerDataCart = (cart, setOwnerData, sendMailSingle, user) => {
       })
       .catch((err) => console.log(err))
   );
+  console.log(owners)
     setOwnerData(owners);
 };
 

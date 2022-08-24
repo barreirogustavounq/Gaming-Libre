@@ -14,13 +14,7 @@ import { addShooppingService } from "../../service/ShoppingService";
 import { apiKey, DOMAIN } from "../../Mailgun/MailgunCredentials";
 import { deleteAll } from "../Redux/CartDuck";
 
-const SuccessBuyMP = ({
-  user,
-  cart,
-  deleteAll,
-  updateProcts,
-  getAllProducts,
-}) => {
+const SuccessBuyMP = ({user, cart, deleteAll, updateProcts, getAllProducts,}) => {
   const cartLS =
     localStorage.getItem("lastBuy") === "cart"
       ? JSON.parse(localStorage.getItem("mpBuy"))
@@ -34,10 +28,7 @@ const SuccessBuyMP = ({
   const medioDePago = localStorage.getItem("medioDePago");
 
   useEffect(() => {
-    if (
-      product &&
-      product.stock === JSON.parse(localStorage.getItem("mpBuy")).stock
-    ) {
+    if (product && product.stock === JSON.parse(localStorage.getItem("mpBuy")).stock) {
       getOwnerData(product, setOwnerData, sendMailSingle, user);
       actualizeStock(product);
       updateProcts([product]);
@@ -49,7 +40,7 @@ const SuccessBuyMP = ({
       deleteAll(cart);
     }
     getAllProducts();
-  }, []);
+  }, [setOwnerData]);
   const sendMailSingle = (prod, owner, userShop) => {
     const mailgun = require("mailgun-js");
     const mg = mailgun({ apiKey: apiKey, domain: DOMAIN });
